@@ -1,0 +1,2 @@
+mainloop:
+	jr mainloop
