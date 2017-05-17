@@ -1,5 +1,6 @@
 Todo:
 	- Clock system
+	- Stars
 	- Star movement
 	- More efficient player sprite removal code (movement)
 
@@ -9,3 +10,4 @@ Temporary:
 Done:
 	- Screen Clearing
 	- Player movement
+	- Player movement boundaries

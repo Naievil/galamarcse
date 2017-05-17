@@ -27,6 +27,22 @@ blank_loop:
         or      c
         jr      nz,blank_loop
         ret
+
+Full_Window:
+        ld      a, $50           ; Set minimum Y
+        ld      hl,0
+        call    Write_Display_Control
+        
+        inc     a               ; Set maximum Y
+        ld      l,239
+        call    Write_Display_Control   
+        
+        ld      hl,0            ; Set minimum X
+        inc     a
+        call    Write_Display_Control
+        
+        inc     a               ; Set maximum X
+        ld      hl,319 
 		
 ;############## Write HL to display register A
 
@@ -38,7 +54,7 @@ Write_Display_Control:
         out     (c),l
         ret
 		
-;############## Draw player to starting point
+;############## DrawPlayerStart: Draw our player to midway starting point
 
 DrawPlayerStart:
 	xor a
@@ -55,7 +71,10 @@ DrawPlayerStart:
 	call DrawSprite_8Bit
 	ret
 	
-;############### DrawRandomRec: Draws a randomly generated rectangle, destroys all registers
+;############## DrawLevel: Draws the world and the siding
+	
+	
+;############## DrawRandomRec: Draws a randomly generated rectangle, destroys all registers
 	
 DrawRandomRec:
 	ld 		b,240		; random location
