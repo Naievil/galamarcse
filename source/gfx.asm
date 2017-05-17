@@ -27,22 +27,6 @@ blank_loop:
         or      c
         jr      nz,blank_loop
         ret
-
-Full_Window:
-        ld      a, $50           ; Set minimum Y
-        ld      hl,0
-        call    Write_Display_Control
-        
-        inc     a               ; Set maximum Y
-        ld      l,239
-        call    Write_Display_Control   
-        
-        ld      hl,0            ; Set minimum X
-        inc     a
-        call    Write_Display_Control
-        
-        inc     a               ; Set maximum X
-        ld      hl,319 
 		
 ;############## Write HL to display register A
 
@@ -58,10 +42,10 @@ Write_Display_Control:
 
 DrawPlayerStart:
 	xor a
-	ld l,240-16
+	ld l,240-16				; middle of bottom screen y
 	ld h,0
 	ld (playery),hl
-	ld l,(320-15)/2
+	ld l,(320-15)/2			; middle of bottom screen x
 	ld h,0
 	ld (playerx),hl
 	
@@ -74,22 +58,50 @@ DrawPlayerStart:
 ;############### DrawRandomRec: Draws a randomly generated rectangle, destroys all registers
 	
 DrawRandomRec:
-	ld b,240		; random location
-	call RandInt
-	ld l,a
-	call RandInt
-	ld h,a
-	ld b, 255		; 255 color bound (inclusive)
-	call RandInt
-	ld c, a
-	call RandInt
-	ld b, a	
-    call ColorRectangle
+	ld 		b,240		; random location
+	call 	RandInt
+	ld 		l,a
+	call 	RandInt
+	ld 		h,a
+	ld 		b, 255		; 255 color bound (inclusive)
+	call 	RandInt
+	ld 		c, a
+	call 	RandInt
+	ld 		b, a	
+    call 	ColorRectangle
 	ret	
 	
 DrawPlayer:
-	ld ix,img_player		; load in image data
-	ld hl,(playery)			; load in y component
-	ld de,(playerx)			; load in x component
-	call DrawSprite_8Bit
+	ld 		ix,img_player			; load in image data
+	ld 		hl,(playery)			; load in y component
+	ld 		de,(playerx)			; load in x component
+	call	DrawSprite_8Bit
+	ret
+	
+DeletePlayerLeft:
+	ld 		hl, (playerx)
+	ld		de, (playery)
+	ld 		iy, $0000
+	dec 	hl
+DeleteLeftLoop:
+	inc 	de
+	call 	ColorPixel
+	ld		a,e
+	cp		240
+	jp		nz, DeleteLeftLoop
+	ret
+
+DeletePlayerRight:
+	ld 		hl, (playerx)
+	ld		de, (playery)
+	ld 		iy, $0000
+	ld 		b, 0		
+	ld		c, 15
+	add		hl, bc
+DeleteRightLoop:
+	inc 	de
+	call 	ColorPixel
+	ld		a,e
+	cp		240
+	jp		nz, DeleteRightLoop
 	ret

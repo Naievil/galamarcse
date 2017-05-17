@@ -1,10 +1,11 @@
 Todo:
 	- Clock system
 	- Star movement
-	- Player movement	
+	- More efficient player sprite removal code (movement)
 
 Temporary:
 	- Player Sprite
 	
 Done:
 	- Screen Clearing
+	- Player movement
