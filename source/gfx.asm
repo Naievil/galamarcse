@@ -54,7 +54,7 @@ Write_Display_Control:
         out     (c),l
         ret
 		
-;############## Draw player to whichever position
+;############## Draw player to starting point
 
 DrawPlayerStart:
 	xor a
@@ -65,16 +65,24 @@ DrawPlayerStart:
 	ld h,0
 	ld (playerx),hl
 	
-	ld ix,img_player
-	ld hl,(playery)
-	ld de,(playerx)
+	ld ix,img_player		; load in image data
+	ld hl,(playery)			; load in y component
+	ld de,(playerx)			; load in x component
 	call DrawSprite_8Bit
 	ret
 	
-;###############
-DrawBoard:
-    ld hl,0
-    ld d,119
-    ld e,240
-    ld bc,BD74h
+;############### DrawRandomRec: Draws a randomly generated rectangle, destroys all registers
+	
+DrawRandomRec:
+	ld b,240		; random location
+	call RandInt
+	ld l,a
+	call RandInt
+	ld h,a
+	ld b, 255		; 255 color bound (inclusive)
+	call RandInt
+	ld c, a
+	call RandInt
+	ld b, a	
     call ColorRectangle
+	ret	

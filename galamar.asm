@@ -77,6 +77,7 @@ InitGame:
 	call ClearLCDFull
    	call ShowTitle		 ; clears the screen, show title
 	call DrawPlayerStart ; draws player starting position
+	call DrawRandomRec
 	call mainloop
 	ret
 	
