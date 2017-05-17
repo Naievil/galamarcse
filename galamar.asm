@@ -16,6 +16,8 @@ temp1		.equ cmdShadow
 playerx		.equ temp1					;2 bytes
 playery		.equ playerx+2				;2 bytes
 player_img	.equ playery+2				;2 more bytes
+time_delay	.equ player_img+2			;additional two more bytes of space
+
 .list
     .org UserMem
 BinaryStart:
@@ -52,7 +54,7 @@ endDCSIcon:
     .dw endDCSDesc - startDCSDesc
     .db ASMHEADER_FIELD_TYPE_DESC
 startDCSDesc:
-    .db "Galamar: 84PCSE Shooter",0
+    .db "Galamar",0
 endDCSDesc:
 
     .dw endDCSAuthor - startDCSAuthor
@@ -74,17 +76,20 @@ ASMStart:
 
 ;Initialize game screen and start loop
 InitGame:
-	call ClearLCDFull
-   	call ShowTitle		 ; clears the screen, show title
-	call DrawPlayerStart ; draws player starting position
-	call DrawRandomRec
-	call mainloop
+	call 	ClearLCDFull
+   	call 	ShowTitle		 	; clears the screen, show title when created
+	call 	DrawPlayerStart 	; draws player starting position
+	ld		a, 86
+	ld		(time_delay), a		; record our time delay
+	call 	mainloop
 	ret
 	
-.include "source/main.asm"
 .include "source/title.asm"
 .include "source/gfx.asm"
 .include "source/image.i"
+.include "source/control.asm"
+.include "source/move.asm"
+.include "source/main.asm"
 
 .endrelocate
 .end

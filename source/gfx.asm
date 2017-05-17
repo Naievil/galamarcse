@@ -58,10 +58,10 @@ Write_Display_Control:
 
 DrawPlayerStart:
 	xor a
-	ld l,0
+	ld l,240-16
 	ld h,0
 	ld (playery),hl
-	ld l,0
+	ld l,(320-15)/2
 	ld h,0
 	ld (playerx),hl
 	
@@ -86,3 +86,10 @@ DrawRandomRec:
 	ld b, a	
     call ColorRectangle
 	ret	
+	
+DrawPlayer:
+	ld ix,img_player		; load in image data
+	ld hl,(playery)			; load in y component
+	ld de,(playerx)			; load in x component
+	call DrawSprite_8Bit
+	ret

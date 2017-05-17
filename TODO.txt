@@ -1,0 +1,10 @@
+Todo:
+	- Clock system
+	- Star movement
+	- Player movement	
+
+Temporary:
+	- Player Sprite
+	
+Done:
+	- Screen Clearing
