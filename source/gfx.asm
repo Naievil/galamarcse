@@ -54,25 +54,37 @@ Write_Display_Control:
         out     (c),l
         ret
 		
-;############## DrawPlayerStart: Draw our player to midway starting point
-
-DrawPlayerStart:
-	xor a
-	ld l,240-16				; middle of bottom screen y
-	ld h,0
-	ld (playery),hl
-	ld l,(320-15)/2			; middle of bottom screen x
-	ld h,0
-	ld (playerx),hl
+;############## DrawPlayerStart: Draw our player to midway starting point	
+DrawPlayerStart:	
+	xor 	a
+	ld 		l,240-16				; middle of bottom screen y
+	ld 		h,0
+	ld 		(playery),hl
+	ld 		l,(320-15)/2			; middle of bottom screen x
+	ld 		h,0
+	ld 		(playerx),hl
 	
-	ld ix,img_player		; load in image data
-	ld hl,(playery)			; load in y component
-	ld de,(playerx)			; load in x component
-	call DrawSprite_8Bit
+	ld 		ix,img_player		; load in image data
+	ld 		hl,(playery)			; load in y component
+	ld 		de,(playerx)			; load in x component
+	call 	DrawSprite_8Bit	
 	ret
 	
 ;############## DrawLevel: Draws the world and the siding
-	
+DrawLevel:
+		ld		de, 272
+		ld		bc,	0
+		ld		hl,	272
+		ld		ix,	240
+		ld		iy, bd74h
+		call	ColorLine
+		ld		de, 46
+		ld		bc, 0
+		ld		hl,	46
+		ld		ix, 240
+		call	ColorLine
+		ret
+
 	
 ;############## DrawRandomRec: Draws a randomly generated rectangle, destroys all registers
 	

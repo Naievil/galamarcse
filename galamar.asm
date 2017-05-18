@@ -12,11 +12,12 @@
 
 .endglobal
 
-temp1		.equ cmdShadow
-playerx		.equ temp1					;2 bytes
-playery		.equ playerx+2				;2 bytes
-player_img	.equ playery+2				;2 more bytes
-time_delay	.equ player_img+2			;additional two more bytes of space
+temp1			.equ cmdShadow
+playerx			.equ temp1					;2 bytes
+playery			.equ playerx+2				;2 bytes
+player_img		.equ playery+2				;2 more bytes
+time_delay		.equ player_img+2			;additional two more bytes of space
+fire_pressed	.equ time_delay+1
 
 .list
     .org UserMem
@@ -76,21 +77,27 @@ ASMStart:
 
 ;Initialize game screen and start loop
 InitGame:
+	ld      a,1
+    out     ($20),a         ; maximum CPU speed
+    ld      a,$45
+    out     ($30),a         ; set timer frequency to 2048Hz
+		
 	call 	ClearLCDFull
    	call 	ShowTitle		 	; clears the screen, show title when created
 	call 	DrawPlayerStart 	; draws player starting position
-	;call	DrawLevel
+	call	DrawLevel
 	ld		a, 86
 	ld		(time_delay), a		; record our time delay
-	call 	mainloop
+	call 	timer_wait_done
 	ret
 	
 .include "source/title.asm"
 .include "source/gfx.asm"
 .include "source/image.i"
-.include "source/control.asm"
-.include "source/move.asm"
 .include "source/main.asm"
+.include "source/move.asm"
+.include "source/control.asm"
+;.include "source/data.asm"
 
 .endrelocate
 .end
