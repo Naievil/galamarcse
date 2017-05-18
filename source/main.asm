@@ -41,7 +41,7 @@ timer_wait_done:
         jr      fire_done		
 
 fire_bullet:
-		;call	DrawRandomRec
+		call	DrawBullet
 		ret
 		
 no_fire:

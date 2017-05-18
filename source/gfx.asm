@@ -72,29 +72,41 @@ DrawPlayerStart:
 	
 ;############## DrawLevel: Draws the world and the siding
 DrawLevel:
-		ld		de, 272
-		ld		bc,	0
-		ld		hl,	272
-		ld		ix,	240
-		ld		iy, bd74h
-		call	ColorLine
-		ld		de, 46
-		ld		bc, 0
-		ld		hl,	46
-		ld		ix, 240
-		call	ColorLine
-		ret
 
+	ld		de, 272
+	ld		bc,	0
+	ld		hl,	272
+	ld		ix,	240
+	ld		iy, bd74h
+	call	ColorLine
+	ld		de, 46
+	ld		bc, 0
+	ld		hl,	46
+	ld		ix, 240
+	call	ColorLine
+	ret
+	
+;############## DrawBulet: Draws bullet in front of player		
+DrawBullet:
+	ld 		hl, (playerx)
+	ld		h,l
+	ld 		bc, (playery)
+	ld 		l, c
+	ld 		d, 1
+	ld 		e, 4
+	ld 		bc, 6666
+	call 	ColorRectangle
+	ret
+	
 	
 ;############## DrawRandomRec: Draws a randomly generated rectangle, destroys all registers
-	
 DrawRandomRec:
-	ld 		b,240		; random location
+	ld 		b,4		; random location
 	call 	RandInt
 	ld 		l,a
 	call 	RandInt
 	ld 		h,a
-	ld 		b, 255		; 255 color bound (inclusive)
+	ld 		b, 4		; 255 color bound (inclusive)
 	call 	RandInt
 	ld 		c, a
 	call 	RandInt

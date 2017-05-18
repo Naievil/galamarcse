@@ -86,7 +86,7 @@ InitGame:
    	call 	ShowTitle		 	; clears the screen, show title when created
 	call 	DrawPlayerStart 	; draws player starting position
 	call	DrawLevel
-	ld		a, 86
+	ld		a, 20
 	ld		(time_delay), a		; record our time delay
 	call 	timer_wait_done
 	ret
