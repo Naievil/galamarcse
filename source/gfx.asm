@@ -86,19 +86,6 @@ DrawLevel:
 	call	ColorLine
 	ret
 	
-;############## DrawBulet: Draws bullet in front of player		
-DrawBullet:
-	ld 		hl, (playerx)
-	ld		h,l
-	ld 		bc, (playery)
-	ld 		l, c
-	ld 		d, 1
-	ld 		e, 4
-	ld 		bc, 6666
-	call 	ColorRectangle
-	ret
-	
-	
 ;############## DrawRandomRec: Draws a randomly generated rectangle, destroys all registers
 DrawRandomRec:
 	ld 		b,4		; random location

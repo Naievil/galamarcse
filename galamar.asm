@@ -18,6 +18,7 @@ playery			.equ playerx+2				;2 bytes
 player_img		.equ playery+2				;2 more bytes
 time_delay		.equ player_img+2			;additional two more bytes of space
 fire_pressed	.equ time_delay+1
+bullets			.equ fire_pressed+1
 
 .list
     .org UserMem
@@ -97,7 +98,7 @@ InitGame:
 .include "source/main.asm"
 .include "source/move.asm"
 .include "source/control.asm"
-;.include "source/data.asm"
+.include "source/bullets.asm"
 
 .endrelocate
 .end

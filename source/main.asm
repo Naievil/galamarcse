@@ -37,12 +37,8 @@ timer_wait_done:
         or      a					; > no idea what this does
         jr      nz,fire_done		; > 
         inc     (hl)				; set our fire_pressed active
-        call    fire_bullet     	; actual bullet firing
+        call    firebullet     		; actual bullet firing
         jr      fire_done		
-
-fire_bullet:
-		call	DrawBullet
-		ret
 		
 no_fire:
         xor     a

@@ -1,5 +1,5 @@
 Todo:
-	- Clock system
+	- Bullets/firing
 	- Stars
 	- Star movement
 	- More efficient player sprite removal code (movement)
@@ -11,3 +11,4 @@ Done:
 	- Screen Clearing
 	- Player movement
 	- Player movement boundaries
+	- Clock system
