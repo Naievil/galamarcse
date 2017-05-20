@@ -23,6 +23,7 @@ timer_loop:
         bit     5,a
         jr      z,timer_loop
 timer_wait_done:
+		call	UpdateStars
         xor     a					
         out     ($31),a				; load 0 into loopingdata
         ld      a,(time_delay)		

@@ -1,3 +1,15 @@
+;   _____              _                   __  __              _____  
+;  / ____|     /\     | |          /\     |  \/  |     /\     |  __ \ 
+; | |  __     /  \    | |         /  \    | \  / |    /  \    | |__) |
+; | | |_ |   / /\ \   | |        / /\ \   | |\/| |   / /\ \   |  _  / 
+; | |__| |  / ____ \  | |____   / ____ \  | |  | |  / ____ \  | | \ \ 
+;  \_____| /_/    \_\ |______| /_/    \_\ |_|  |_| /_/    \_\ |_|  \_\
+;
+;
+; 							A TI-84 Shooter
+;					 Ryan Baldwin (rabaldwi@ncsu.edu)     
+;
+;
 ; Program Name: Galamar (and other various tests)
 ; Author: 		Ryan Baldwin (rabaldwi@ncsu.edu)
 ; Version:		0.1a
@@ -19,6 +31,24 @@ player_img		.equ playery+2				;2 more bytes
 time_delay		.equ player_img+2			;additional two more bytes of space
 fire_pressed	.equ time_delay+1
 bullets			.equ fire_pressed+1
+star1y			.equ bullets+1
+star2y			.equ star1y+1
+star3y			.equ star2y+1
+star4y			.equ star3y+1
+star5y			.equ star4y+1
+star6y			.equ star5y+1
+star1x			.equ star6y+2
+star2x			.equ star1x+2
+star3x			.equ star2x+2
+star4x			.equ star3x+2
+star5x			.equ star4x+2
+star6x			.equ star5x+2
+star1clr		.equ star6x+2
+star2clr		.equ star1clr+2
+star3clr		.equ star2clr+2
+star4clr		.equ star3clr+2
+star5clr		.equ star4clr+2
+star6clr		.equ star5clr+2
 
 .list
     .org UserMem
@@ -85,6 +115,7 @@ InitGame:
 		
 	call 	ClearLCDFull
    	call 	ShowTitle		 	; clears the screen, show title when created
+	call	LoadStars
 	call 	DrawPlayerStart 	; draws player starting position
 	call	DrawLevel
 	ld		a, 20

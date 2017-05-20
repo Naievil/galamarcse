@@ -135,3 +135,44 @@ DeleteRightLoop:
 	cp		240
 	jp		nz, DeleteRightLoop
 	ret
+	
+SetStartoZero:
+	ld		a, e
+	cp		240
+	jr		nz, endSetStar
+	ld		de,	0
+EndSetStar:
+	ret
+	
+
+UpdateStars:
+	ld		de,	(star1y)
+	inc		de
+	ld 		(star1y), de
+	
+	ld		de,	(star2y)
+	inc		de
+	ld 		(star2y), de
+	
+	ld		de,	(star2y)
+	inc		de
+	ld 		(star2y), de
+	
+	ld		de,	(star3y)
+	inc		de
+	ld 		(star3y), de
+	
+	ld		de,	(star4y)
+	inc		de
+	ld 		(star4y), de
+	
+	ld		de,	(star5y)
+	inc		de
+	ld 		(star5y), de
+	
+	ld		de,	(star6y)
+	inc		de
+	ld 		(star6y), de
+
+	call	DrawStars
+	ret
