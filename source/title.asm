@@ -41,3 +41,7 @@ setred:
 setblack:
 	ld		iy, 0000h
 	ret
+	
+setgreen:
+	ld		iy, 2525h
+	ret

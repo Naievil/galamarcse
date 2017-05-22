@@ -145,6 +145,7 @@ UpdateStars:
 	call		UpdateStar4
 	call		UpdateStar5
 	call		UpdateStar6
+	call		Reset_Y
 	ret
 	
 ;################ UpdateStarX: Increments position of star, redraws
@@ -159,10 +160,8 @@ UpdateStar1:
 	
 	ld		de, (star1y)
 	ld		hl, 68
-	dec 	de
-	dec		de
-	ld		iy, 0000h
-	call 	ColorPixel
+	call	FillinStar
+
 	ret
 	
 UpdateStar2:
@@ -175,11 +174,7 @@ UpdateStar2:
 	
 	ld		de, (star2y)
 	ld		hl, 112
-	dec 	de
-	dec		de
-	dec 	de
-	ld		iy, 0000h
-	call 	ColorPixel
+	call	FillinStar
 	ret
 	
 UpdateStar3:
@@ -192,10 +187,7 @@ UpdateStar3:
 	
 	ld		de, (star3y)
 	ld		hl, 146
-	dec 	de
-	dec		de
-	ld		iy, 0000h
-	call 	ColorPixel
+	call	FillinStar
 	ret
 	
 UpdateStar4:
@@ -208,10 +200,7 @@ UpdateStar4:
 	
 	ld		de, (star4y)
 	ld		hl, 180
-	dec 	de
-	dec		de
-	ld		iy, 0000h
-	call 	ColorPixel
+	call	FillinStar
 	ret
 	
 UpdateStar5:
@@ -219,15 +208,12 @@ UpdateStar5:
 	ld		hl, 214
 	inc 	de
 	ld		(star5y), de
-	call	setred
+	call	setgreen
 	call 	ColorPixel
 	
 	ld		de, (star5y)
 	ld		hl, 214
-	dec 	de
-	dec		de
-	ld		iy, 0000h
-	call 	ColorPixel
+	call	FillinStar
 	ret
 	
 UpdateStar6:
@@ -235,17 +221,77 @@ UpdateStar6:
 	ld		hl, 248
 	inc 	de
 	ld		(star6y), de
-	call	setblue
+	call	setwhite
 	call 	ColorPixel
 	
 	ld		de, (star6y)
 	ld		hl, 248
+	call	FillinStar
+	ret
+	
+FillinStar:
 	dec 	de
 	dec		de
 	ld		iy, 0000h
 	call 	ColorPixel
+	
+Reset_Y:
+	ld		ix, 0
+	ld		bc, 240
+	call	setblack
+	ld		de, (star1y)
+	ld		a, e
+	cp		240
+	jr		z, Reset_Y1
+	ld		de, (star2y)
+	ld		a, e
+	cp		240
+	jr		z, Reset_Y2
+	ld		de, (star3y)
+	ld		a, e
+	cp		240
+	jr		z, Reset_Y3
+	ld		de, (star4y)
+	ld		a, e
+	cp		240
+	jr		z, Reset_Y4
+	ld		de, (star5y)
+	ld		a, e
+	cp		240
+	jr		z, Reset_Y5
+	ld		de, (star6y)
+	ld		a, e
+	cp		240
+	jr		z, Reset_Y6
 	ret
 	
-
-
-
+Reset_Y1:
+	ld		(star1y), ix
+	ld		hl, 68
+	call	ColorPixel
+	ret
+Reset_Y2:
+	ld		(star2y), ix
+	ld		hl, 112
+	call	ColorPixel
+	ret
+Reset_Y3:
+	ld		(star3y), ix
+	ld		hl, 146
+	call	ColorPixel
+	ret
+Reset_Y4:
+	ld		(star4y), ix
+	ld		hl, 180
+	call	ColorPixel
+	ret
+Reset_Y5:
+	ld		(star5y), ix
+	ld		hl, 214
+	call	ColorPixel
+	ret
+Reset_Y6:
+	ld		(star6y), ix
+	ld		hl, 248
+	call	ColorPixel
+	ret
