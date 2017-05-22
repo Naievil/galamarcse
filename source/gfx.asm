@@ -134,45 +134,118 @@ DeleteRightLoop:
 	ld		a,e
 	cp		240
 	jp		nz, DeleteRightLoop
-	ret
+	ret	
 	
-SetStartoZero:
-	ld		a, e
-	cp		240
-	jr		nz, endSetStar
-	ld		de,	0
-EndSetStar:
-	ret
+;################ UpdateStars: Jump location called from main after timer goes off, which redraws stars
 	
-
 UpdateStars:
-	ld		de,	(star1y)
-	inc		de
-	ld 		(star1y), de
-	
-	ld		de,	(star2y)
-	inc		de
-	ld 		(star2y), de
-	
-	ld		de,	(star2y)
-	inc		de
-	ld 		(star2y), de
-	
-	ld		de,	(star3y)
-	inc		de
-	ld 		(star3y), de
-	
-	ld		de,	(star4y)
-	inc		de
-	ld 		(star4y), de
-	
-	ld		de,	(star5y)
-	inc		de
-	ld 		(star5y), de
-	
-	ld		de,	(star6y)
-	inc		de
-	ld 		(star6y), de
-
-	call	DrawStars
+	call		UpdateStar1
+	call		UpdateStar2
+	call		UpdateStar3
+	call		UpdateStar4
+	call		UpdateStar5
+	call		UpdateStar6
 	ret
+	
+;################ UpdateStarX: Increments position of star, redraws
+	
+UpdateStar1:
+	ld		de, (star1y)		
+	ld		hl, 68
+	inc 	de
+	ld		(star1y), de
+	call	setblue
+	call 	ColorPixel
+	
+	ld		de, (star1y)
+	ld		hl, 68
+	dec 	de
+	dec		de
+	ld		iy, 0000h
+	call 	ColorPixel
+	ret
+	
+UpdateStar2:
+	ld		de, (star2y)		
+	ld		hl, 112				
+	inc 	de
+	ld		(star2y), de
+	call	setwhite
+	call 	ColorPixel
+	
+	ld		de, (star2y)
+	ld		hl, 112
+	dec 	de
+	dec		de
+	dec 	de
+	ld		iy, 0000h
+	call 	ColorPixel
+	ret
+	
+UpdateStar3:
+	ld		de, (star3y)		
+	ld		hl, 146
+	inc 	de
+	ld		(star3y), de
+	call	setred
+	call 	ColorPixel
+	
+	ld		de, (star3y)
+	ld		hl, 146
+	dec 	de
+	dec		de
+	ld		iy, 0000h
+	call 	ColorPixel
+	ret
+	
+UpdateStar4:
+	ld		de, (star4y)		
+	ld		hl, 180
+	inc 	de
+	ld		(star4y), de
+	call	setblue
+	call 	ColorPixel
+	
+	ld		de, (star4y)
+	ld		hl, 180
+	dec 	de
+	dec		de
+	ld		iy, 0000h
+	call 	ColorPixel
+	ret
+	
+UpdateStar5:
+	ld		de, (star5y)		
+	ld		hl, 214
+	inc 	de
+	ld		(star5y), de
+	call	setred
+	call 	ColorPixel
+	
+	ld		de, (star5y)
+	ld		hl, 214
+	dec 	de
+	dec		de
+	ld		iy, 0000h
+	call 	ColorPixel
+	ret
+	
+UpdateStar6:
+	ld		de, (star6y)		
+	ld		hl, 248
+	inc 	de
+	ld		(star6y), de
+	call	setblue
+	call 	ColorPixel
+	
+	ld		de, (star6y)
+	ld		hl, 248
+	dec 	de
+	dec		de
+	ld		iy, 0000h
+	call 	ColorPixel
+	ret
+	
+
+
+

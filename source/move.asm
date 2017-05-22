@@ -9,14 +9,14 @@ move_right:
 		jr		nz, move_right_begin	; 
 		ld		a,l						;
 		cp		0						; right bound is at x = 272
-		jr		z, mainloop
+		jr		z, tomain
 move_right_begin:						; the actual movement and drawing calls
 		ld		hl, (playerx)
 		inc 	hl
 		ld 		(playerx), hl			; store our increased position
 		call 	DrawPlayer
 		call	DeletePlayerLeft		; delete leftover colors (fill in with black)
-		jr 		mainloop				; back to the beginning...
+		jr 		tomain				; back to the beginning...
 		
 ;############## Move left
 

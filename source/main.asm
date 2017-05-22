@@ -23,12 +23,11 @@ timer_loop:
         bit     5,a
         jr      z,timer_loop
 timer_wait_done:
-		call	UpdateStars
         xor     a					
         out     ($31),a				; load 0 into loopingdata
         ld      a,(time_delay)		
         out     ($32),a          	; load our timer delay value into crystal timer
-	
+			
         ld      hl,fire_pressed		; load our fire_pressed variable
 
         in      a,(1)           	; shoot if 2nd is pressed
@@ -56,7 +55,8 @@ fire_done:
         ;or      l
         ;ld      hl,lose_message
         ;jp      z,check_highscore
-        ;jp      z,check_highscore
+		
+		call	UpdateStars			; update/redraw stars
 		
         ld 		a,$ff
 		out 	(1),a
@@ -71,4 +71,5 @@ fire_done:
 		jr 		z,move_left
 		bit 	2,a
 		jr 		z,move_right
+				
 		jp 		mainloop
