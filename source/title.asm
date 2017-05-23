@@ -25,23 +25,3 @@ LoadStars:
 	ld		hl, 62
 	ld		(star6y), hl
 	ret
-	
-setblue:
-	ld		iy, 1818h
-	ret
-
-setwhite:
-	ld		iy, ffffh
-	ret
-	
-setred:
-	ld		iy, 8080h
-	ret
-
-setblack:
-	ld		iy, 0000h
-	ret
-	
-setgreen:
-	ld		iy, 2525h
-	ret

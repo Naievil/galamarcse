@@ -148,6 +148,26 @@ UpdateStars:
 	call		Reset_Y
 	ret
 	
+setblue:
+	ld		iy, 1818h
+	ret
+
+setwhite:
+	ld		iy, ffffh
+	ret
+	
+setred:
+	ld		iy, 8080h
+	ret
+
+setblack:
+	ld		iy, 0000h
+	ret
+	
+setgreen:
+	ld		iy, 2525h
+	ret
+	
 ;################ UpdateStarX: Increments position of star, redraws
 	
 UpdateStar1:
@@ -237,61 +257,47 @@ FillinStar:
 	
 Reset_Y:
 	ld		ix, 0
-	ld		bc, 240
-	call	setblack
 	ld		de, (star1y)
 	ld		a, e
-	cp		240
+	cp		241
 	jr		z, Reset_Y1
 	ld		de, (star2y)
 	ld		a, e
-	cp		240
+	cp		241
 	jr		z, Reset_Y2
 	ld		de, (star3y)
 	ld		a, e
-	cp		240
+	cp		241
 	jr		z, Reset_Y3
 	ld		de, (star4y)
 	ld		a, e
-	cp		240
+	cp		241
 	jr		z, Reset_Y4
 	ld		de, (star5y)
 	ld		a, e
-	cp		240
+	cp		241
 	jr		z, Reset_Y5
 	ld		de, (star6y)
 	ld		a, e
-	cp		240
+	cp		241
 	jr		z, Reset_Y6
 	ret
 	
 Reset_Y1:
 	ld		(star1y), ix
-	ld		hl, 68
-	call	ColorPixel
 	ret
 Reset_Y2:
 	ld		(star2y), ix
-	ld		hl, 112
-	call	ColorPixel
 	ret
 Reset_Y3:
 	ld		(star3y), ix
-	ld		hl, 146
-	call	ColorPixel
 	ret
 Reset_Y4:
 	ld		(star4y), ix
-	ld		hl, 180
-	call	ColorPixel
 	ret
 Reset_Y5:
 	ld		(star5y), ix
-	ld		hl, 214
-	call	ColorPixel
 	ret
 Reset_Y6:
 	ld		(star6y), ix
-	ld		hl, 248
-	call	ColorPixel
 	ret
