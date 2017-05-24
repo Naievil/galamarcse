@@ -1,7 +1,5 @@
 Todo:
 	- Bullets/firing
-	- Stars
-	- Star movement
 	- More efficient player sprite removal code (movement)
 
 Temporary:
@@ -12,3 +10,4 @@ Done:
 	- Player movement
 	- Player movement boundaries
 	- Clock system
+	- Stars/their movement

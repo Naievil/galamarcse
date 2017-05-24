@@ -1,5 +1,6 @@
 ;############################################;
-;#			Calculzap Base Loop Code		#;
+;#			Galamar Base Loop Code			#;
+;#	  Based off of Calcuzap's loop code 	#;
 ;############################################;
 
 mainloop:

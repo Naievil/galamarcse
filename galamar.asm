@@ -120,5 +120,10 @@ InitGame:
 .include "source/gfx.asm"
 .include "source/bullets.asm"
 
+img_logo:
+	.dw LogoPalette
+	.db 45, 220
+	.incbmp "assets/logo.png"	
+
 .endrelocate
 .end

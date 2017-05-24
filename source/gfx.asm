@@ -84,6 +84,10 @@ DrawLevel:
 	ld		hl,	46
 	ld		ix, 240
 	call	ColorLine
+	ld		de, 0
+	ld		hl, 0
+	ld 		ix, img_logo
+	call	DrawSprite_1Bit
 	ret
 	
 ;############## DrawRandomRec: Draws a randomly generated rectangle, destroys all registers
@@ -254,6 +258,7 @@ FillinStar:
 	dec		de
 	ld		iy, 0000h
 	call 	ColorPixel
+	ret 
 	
 Reset_Y:
 	ld		ix, 0
