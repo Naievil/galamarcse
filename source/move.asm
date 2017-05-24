@@ -16,7 +16,7 @@ move_right_begin:						; the actual movement and drawing calls
 		ld 		(playerx), hl			; store our increased position
 		call 	DrawPlayer
 		call	DeletePlayerLeft		; delete leftover colors (fill in with black)
-		jr 		tomain				; back to the beginning...
+		jr 		tomain					; back to the beginning...
 		
 ;############## Move left
 

@@ -116,14 +116,8 @@ InitGame:
 .include "source/image.i"
 .include "source/main.asm"
 .include "source/move.asm"
-.include "source/control.asm"
 .include "source/gfx.asm"
-.include "source/bullets.asm"
-
-img_logo:
-	.dw LogoPalette
-	.db 45, 220
-	.incbmp "assets/logo.png"	
+.include "source/bullets.asm"	
 
 .endrelocate
 .end

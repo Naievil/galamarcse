@@ -26,3 +26,13 @@ LogoPalette:
 .db FFh, DDh
 .db 00h, 00h
 
+
+img_logo:
+	.dw LogoPalette
+	.db 45, 220
+	.incbmp "../assets/logo.png"
+	
+pauselogo:
+	.dw LogoPalette
+	.db	100, 30
+	.incbmp "../assets/paused.png"

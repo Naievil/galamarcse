@@ -3,22 +3,32 @@
 ;#	  Based off of Calcuzap's loop code 	#;
 ;############################################;
 
+drawpausegame:
+		ld		de, 110
+		ld		hl, 105
+		ld		ix, pauselogo
+		call	DrawSprite_1Bit
+pausegame:
+		ld      a,%10111111    		; mask most keys (allow 2nd)
+		out 	(1),a
+		nop \ nop
+		in 		a,(1)
+		bit 	5,a
+		jr		nz,pausegame		
+		ld		h, 55
+		ld		l, 105
+		ld 		d, 50
+		ld		e, 30
+		ld		bc, 0000h
+		call	ColorRectangle	
+
 mainloop:
-	;ld      a,(score+4)
-    ;or      1
-    ;ld      hl,rand_inc				; pretty sure this is used for bonus...
-    ;add     a,(hl)
-    ;ld      (hl),a
-        
-    ;ld      hl,(frame_count)		; |
-    ;inc     hl						; |
-    ;ld      (frame_count),hl		; -> increase frame count by 1
-    ;ld      bc,33*4*256+232
-    ;ld      hl,score
-    ;call    Draw_String
-    ld      a,%10111111    			; mask most keys (allow 2nd)
-    out     (1),a
 	
+		; Draw update to score here when necessary
+		
+		ld      a,%10111111    		; mask most keys (allow 2nd)
+		out     (1),a
+
 timer_loop: 
         in      a,(4)
         bit     5,a
@@ -34,9 +44,9 @@ timer_wait_done:
         in      a,(1)           	; shoot if 2nd is pressed
         bit     5,a					; check if bit is active
         jr      nz,no_fire			; if not active, skip
-        ld      a,(hl)				; >
-        or      a					; > no idea what this does
-        jr      nz,fire_done		; > 
+        ld      a,(hl)				; 
+        or      a					; 
+        jr      nz,fire_done		; 
         inc     (hl)				; set our fire_pressed active
         call    firebullet     		; actual bullet firing
         jr      fire_done		
@@ -72,5 +82,7 @@ fire_done:
 		bit 	1,a
 		jr 		z,move_left
 		bit 	2,a
-		jr 		z,move_right			
+		jr 		z,move_right
+		bit 	3,a
+		jr		z,drawpausegame
 		jp 		mainloop
