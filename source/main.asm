@@ -79,10 +79,10 @@ fire_done:
 		in 		a,(1)
 		cp 		$ff
 		jr 		z,mainloop
+		bit 	3,a
+		jr		z,drawpausegame		; set pause to a priority
 		bit 	1,a
 		jr 		z,move_left
 		bit 	2,a
 		jr 		z,move_right
-		bit 	3,a
-		jr		z,drawpausegame
 		jp 		mainloop
