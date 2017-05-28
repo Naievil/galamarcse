@@ -3,6 +3,22 @@
 ;#	  Based off of Calcuzap's loop code 	#;
 ;############################################;
 
+;#############################;
+; checkinputlevel: takes in b (typically in binary),
+; 		loads/delays into a
+checkinputlevel:
+		ld 		a,$ff
+		out 	(1),a
+		nop \ nop
+		ld 		a,b
+		out 	(1),a
+		nop \ nop
+		call	DrawPlayer	
+		in 		a,(1)
+		cp 		$ff
+		ret
+		
+
 drawpausegame:
 		ld		de, 110
 		ld		hl, 105
@@ -68,21 +84,20 @@ fire_done:
         ;jp      z,check_highscore
 		
 		call	UpdateStars			; update/redraw stars
+		call	DrawPlayer			; redraw player in case stars go in front
 		
-        ld 		a,$ff
-		out 	(1),a
-		nop \ nop
-		ld 		a,%11111100
-		out 	(1),a
-		nop \ nop
-		call	DrawPlayer	
-		in 		a,(1)
-		cp 		$ff
+		ld 		b,%1111101
+        call	checkinputlevel
+		bit 	0, a
+		jr		z, drawpausegame
+	
+		ld 		b,%11111100
+        call	checkinputlevel
 		jr 		z,mainloop
 		bit 	3,a
-		jr		z,drawpausegame		; set pause to a priority
+		;jr		z,mainloop			; for laser charge later
 		bit 	1,a
 		jr 		z,move_left
 		bit 	2,a
 		jr 		z,move_right
-		jp 		mainloop
+		jr 		mainloop

@@ -1,6 +1,7 @@
 Todo:
 	- Bullets/firing
 	- More efficient player sprite removal code (movement)
+	- Laser/other input/charging
 
 Temporary:
 	- Player Sprite
