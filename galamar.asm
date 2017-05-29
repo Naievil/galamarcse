@@ -40,6 +40,8 @@ star5y			.equ star4y+2
 star6y			.equ star5y+2
 
 .list
+.variablename GALAMAR
+
     .org UserMem
 BinaryStart:
     .db $DE,$2A,"N",$BB,$B4,$BB,$B4,$BB,$B3,$BB,$C3,")D"   ;Disp "Needs D
@@ -93,6 +95,8 @@ endDCSAuthor:
 
 ASMStart:
 .relocate UserMem
+.varloc saveSScreen, 300h
+
 .define bcall(label) rst $28 \ .dw label
 
 ;Initialize game screen and start loop

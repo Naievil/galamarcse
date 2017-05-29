@@ -84,7 +84,7 @@ fire_done:
         ;jp      z,check_highscore
 		
 		call	UpdateStars			; update/redraw stars
-		call	DrawPlayer			; redraw player in case stars go in front
+		;call	DrawPlayer			; commented for speedup...redraw player in case stars go in front
 		
 		ld 		b,%1111101
         call	checkinputlevel
@@ -96,6 +96,7 @@ fire_done:
 		jr 		z,mainloop
 		bit 	3,a
 		;jr		z,mainloop			; for laser charge later
+		ret		z		
 		bit 	1,a
 		jr 		z,move_left
 		bit 	2,a
