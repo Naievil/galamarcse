@@ -95,10 +95,16 @@ fire_done:
         call	checkinputlevel
 		jr 		z,mainloop
 		bit 	3,a
-		;jr		z,mainloop			; for laser charge later
-		ret		z		
+		call	z,changespeed			; for laser charge later
+		ld 		b,%11111100
+        call	checkinputlevel
 		bit 	1,a
 		jr 		z,move_left
 		bit 	2,a
 		jr 		z,move_right
 		jr 		mainloop
+		
+changespeed:
+	call	UpdateStars
+	call	UpdateStars
+	ret

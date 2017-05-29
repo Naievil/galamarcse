@@ -38,7 +38,7 @@ star3y			.equ star2y+2
 star4y			.equ star3y+2
 star5y			.equ star4y+2
 star6y			.equ star5y+2
-
+laserpower		.equ star6y+2
 .list
 .variablename GALAMAR
 
