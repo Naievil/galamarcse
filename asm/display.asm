@@ -36,3 +36,36 @@ Write_Display_Control:
         out     (c),h
         out     (c),l
         ret
+		
+;############## Clear the screen (in black)
+;##############      Function adapted from Calcuzap by Patrick Davidson (huge thank you!)
+
+Clear_Screen:   
+        call    Full_Window
+        
+        ld      a,$20
+        ld      hl,0            ; set write Y coordinate
+        call    Write_Display_Control
+        ld      a,$21           ; set write X coordinate
+        call    Write_Display_Control
+        
+        ld      a,$22
+        out     ($10),a
+        out     ($10),a
+
+        ld      bc,320*240*2/3
+		ld		e, 0
+
+;############## screen_write_loop: 
+; E  -> $XX color input
+; BC -> loop times
+screen_write_loop:
+        ld		a, e
+        out     ($11),a
+        out     ($11),a
+        out     ($11),a
+        dec     bc
+        ld      a,b
+        or      c
+        jr      nz,screen_write_loop
+        ret

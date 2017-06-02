@@ -1,32 +1,4 @@
 ;############## Galamar by Ryan Baldwin - graphics routines
-
-;############## Clear the screen (in black)
-;##############      Function adapted from Calcuzap by Patrick Davidson (huge thank you!)
-
-Clear_Screen:   
-        call    Full_Window
-        
-        ld      a,$20
-        ld      hl,0            ; set write Y coordinate
-        call    Write_Display_Control
-        ld      a,$21           ; set write X coordinate
-        call    Write_Display_Control
-        
-        ld      a,$22
-        out     ($10),a
-        out     ($10),a
-
-        ld      bc,320*240*2/3
-blank_loop:
-        xor     a
-        out     ($11),a
-        out     ($11),a
-        out     ($11),a
-        dec     bc
-        ld      a,b
-        or      c
-        jr      nz,blank_loop
-        ret
 		
 ;############## DrawPlayerStart: Draw our player to midway starting point	
 DrawPlayerStart:	
@@ -89,7 +61,7 @@ DrawPlayer:
 DeletePlayerLeft:
 	ld 		hl, (playerx)
 	ld		de, (playery)
-	ld 		iy, $0000
+	ld 		iy, $00
 	dec 	hl
 DeleteLeftLoop:
 	inc 	de
@@ -102,7 +74,7 @@ DeleteLeftLoop:
 DeletePlayerRight:
 	ld 		hl, (playerx)
 	ld		de, (playery)
-	ld 		iy, $0000
+	ld 		iy, $00
 	ld 		b, 0		
 	ld		c, 15
 	add		hl, bc
@@ -290,11 +262,35 @@ Draw_8Bit:
 Color_Line:
 	ret
 	
-Color_Rectangle
-	ret
-	
-Color_Pixel:
+Color_Rectangle:
 	ret
 	
 RandInt:
 	ret
+
+; Color_Pixel: takes in hl as x, de for y, iy as 8 bit color
+Color_Pixel:
+		; *************
+		;  Set X coord
+		; *************
+		ld      a, $21          ; set write X coordinate
+        ; we don't change value of HL since it already contains the X value!
+        call    Write_Display_Control
+		
+		; *************
+		;  Set Y cord
+		; *************
+		ld		h, 0			; y coord will ALWAYS be < 256 so no need for first bit
+		ld		l, e
+        ld      a,$20           ; set write Y coordinate
+        call    Write_Display_Control
+        
+        ld      a,$22
+        out     ($10),a
+        out     ($10),a
+
+        ld      bc, 1
+		ld		e, IYL
+		call	screen_write_loop
+		
+		ret
