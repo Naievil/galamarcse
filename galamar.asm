@@ -12,7 +12,7 @@
 ;
 ; Program Name: Galamar (and other various tests)
 ; Author: 		Ryan Baldwin (rabaldwi@ncsu.edu)
-; Version:		0.1a
+; Version:		0.2a
 ; Date: 		16/5/2017
 
 .nolist
@@ -21,9 +21,12 @@
 ASMStart:
 
 #define bcall(label) rst $28 \ .dw label
-
+#define push_all	push af \ push bc \ push de \ push hl \ push ix \ push iy
+#define	pop_all		push iy \ pop ix \ pop hl \ pop de \ pop bc \ pop af 
+ 
 ;Initialize game screen and start loop
 InitGame:
+	push    iy
 	ld      a,1
     out     ($20),a         ; maximum CPU speed
     ld      a,$45
@@ -38,5 +41,6 @@ InitGame:
 	ld		a, 20
 	ld		(time_delay), a		; record our time delay
 	call 	timer_wait_done
+	pop     iy
 	ret
 	

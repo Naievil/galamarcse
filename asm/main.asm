@@ -4,8 +4,7 @@
 ;############################################;
 
 ;#############################;
-; checkinputlevel: takes in b (typically in binary),
-; 		loads/delays into a
+; checkinputlevel: takes in b, loads and delays into a
 checkinputlevel:
 		ld 		a,$ff
 		out 	(1),a
@@ -20,6 +19,13 @@ checkinputlevel:
 		
 
 drawpausegame:
+
+
+		; temp
+		ret	
+		; temp
+		
+		
 		ld		de, 110
 		ld		hl, 105
 		ld		ix, pauselogo
@@ -36,7 +42,7 @@ pausegame:
 		ld 		d, 50
 		ld		e, 30
 		ld		bc, 0000h
-		call	Color_Rectangle	
+		call	Color_Rectangle
 
 mainloop:
 	
@@ -54,14 +60,14 @@ timer_wait_done:
         out     ($31),a				; load 0 into loopingdata
         ld      a,(time_delay)		
         out     ($32),a          	; load our timer delay value into crystal timer
-			
+					
         ld      hl,fire_pressed		; load our fire_pressed variable
 
         in      a,(1)           	; shoot if 2nd is pressed
         bit     5,a					; check if bit is active
         jr      nz,no_fire			; if not active, skip
         ld      a,(hl)				; 
-        or      a					; 
+        or      a					; 		
         jr      nz,fire_done		; 
         inc     (hl)				; set our fire_pressed active
         call    firebullet     		; actual bullet firing
@@ -72,19 +78,9 @@ no_fire:
         ld      (hl),a				; set fire_pressed to 0
 		 
 fire_done:
-
-        ;call    player_bullets
-        ;call    process_enemies
-        ;call    hit_enemy
-        ;call    process_enemy_bullets
-        ;ld      hl,(lives)
-        ;ld      a,h
-        ;or      l
-        ;ld      hl,lose_message
-        ;jp      z,check_highscore
 		
 		call	UpdateStars			; update/redraw stars
-		;call	DrawPlayer			; commented for speedup...redraw player in case stars go in front
+		call	DrawPlayer			; commented for speedup...redraw player in case stars go in front
 		
 		ld 		b,%1111101
         call	checkinputlevel
@@ -95,8 +91,7 @@ fire_done:
         call	checkinputlevel
 		jr 		z,mainloop
 		bit 	3,a
-		;call	z,changespeed			; for laser charge later
-		ret		z
+		call	z,changespeed			; for laser charge later
 		ld 		b,%11111100
         call	checkinputlevel
 		bit 	1,a
