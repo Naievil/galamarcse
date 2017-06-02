@@ -1,4 +1,5 @@
 Todo:
+	- Color_Pixel, Color_Line, Color_Rectangle, Sprites WITHOUT DCSE
 	- Bullets/firing
 	- More efficient player sprite removal code (movement)
 	- Laser/other input/charging

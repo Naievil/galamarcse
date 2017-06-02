@@ -23,7 +23,7 @@ drawpausegame:
 		ld		de, 110
 		ld		hl, 105
 		ld		ix, pauselogo
-		call	DrawSprite_1Bit
+		call	Draw_1Bit
 pausegame:
 		ld      a,%10111111    		; mask most keys (allow 2nd)
 		out 	(1),a
@@ -36,7 +36,7 @@ pausegame:
 		ld 		d, 50
 		ld		e, 30
 		ld		bc, 0000h
-		call	ColorRectangle	
+		call	Color_Rectangle	
 
 mainloop:
 	
@@ -95,7 +95,8 @@ fire_done:
         call	checkinputlevel
 		jr 		z,mainloop
 		bit 	3,a
-		call	z,changespeed			; for laser charge later
+		;call	z,changespeed			; for laser charge later
+		ret		z
 		ld 		b,%11111100
         call	checkinputlevel
 		bit 	1,a

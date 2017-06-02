@@ -27,32 +27,6 @@ blank_loop:
         or      c
         jr      nz,blank_loop
         ret
-
-Full_Window:
-        ld      a, $50           ; Set minimum Y
-        ld      hl,0
-        call    Write_Display_Control
-        
-        inc     a               ; Set maximum Y
-        ld      l,239
-        call    Write_Display_Control   
-        
-        ld      hl,0            ; Set minimum X
-        inc     a
-        call    Write_Display_Control
-        
-        inc     a               ; Set maximum X
-        ld      hl,319 
-		
-;############## Write HL to display register A
-
-Write_Display_Control:
-        out     ($10),a
-        out     ($10),a
-        ld      c,$11
-        out     (c),h
-        out     (c),l
-        ret
 		
 ;############## DrawPlayerStart: Draw our player to midway starting point	
 DrawPlayerStart:	
@@ -67,7 +41,7 @@ DrawPlayerStart:
 	ld 		ix,img_player		; load in image data
 	ld 		hl,(playery)			; load in y component
 	ld 		de,(playerx)			; load in x component
-	call 	DrawSprite_8Bit	
+	call 	Draw_8Bit	
 	ret
 	
 ;############## DrawLevel: Draws the world and the siding
@@ -77,17 +51,17 @@ DrawLevel:
 	ld		bc,	0
 	ld		hl,	272
 	ld		ix,	240
-	ld		iy, bd74h
-	call	ColorLine
+	ld		iy, $bd74
+	call	Color_Line
 	ld		de, 46
 	ld		bc, 0
 	ld		hl,	46
 	ld		ix, 240
-	call	ColorLine
+	call	Color_Line
 	ld		de, 0
 	ld		hl, 0
 	ld 		ix, img_logo
-	call	DrawSprite_1Bit
+	call	Draw_1Bit
 	ret
 	
 ;############## DrawRandomRec: Draws a randomly generated rectangle, destroys all registers
@@ -102,14 +76,14 @@ DrawRandomRec:
 	ld 		c, a
 	call 	RandInt
 	ld 		b, a	
-    call 	ColorRectangle
+    call 	Color_Rectangle
 	ret	
 	
 DrawPlayer:
 	ld 		ix,img_player			; load in image data
 	ld 		hl,(playery)			; load in y component
 	ld 		de,(playerx)			; load in x component
-	call	DrawSprite_8Bit
+	call	Draw_8Bit
 	ret
 	
 DeletePlayerLeft:
@@ -119,7 +93,7 @@ DeletePlayerLeft:
 	dec 	hl
 DeleteLeftLoop:
 	inc 	de
-	call 	ColorPixel
+	call 	Color_Pixel
 	ld		a,e
 	cp		240
 	jp		nz, DeleteLeftLoop
@@ -134,7 +108,7 @@ DeletePlayerRight:
 	add		hl, bc
 DeleteRightLoop:
 	inc 	de
-	call 	ColorPixel
+	call 	Color_Pixel
 	ld		a,e
 	cp		240
 	jp		nz, DeleteRightLoop
@@ -157,7 +131,7 @@ setblue:
 	ret
 
 setwhite:
-	ld		iy, ffffh
+	ld		iy, $ffff
 	ret
 	
 setred:
@@ -180,7 +154,7 @@ UpdateStar1:
 	inc 	de
 	ld		(star1y), de
 	call	setblue
-	call 	ColorPixel
+	call 	Color_Pixel
 	
 	ld		de, (star1y)
 	ld		hl, 68
@@ -194,7 +168,7 @@ UpdateStar2:
 	inc 	de
 	ld		(star2y), de
 	call	setwhite
-	call 	ColorPixel
+	call 	Color_Pixel
 	
 	ld		de, (star2y)
 	ld		hl, 112
@@ -207,7 +181,7 @@ UpdateStar3:
 	inc 	de
 	ld		(star3y), de
 	call	setred
-	call 	ColorPixel
+	call 	Color_Pixel
 	
 	ld		de, (star3y)
 	ld		hl, 146
@@ -220,7 +194,7 @@ UpdateStar4:
 	inc 	de
 	ld		(star4y), de
 	call	setblue
-	call 	ColorPixel
+	call 	Color_Pixel
 	
 	ld		de, (star4y)
 	ld		hl, 180
@@ -233,7 +207,7 @@ UpdateStar5:
 	inc 	de
 	ld		(star5y), de
 	call	setgreen
-	call 	ColorPixel
+	call 	Color_Pixel
 	
 	ld		de, (star5y)
 	ld		hl, 214
@@ -246,7 +220,7 @@ UpdateStar6:
 	inc 	de
 	ld		(star6y), de
 	call	setwhite
-	call 	ColorPixel
+	call 	Color_Pixel
 	
 	ld		de, (star6y)
 	ld		hl, 248
@@ -257,7 +231,7 @@ FillinStar:
 	dec 	de
 	dec		de
 	ld		iy, 0000h
-	call 	ColorPixel
+	call 	Color_Pixel
 	ret 
 	
 Reset_Y:
@@ -305,4 +279,22 @@ Reset_Y5:
 	ret
 Reset_Y6:
 	ld		(star6y), ix
+	ret
+	
+Draw_1Bit:
+	ret
+	
+Draw_8Bit:
+	ret
+	
+Color_Line:
+	ret
+	
+Color_Rectangle
+	ret
+	
+Color_Pixel:
+	ret
+	
+RandInt:
 	ret

@@ -7,19 +7,23 @@
 ;
 ;
 ; 							A TI-84 Shooter
-;						Ryan Baldwin (rabaldwi@ncsu.edu)                                                  
+;					 Ryan Baldwin (rabaldwi@ncsu.edu)                                                  
 
-#include        ti84pcse.inc
-  
+#include        "asm\ti84pcse.inc"
+
+    .org    $8100
+	
+	call    Display_Org
     call    Initgame
-
-.include "galamar.asm"
-.include "source/title.asm"
-.include "source/gfx.asm"
-.include "source/image.i"
-.include "source/main.asm"
-.include "source/move.asm"
-.include "source/control.asm"
-.include "source/bullets.asm"
-
+    jp      Display_Normal  
+	
+#include "galamar.asm"
+#include "asm\title.asm"
+#include "asm\gfx.asm"
+#include "asm\image.i"
+#include "asm\main.asm"
+#include "asm\move.asm"
+#include "asm\control.asm"
+#include "asm\bullets.asm"
+#include "asm\display.asm"
 .end
