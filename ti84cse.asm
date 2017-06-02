@@ -14,8 +14,8 @@
     .org    $8100
 	
 	call    Display_Org
-    call    Initgame
-    jp      Display_Normal  
+	call    InitGame
+    jp      Display_Normal
 	
 #include "galamar.asm"
 #include "asm\title.asm"
@@ -23,7 +23,7 @@
 #include "asm\image.i"
 #include "asm\main.asm"
 #include "asm\move.asm"
-#include "asm\control.asm"
 #include "asm\bullets.asm"
 #include "asm\display.asm"
+#include "asm\data.asm"
 .end

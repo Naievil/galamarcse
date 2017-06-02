@@ -38,6 +38,5 @@ InitGame:
 	ld		a, 20
 	ld		(time_delay), a		; record our time delay
 	call 	timer_wait_done
-	jp		Display_Normal
-	
+	ret
 	
