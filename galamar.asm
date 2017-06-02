@@ -16,22 +16,6 @@
 ; Date: 		16/5/2017
 
 .nolist
-
-temp1			.equ cmdShadow
-playerx			.equ temp1					;2 bytes
-playery			.equ playerx+2				;2 bytes
-player_img		.equ playery+2				;2 more bytes
-time_delay		.equ player_img+2			;additional two more bytes of space
-fire_pressed	.equ time_delay+1
-bullets			.equ fire_pressed+1
-star1y			.equ bullets+2
-temp2			.equ savesscreen
-star2y			.equ temp2
-star3y			.equ star2y+2
-star4y			.equ star3y+2
-star5y			.equ star4y+2
-star6y			.equ star5y+2
-laserpower		.equ star6y+2
 .list
 
 ASMStart:
