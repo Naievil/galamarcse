@@ -17,8 +17,10 @@
 
 .nolist
 temp1			.equ cmdShadow
-playerx			.equ temp1					;2 bytes
+playerx			.equ temp1
 playery			.equ playerx+2
+rightcount		.equ playery+2
+leftcount		.equ rightcount+2
 .list
 
 ASMStart:
@@ -39,8 +41,12 @@ InitGame:
 	ld 		(playerx), hl
 	ld		hl, 240-16
 	ld		(playery), hl
+	
+	call    resetrightcount
+	call    resetleftcount
 		
 	bcall(_ClrLCDFull)
+	
 	
    	call 	ShowTitle		 	; clears the screen, show title when created
 	call	LoadStars
