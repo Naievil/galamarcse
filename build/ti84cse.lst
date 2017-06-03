@@ -4918,869 +4918,1053 @@ Listing for file "ti84cse.asm"
    13 00:0000 -  -  -  -  
    14 00:0000 -  -  -  -      .org    $8100
    15 00:8100 -  -  -  -  	
-   16 00:8100 CD 2B 86 -  	call    Display_Org
-   17 00:8103 -  -  -  -  	;call    InitGame
-   18 00:8103 C3 35 86 -      jp      Display_Normal
-   19 00:8106 -  -  -  -  	
-   20 00:8106 -  -  -  -  #include "galamar.asm"
+   16 00:8100 CD 14 87 -  	call    Display_Org
+   17 00:8103 CD 09 81 -  	call    InitGame
+   18 00:8106 C3 1E 87 -      jp      Display_Normal
+   19 00:8109 -  -  -  -  	
+   20 00:8109 -  -  -  -  #include "galamar.asm"
 Listing for file "C:\asm\source\galamarcse\galamar.asm"
-    1 00:8106 -  -  -  -  ;   _____              _                   __  __              _____  
-    2 00:8106 -  -  -  -  ;  / ____|     /\     | |          /\     |  \/  |     /\     |  __ \ 
-    3 00:8106 -  -  -  -  ; | |  __     /  \    | |         /  \    | \  / |    /  \    | |__) |
-    4 00:8106 -  -  -  -  ; | | |_ |   / /\ \   | |        / /\ \   | |\/| |   / /\ \   |  _  / 
-    5 00:8106 -  -  -  -  ; | |__| |  / ____ \  | |____   / ____ \  | |  | |  / ____ \  | | \ \ 
-    6 00:8106 -  -  -  -  ;  \_____| /_/    \_\ |______| /_/    \_\ |_|  |_| /_/    \_\ |_|  \_\
-    7 00:8106 -  -  -  -  ;
-    8 00:8106 -  -  -  -  ;
-    9 00:8106 -  -  -  -  ; 							A TI-84 Shooter
-   10 00:8106 -  -  -  -  ;					 Ryan Baldwin (rabaldwi@ncsu.edu)     
-   11 00:8106 -  -  -  -  ;
-   12 00:8106 -  -  -  -  ;
-   13 00:8106 -  -  -  -  ; Program Name: Galamar (and other various tests)
-   14 00:8106 -  -  -  -  ; Author: 		Ryan Baldwin (rabaldwi@ncsu.edu)
-   15 00:8106 -  -  -  -  ; Version:		0.2a
-   16 00:8106 -  -  -  -  ; Date: 		16/5/2017
-   17 00:8106 -  -  -  -  
-   20 00:8106 -  -  -  -  
-   21 00:8106 -  -  -  -  ASMStart:
-   22 00:8106 -  -  -  -  
-   23 00:8106 -  -  -  -  #define bcall(label) rst $28 \ .dw label
-   24 00:8106 -  -  -  -  #define push_all	push af \ push bc \ push de \ push hl \ push ix \ push iy
-   25 00:8106 -  -  -  -  #define	pop_all		push iy \ pop ix \ pop hl \ pop de \ pop bc \ pop af 
-   26 00:8106 -  -  -  -   
-   27 00:8106 -  -  -  -  ;Initialize game screen and start loop
-   28 00:8106 -  -  -  -  InitGame:
-   29 00:8106 FD E5 -  -  	push    iy
-   30 00:8108 3E 01 -  -  	ld      a,1
-   31 00:810A D3 20 -  -      out     ($20),a         ; maximum CPU speed
-   32 00:810C 3E 45 -  -      ld      a,$45
-   33 00:810E D3 30 -  -      out     ($30),a         ; set timer frequency to 2048Hz
-   34 00:8110 -  -  -  -  		
-   35 00:8110 EF 37 45 -  	bcall(_ClrLCDFull)
+    1 00:8109 -  -  -  -  ;   _____              _                   __  __              _____  
+    2 00:8109 -  -  -  -  ;  / ____|     /\     | |          /\     |  \/  |     /\     |  __ \ 
+    3 00:8109 -  -  -  -  ; | |  __     /  \    | |         /  \    | \  / |    /  \    | |__) |
+    4 00:8109 -  -  -  -  ; | | |_ |   / /\ \   | |        / /\ \   | |\/| |   / /\ \   |  _  / 
+    5 00:8109 -  -  -  -  ; | |__| |  / ____ \  | |____   / ____ \  | |  | |  / ____ \  | | \ \ 
+    6 00:8109 -  -  -  -  ;  \_____| /_/    \_\ |______| /_/    \_\ |_|  |_| /_/    \_\ |_|  \_\
+    7 00:8109 -  -  -  -  ;
+    8 00:8109 -  -  -  -  ;
+    9 00:8109 -  -  -  -  ; 							A TI-84 Shooter
+   10 00:8109 -  -  -  -  ;					 Ryan Baldwin (rabaldwi@ncsu.edu)     
+   11 00:8109 -  -  -  -  ;
+   12 00:8109 -  -  -  -  ;
+   13 00:8109 -  -  -  -  ; Program Name: Galamar (and other various tests)
+   14 00:8109 -  -  -  -  ; Author: 		Ryan Baldwin (rabaldwi@ncsu.edu)
+   15 00:8109 -  -  -  -  ; Version:		0.2a
+   16 00:8109 -  -  -  -  ; Date: 		16/5/2017
+   17 00:8109 -  -  -  -  
+   20 00:8109 -  -  -  -  
+   21 00:8109 -  -  -  -  ASMStart:
+   22 00:8109 -  -  -  -  
+   23 00:8109 -  -  -  -  #define bcall(label) rst $28 \ .dw label
+   24 00:8109 -  -  -  -  #define push_all	push af \ push bc \ push de \ push hl \ push ix \ push iy
+   25 00:8109 -  -  -  -  #define	pop_all		push iy \ pop ix \ pop hl \ pop de \ pop bc \ pop af 
+   26 00:8109 -  -  -  -   
+   27 00:8109 -  -  -  -  ;Initialize game screen and start loop
+   28 00:8109 -  -  -  -  InitGame:
+   29 00:8109 FD E5 -  -  	push    iy
+   30 00:810B 3E 01 -  -  	ld      a,1
+   31 00:810D D3 20 -  -      out     ($20),a         ; maximum CPU speed
+   32 00:810F 3E 45 -  -      ld      a,$45
+   33 00:8111 D3 30 -  -      out     ($30),a         ; set timer frequency to 2048Hz
+   34 00:8113 -  -  -  -  		
+   35 00:8113 EF 37 45 -  	bcall(_ClrLCDFull)
 Listing for file "C:\asm\source\galamarcse\galamar.asm"
-   36 00:8113 -  -  -  -  	
-   37 00:8113 CD 2A 81 -     	call 	ShowTitle		 	; clears the screen, show title when created
-   38 00:8116 CD 2E 81 -  	call	LoadStars
-   39 00:8119 CD 53 81 -  	call 	DrawPlayerStart 	; draws player starting position
-   40 00:811C CD 71 81 -  	call	DrawLevel
-   41 00:811F 3E 14 -  -  	ld		a, 20
-   42 00:8121 32 89 86 -  	ld		(time_delay), a		; record our time delay
-   43 00:8124 CD A2 85 -  	call 	timer_wait_done
-   44 00:8127 FD E1 -  -  	pop     iy
-   45 00:8129 C9 -  -  -  	ret
-   46 00:812A -  -  -  -  	
+   36 00:8116 -  -  -  -  	
+   37 00:8116 CD 2D 81 -     	call 	ShowTitle		 	; clears the screen, show title when created
+   38 00:8119 CD 31 81 -  	call	LoadStars
+   39 00:811C CD 56 81 -  	call 	DrawPlayerStart 	; draws player starting position
+   40 00:811F CD 6B 81 -  	call	DrawLevel
+   41 00:8122 3E 14 -  -  	ld		a, 20
+   42 00:8124 32 72 87 -  	ld		(time_delay), a		; record our time delay
+   43 00:8127 CD 90 85 -  	call 	timer_wait_done
+   44 00:812A FD E1 -  -  	pop     iy
+   45 00:812C C9 -  -  -  	ret
+   46 00:812D -  -  -  -  	
 Listing for file "ti84cse.asm"
-   21 00:812A -  -  -  -  #include "asm\title.asm"
+   21 00:812D -  -  -  -  #include "asm\title.asm"
 Listing for file "C:\asm\source\galamarcse\asm\title.asm"
-    1 00:812A -  -  -  -  ;############## Galamar by Ryan Baldwin - title/etc implementation
-    2 00:812A -  -  -  -  
-    3 00:812A -  -  -  -  ShowTitle: 
-    4 00:812A CD 61 86 -      call    Clear_Screen
-    5 00:812D C9 -  -  -  	ret
-    6 00:812E -  -  -  -  
-    7 00:812E -  -  -  -  ;############## LoadStars:	Initial load of all y positions per 6 stars
-    8 00:812E -  -  -  -  LoadStars:
-    9 00:812E -  -  -  -  	
-   10 00:812E 21 18 00 -  	ld		hl, 24		
-   11 00:8131 22 89 86 -  	ld		(star1y), hl
-   12 00:8134 -  -  -  -  	
-   13 00:8134 21 70 00 -  	ld		hl, 112
-   14 00:8137 22 89 86 -  	ld		(star2y), hl
-   15 00:813A -  -  -  -  		
-   16 00:813A 21 C8 00 -  	ld		hl, 200
-   17 00:813D 22 89 86 -  	ld		(star3y), hl
-   18 00:8140 -  -  -  -  	
-   19 00:8140 21 69 00 -  	ld		hl, 105
-   20 00:8143 22 89 86 -  	ld		(star4y), hl
-   21 00:8146 -  -  -  -  	
-   22 00:8146 21 96 00 -  	ld		hl, 150
-   23 00:8149 22 89 86 -  	ld		(star5y), hl
-   24 00:814C -  -  -  -  	
-   25 00:814C 21 3E 00 -  	ld		hl, 62
-   26 00:814F 22 89 86 -  	ld		(star6y), hl
-   27 00:8152 C9 -  -  -  	ret
+    1 00:812D -  -  -  -  ;############## Galamar by Ryan Baldwin - title/etc implementation
+    2 00:812D -  -  -  -  
+    3 00:812D -  -  -  -  ShowTitle: 
+    4 00:812D CD 4A 87 -      call    Clear_Screen
+    5 00:8130 C9 -  -  -  	ret
+    6 00:8131 -  -  -  -  
+    7 00:8131 -  -  -  -  ;############## LoadStars:	Initial load of all y positions per 6 stars
+    8 00:8131 -  -  -  -  LoadStars:
+    9 00:8131 -  -  -  -  	
+   10 00:8131 21 18 00 -  	ld		hl, 24		
+   11 00:8134 22 72 87 -  	ld		(star1y), hl
+   12 00:8137 -  -  -  -  	
+   13 00:8137 21 70 00 -  	ld		hl, 112
+   14 00:813A 22 72 87 -  	ld		(star2y), hl
+   15 00:813D -  -  -  -  		
+   16 00:813D 21 C8 00 -  	ld		hl, 200
+   17 00:8140 22 72 87 -  	ld		(star3y), hl
+   18 00:8143 -  -  -  -  	
+   19 00:8143 21 69 00 -  	ld		hl, 105
+   20 00:8146 22 72 87 -  	ld		(star4y), hl
+   21 00:8149 -  -  -  -  	
+   22 00:8149 21 96 00 -  	ld		hl, 150
+   23 00:814C 22 72 87 -  	ld		(star5y), hl
+   24 00:814F -  -  -  -  	
+   25 00:814F 21 3E 00 -  	ld		hl, 62
+   26 00:8152 22 72 87 -  	ld		(star6y), hl
+   27 00:8155 C9 -  -  -  	ret
 Listing for file "ti84cse.asm"
-   22 00:8153 -  -  -  -  #include "asm\gfx.asm"
+   22 00:8156 -  -  -  -  #include "asm\gfx.asm"
 Listing for file "C:\asm\source\galamarcse\asm\gfx.asm"
-    1 00:8153 -  -  -  -  ;############## Galamar by Ryan Baldwin - graphics routines
-    2 00:8153 -  -  -  -  		
-    3 00:8153 -  -  -  -  ;############## DrawPlayerStart: Draw our player to midway starting point	
-    4 00:8153 -  -  -  -  DrawPlayerStart:	
-    5 00:8153 AF -  -  -  	xor 	a
-    6 00:8154 2E E0 -  -  	ld 		l,240-16				; middle of bottom screen y
-    7 00:8156 26 00 -  -  	ld 		h,0
-    8 00:8158 22 89 86 -  	ld 		(playery),hl
-    9 00:815B 2E 98 -  -  	ld 		l,(320-15)/2			; middle of bottom screen x
-   10 00:815D 26 00 -  -  	ld 		h,0
-   11 00:815F 22 89 86 -  	ld 		(playerx),hl
-   12 00:8162 -  -  -  -  	
-   13 00:8162 DD 21 5C 84 	ld 		ix,img_player		; load in image data
-   14 00:8166 2A 89 86 -  	ld 		hl,(playery)			; load in y component
-   15 00:8169 ED 5B 89 86 	ld 		de,(playerx)			; load in x component
-   16 00:816D CD 3D 83 -  	call 	Draw_8Bit	
-   17 00:8170 C9 -  -  -  	ret
-   18 00:8171 -  -  -  -  	
-   19 00:8171 -  -  -  -  ;############## DrawLevel: Draws the world and the siding
-   20 00:8171 -  -  -  -  DrawLevel:
-   21 00:8171 -  -  -  -  
-   22 00:8171 11 10 01 -  	ld		de, 272
-   23 00:8174 01 00 00 -  	ld		bc,	0
-   24 00:8177 21 10 01 -  	ld		hl,	272
-   25 00:817A DD 21 F0 00 	ld		ix,	240
-   26 00:817E FD 21 74 BD 	ld		iy, $bd74
-   27 00:8182 CD 3E 83 -  	call	Color_Line
-   28 00:8185 11 2E 00 -  	ld		de, 46
-   29 00:8188 01 00 00 -  	ld		bc, 0
-   30 00:818B 21 2E 00 -  	ld		hl,	46
-   31 00:818E DD 21 F0 00 	ld		ix, 240
-   32 00:8192 CD 3E 83 -  	call	Color_Line
-   33 00:8195 11 00 00 -  	ld		de, 0
-   34 00:8198 21 00 00 -  	ld		hl, 0
-   35 00:819B DD 21 55 85 	ld 		ix, img_logo
-   36 00:819F CD 3C 83 -  	call	Draw_1Bit
-   37 00:81A2 C9 -  -  -  	ret
-   38 00:81A3 -  -  -  -  	
-   39 00:81A3 -  -  -  -  ;############## DrawRandomRec: Draws a randomly generated rectangle, destroys all registers
-   40 00:81A3 -  -  -  -  DrawRandomRec:
-   41 00:81A3 06 04 -  -  	ld 		b,4		; random location
-   42 00:81A5 CD 40 83 -  	call 	RandInt
-   43 00:81A8 6F -  -  -  	ld 		l,a
-   44 00:81A9 CD 40 83 -  	call 	RandInt
-   45 00:81AC 67 -  -  -  	ld 		h,a
-   46 00:81AD 06 04 -  -  	ld 		b, 4		; 255 color bound (inclusive)
-   47 00:81AF CD 40 83 -  	call 	RandInt
-   48 00:81B2 4F -  -  -  	ld 		c, a
-   49 00:81B3 CD 40 83 -  	call 	RandInt
-   50 00:81B6 47 -  -  -  	ld 		b, a	
-   51 00:81B7 CD 3F 83 -      call 	Color_Rectangle
-   52 00:81BA C9 -  -  -  	ret	
-   53 00:81BB -  -  -  -  	
-   54 00:81BB -  -  -  -  DrawPlayer:
-   55 00:81BB DD 21 5C 84 	ld 		ix,img_player			; load in image data
-   56 00:81BF 2A 89 86 -  	ld 		hl,(playery)			; load in y component
-   57 00:81C2 ED 5B 89 86 	ld 		de,(playerx)			; load in x component
-   58 00:81C6 CD 3D 83 -  	call	Draw_8Bit
-   59 00:81C9 C9 -  -  -  	ret
-   60 00:81CA -  -  -  -  	
-   61 00:81CA -  -  -  -  DeletePlayerLeft:
-   62 00:81CA 2A 89 86 -  	ld 		hl, (playerx)
-   63 00:81CD ED 5B 89 86 	ld		de, (playery)
-   64 00:81D1 FD 21 00 00 	ld 		iy, $00
-   65 00:81D5 2B -  -  -  	dec 	hl
-   66 00:81D6 -  -  -  -  DeleteLeftLoop:
-   67 00:81D6 13 -  -  -  	inc 	de
-   68 00:81D7 CD 41 83 -  	call 	Color_Pixel
-   69 00:81DA 7B -  -  -  	ld		a,e
-   70 00:81DB FE F0 -  -  	cp		240
-   71 00:81DD C2 D6 81 -  	jp		nz, DeleteLeftLoop
-   72 00:81E0 C9 -  -  -  	ret
-   73 00:81E1 -  -  -  -  
-   74 00:81E1 -  -  -  -  DeletePlayerRight:
-   75 00:81E1 2A 89 86 -  	ld 		hl, (playerx)
-   76 00:81E4 ED 5B 89 86 	ld		de, (playery)
-   77 00:81E8 FD 21 00 00 	ld 		iy, $00
-   78 00:81EC 06 00 -  -  	ld 		b, 0		
-   79 00:81EE 0E 0F -  -  	ld		c, 15
-   80 00:81F0 09 -  -  -  	add		hl, bc
-   81 00:81F1 -  -  -  -  DeleteRightLoop:
-   82 00:81F1 13 -  -  -  	inc 	de
-   83 00:81F2 CD 41 83 -  	call 	Color_Pixel
-   84 00:81F5 7B -  -  -  	ld		a,e
-   85 00:81F6 FE F0 -  -  	cp		240
-   86 00:81F8 C2 F1 81 -  	jp		nz, DeleteRightLoop
-   87 00:81FB C9 -  -  -  	ret	
-   88 00:81FC -  -  -  -  	
-   89 00:81FC -  -  -  -  ;################ UpdateStars: Jump location called from main after timer goes off, which redraws stars
-   90 00:81FC -  -  -  -  	
-   91 00:81FC -  -  -  -  UpdateStars:
-   92 00:81FC CD 2B 82 -  	call		UpdateStar1
-   93 00:81FF CD 48 82 -  	call		UpdateStar2
-   94 00:8202 CD 65 82 -  	call		UpdateStar3
-   95 00:8205 CD 82 82 -  	call		UpdateStar4
-   96 00:8208 CD 9F 82 -  	call		UpdateStar5
-   97 00:820B CD BC 82 -  	call		UpdateStar6
-   98 00:820E CD E3 82 -  	call		Reset_Y
-   99 00:8211 C9 -  -  -  	ret
-  100 00:8212 -  -  -  -  	
-  101 00:8212 -  -  -  -  setblue:
-  102 00:8212 FD 21 18 18 	ld		iy, 1818h
-  103 00:8216 C9 -  -  -  	ret
-  104 00:8217 -  -  -  -  
-  105 00:8217 -  -  -  -  setwhite:
-  106 00:8217 FD 21 FF FF 	ld		iy, $ffff
-  107 00:821B C9 -  -  -  	ret
-  108 00:821C -  -  -  -  	
-  109 00:821C -  -  -  -  setred:
-  110 00:821C FD 21 80 80 	ld		iy, 8080h
-  111 00:8220 C9 -  -  -  	ret
-  112 00:8221 -  -  -  -  
-  113 00:8221 -  -  -  -  setblack:
-  114 00:8221 FD 21 00 00 	ld		iy, 0000h
-  115 00:8225 C9 -  -  -  	ret
-  116 00:8226 -  -  -  -  	
-  117 00:8226 -  -  -  -  setgreen:
-  118 00:8226 FD 21 25 25 	ld		iy, 2525h
-  119 00:822A C9 -  -  -  	ret
-  120 00:822B -  -  -  -  	
-  121 00:822B -  -  -  -  ;################ UpdateStarX: Increments position of star, redraws
-  122 00:822B -  -  -  -  	
-  123 00:822B -  -  -  -  UpdateStar1:
-  124 00:822B ED 5B 89 86 	ld		de, (star1y)		
-  125 00:822F 21 44 00 -  	ld		hl, 68
-  126 00:8232 13 -  -  -  	inc 	de
-  127 00:8233 ED 53 89 86 	ld		(star1y), de
-  128 00:8237 CD 12 82 -  	call	setblue
-  129 00:823A CD 41 83 -  	call 	Color_Pixel
-  130 00:823D -  -  -  -  	
-  131 00:823D ED 5B 89 86 	ld		de, (star1y)
-  132 00:8241 21 44 00 -  	ld		hl, 68
-  133 00:8244 CD D9 82 -  	call	FillinStar
-  134 00:8247 -  -  -  -  
-  135 00:8247 C9 -  -  -  	ret
-  136 00:8248 -  -  -  -  	
-  137 00:8248 -  -  -  -  UpdateStar2:
-  138 00:8248 ED 5B 89 86 	ld		de, (star2y)		
-  139 00:824C 21 70 00 -  	ld		hl, 112				
-  140 00:824F 13 -  -  -  	inc 	de
-  141 00:8250 ED 53 89 86 	ld		(star2y), de
-  142 00:8254 CD 17 82 -  	call	setwhite
-  143 00:8257 CD 41 83 -  	call 	Color_Pixel
-  144 00:825A -  -  -  -  	
-  145 00:825A ED 5B 89 86 	ld		de, (star2y)
-  146 00:825E 21 70 00 -  	ld		hl, 112
-  147 00:8261 CD D9 82 -  	call	FillinStar
-  148 00:8264 C9 -  -  -  	ret
-  149 00:8265 -  -  -  -  	
-  150 00:8265 -  -  -  -  UpdateStar3:
-  151 00:8265 ED 5B 89 86 	ld		de, (star3y)		
-  152 00:8269 21 92 00 -  	ld		hl, 146
-  153 00:826C 13 -  -  -  	inc 	de
-  154 00:826D ED 53 89 86 	ld		(star3y), de
-  155 00:8271 CD 1C 82 -  	call	setred
-  156 00:8274 CD 41 83 -  	call 	Color_Pixel
-  157 00:8277 -  -  -  -  	
-  158 00:8277 ED 5B 89 86 	ld		de, (star3y)
-  159 00:827B 21 92 00 -  	ld		hl, 146
-  160 00:827E CD D9 82 -  	call	FillinStar
-  161 00:8281 C9 -  -  -  	ret
-  162 00:8282 -  -  -  -  	
-  163 00:8282 -  -  -  -  UpdateStar4:
-  164 00:8282 ED 5B 89 86 	ld		de, (star4y)		
-  165 00:8286 21 B4 00 -  	ld		hl, 180
-  166 00:8289 13 -  -  -  	inc 	de
-  167 00:828A ED 53 89 86 	ld		(star4y), de
-  168 00:828E CD 12 82 -  	call	setblue
-  169 00:8291 CD 41 83 -  	call 	Color_Pixel
-  170 00:8294 -  -  -  -  	
-  171 00:8294 ED 5B 89 86 	ld		de, (star4y)
-  172 00:8298 21 B4 00 -  	ld		hl, 180
-  173 00:829B CD D9 82 -  	call	FillinStar
-  174 00:829E C9 -  -  -  	ret
-  175 00:829F -  -  -  -  	
-  176 00:829F -  -  -  -  UpdateStar5:
-  177 00:829F ED 5B 89 86 	ld		de, (star5y)		
-  178 00:82A3 21 D6 00 -  	ld		hl, 214
-  179 00:82A6 13 -  -  -  	inc 	de
-  180 00:82A7 ED 53 89 86 	ld		(star5y), de
-  181 00:82AB CD 26 82 -  	call	setgreen
-  182 00:82AE CD 41 83 -  	call 	Color_Pixel
-  183 00:82B1 -  -  -  -  	
-  184 00:82B1 ED 5B 89 86 	ld		de, (star5y)
-  185 00:82B5 21 D6 00 -  	ld		hl, 214
-  186 00:82B8 CD D9 82 -  	call	FillinStar
-  187 00:82BB C9 -  -  -  	ret
-  188 00:82BC -  -  -  -  	
-  189 00:82BC -  -  -  -  UpdateStar6:
-  190 00:82BC ED 5B 89 86 	ld		de, (star6y)		
-  191 00:82C0 21 F8 00 -  	ld		hl, 248
-  192 00:82C3 13 -  -  -  	inc 	de
-  193 00:82C4 ED 53 89 86 	ld		(star6y), de
-  194 00:82C8 CD 17 82 -  	call	setwhite
-  195 00:82CB CD 41 83 -  	call 	Color_Pixel
-  196 00:82CE -  -  -  -  	
-  197 00:82CE ED 5B 89 86 	ld		de, (star6y)
-  198 00:82D2 21 F8 00 -  	ld		hl, 248
-  199 00:82D5 CD D9 82 -  	call	FillinStar
-  200 00:82D8 C9 -  -  -  	ret
-  201 00:82D9 -  -  -  -  	
-  202 00:82D9 -  -  -  -  FillinStar:
-  203 00:82D9 1B -  -  -  	dec 	de
-  204 00:82DA 1B -  -  -  	dec		de
-  205 00:82DB FD 21 00 00 	ld		iy, 0000h
-  206 00:82DF CD 41 83 -  	call 	Color_Pixel
-  207 00:82E2 C9 -  -  -  	ret 
-  208 00:82E3 -  -  -  -  	
-  209 00:82E3 -  -  -  -  Reset_Y:
-  210 00:82E3 DD 21 00 00 	ld		ix, 0
-  211 00:82E7 ED 5B 89 86 	ld		de, (star1y)
-  212 00:82EB 7B -  -  -  	ld		a, e
-  213 00:82EC FE F1 -  -  	cp		241
-  214 00:82EE 28 2E -  -  	jr		z, Reset_Y1
-  215 00:82F0 ED 5B 89 86 	ld		de, (star2y)
-  216 00:82F4 7B -  -  -  	ld		a, e
-  217 00:82F5 FE F1 -  -  	cp		241
-  218 00:82F7 28 2A -  -  	jr		z, Reset_Y2
-  219 00:82F9 ED 5B 89 86 	ld		de, (star3y)
-  220 00:82FD 7B -  -  -  	ld		a, e
-  221 00:82FE FE F1 -  -  	cp		241
-  222 00:8300 28 26 -  -  	jr		z, Reset_Y3
-  223 00:8302 ED 5B 89 86 	ld		de, (star4y)
-  224 00:8306 7B -  -  -  	ld		a, e
-  225 00:8307 FE F1 -  -  	cp		241
-  226 00:8309 28 22 -  -  	jr		z, Reset_Y4
-  227 00:830B ED 5B 89 86 	ld		de, (star5y)
-  228 00:830F 7B -  -  -  	ld		a, e
-  229 00:8310 FE F1 -  -  	cp		241
-  230 00:8312 28 1E -  -  	jr		z, Reset_Y5
-  231 00:8314 ED 5B 89 86 	ld		de, (star6y)
-  232 00:8318 7B -  -  -  	ld		a, e
-  233 00:8319 FE F1 -  -  	cp		241
-  234 00:831B 28 1A -  -  	jr		z, Reset_Y6
-  235 00:831D C9 -  -  -  	ret
-  236 00:831E -  -  -  -  	
-  237 00:831E -  -  -  -  Reset_Y1:
-  238 00:831E DD 22 89 86 	ld		(star1y), ix
-  239 00:8322 C9 -  -  -  	ret
-  240 00:8323 -  -  -  -  Reset_Y2:
-  241 00:8323 DD 22 89 86 	ld		(star2y), ix
-  242 00:8327 C9 -  -  -  	ret
-  243 00:8328 -  -  -  -  Reset_Y3:
-  244 00:8328 DD 22 89 86 	ld		(star3y), ix
-  245 00:832C C9 -  -  -  	ret
-  246 00:832D -  -  -  -  Reset_Y4:
-  247 00:832D DD 22 89 86 	ld		(star4y), ix
-  248 00:8331 C9 -  -  -  	ret
-  249 00:8332 -  -  -  -  Reset_Y5:
-  250 00:8332 DD 22 89 86 	ld		(star5y), ix
-  251 00:8336 C9 -  -  -  	ret
-  252 00:8337 -  -  -  -  Reset_Y6:
-  253 00:8337 DD 22 89 86 	ld		(star6y), ix
-  254 00:833B C9 -  -  -  	ret
-  255 00:833C -  -  -  -  	
-  256 00:833C -  -  -  -  Draw_1Bit:
-  257 00:833C C9 -  -  -  	ret
-  258 00:833D -  -  -  -  	
-  259 00:833D -  -  -  -  Draw_8Bit:
-  260 00:833D C9 -  -  -  	ret
-  261 00:833E -  -  -  -  	
-  262 00:833E -  -  -  -  Color_Line:
-  263 00:833E C9 -  -  -  	ret
-  264 00:833F -  -  -  -  	
-  265 00:833F -  -  -  -  Color_Rectangle:
-  266 00:833F C9 -  -  -  	ret
-  267 00:8340 -  -  -  -  	
-  268 00:8340 -  -  -  -  RandInt:
-  269 00:8340 C9 -  -  -  	ret
-  270 00:8341 -  -  -  -  
-  271 00:8341 -  -  -  -  ; Color_Pixel: takes in hl as x, de for y, iy as 8 bit color
-  272 00:8341 -  -  -  -  Color_Pixel:
-  273 00:8341 -  -  -  -  		; *************
-  274 00:8341 -  -  -  -  		;  Set X coord
-  275 00:8341 -  -  -  -  		; *************
-  276 00:8341 3E 21 -  -  		ld      a, $21          ; set write X coordinate
-  277 00:8343 -  -  -  -          ; we don't change value of HL since it already contains the X value!
-  278 00:8343 CD 56 86 -          call    Write_Display_Control
-  279 00:8346 -  -  -  -  		
-  280 00:8346 -  -  -  -  		; *************
-  281 00:8346 -  -  -  -  		;  Set Y cord
-  282 00:8346 -  -  -  -  		; *************
-  283 00:8346 26 00 -  -  		ld		h, 0			; y coord will ALWAYS be < 256 so no need for first bit
-  284 00:8348 6B -  -  -  		ld		l, e
-  285 00:8349 3E 20 -  -          ld      a,$20           ; set write Y coordinate
-  286 00:834B CD 56 86 -          call    Write_Display_Control
-  287 00:834E -  -  -  -          
-  288 00:834E 3E 22 -  -          ld      a,$22
-  289 00:8350 D3 10 -  -          out     ($10),a
-  290 00:8352 D3 10 -  -          out     ($10),a
-  291 00:8354 -  -  -  -  
-  292 00:8354 01 01 00 -          ld      bc, 1
-  293 00:8357 FD 5D -  -  		ld		e, IYL
-  294 00:8359 CD 7C 86 -  		call	screen_write_loop
-  295 00:835C -  -  -  -  		
-  296 00:835C C9 -  -  -  		ret
+    1 00:8156 -  -  -  -  ;############## Galamar by Ryan Baldwin - graphics routines
+    2 00:8156 -  -  -  -  		
+    3 00:8156 -  -  -  -  ;############## DrawPlayerStart: Draw our player to midway starting point	
+    4 00:8156 -  -  -  -  DrawPlayerStart:	
+    5 00:8156 -  -  -  -  	;xor 	a
+    6 00:8156 -  -  -  -  	;ld 		l,240-16				; middle of bottom screen y
+    7 00:8156 -  -  -  -  	;ld 		h,0
+    8 00:8156 -  -  -  -  	;ld 		(playery),hl
+    9 00:8156 -  -  -  -  	;ld 		l,(320-15)/2			; middle of bottom screen x
+   10 00:8156 -  -  -  -  	;ld 		h,0
+   11 00:8156 -  -  -  -  	;ld 		(playerx),hl
+   12 00:8156 -  -  -  -  	
+   13 00:8156 -  -  -  -  	;ld 		ix,img_player		; load in image data
+   14 00:8156 -  -  -  -  	;ld 		hl,(playery)			; load in y component
+   15 00:8156 -  -  -  -  	;ld 		de,(playerx)			; load in x component
+   16 00:8156 -  -  -  -  	;call 	    Draw_8Bit	
+   17 00:8156 -  -  -  -  	
+   18 00:8156 26 00 -  -  	ld		h, 0
+   19 00:8158 2E 90 -  -  	ld		l, 144
+   20 00:815A 22 72 87 -  	ld		(playerx), hl           ; store our player x value into the var
+   21 00:815D 06 7A -  -  	ld		b, 122
+   22 00:815F 2E E0 -  -  	ld		l, 240-16
+   23 00:8161 22 72 87 -  	ld      (playery), hl           ; store our player y value into the var
+   24 00:8164 11 3C 83 -  	ld      de, img_player
+   25 00:8167 CD 82 86 -  	call    Draw_Sprite_Packed
+   26 00:816A C9 -  -  -  	ret
+   27 00:816B -  -  -  -  	
+   28 00:816B -  -  -  -  ;############## DrawLevel: Draws the world and the siding
+   29 00:816B -  -  -  -  DrawLevel:
+   30 00:816B -  -  -  -  
+   31 00:816B 11 10 01 -  	ld		de, 272
+   32 00:816E 01 00 00 -  	ld		bc,	0
+   33 00:8171 21 10 01 -  	ld		hl,	272
+   34 00:8174 DD 21 F0 00 	ld		ix,	240
+   35 00:8178 FD 21 74 BD 	ld		iy, $bd74
+   36 00:817C CD 38 83 -  	call	Color_Line
+   37 00:817F 11 2E 00 -  	ld		de, 46
+   38 00:8182 01 00 00 -  	ld		bc, 0
+   39 00:8185 21 2E 00 -  	ld		hl,	46
+   40 00:8188 DD 21 F0 00 	ld		ix, 240
+   41 00:818C CD 38 83 -  	call	Color_Line
+   42 00:818F 11 00 00 -  	ld		de, 0
+   43 00:8192 21 00 00 -  	ld		hl, 0
+   44 00:8195 DD 21 43 85 	ld 		ix, img_logo
+   45 00:8199 CD 36 83 -  	call	Draw_1Bit
+   46 00:819C C9 -  -  -  	ret
+   47 00:819D -  -  -  -  	
+   48 00:819D -  -  -  -  ;############## DrawRandomRec: Draws a randomly generated rectangle, destroys all registers
+   49 00:819D -  -  -  -  DrawRandomRec:
+   50 00:819D 06 04 -  -  	ld 		b,4		; random location
+   51 00:819F CD 3A 83 -  	call 	RandInt
+   52 00:81A2 6F -  -  -  	ld 		l,a
+   53 00:81A3 CD 3A 83 -  	call 	RandInt
+   54 00:81A6 67 -  -  -  	ld 		h,a
+   55 00:81A7 06 04 -  -  	ld 		b, 4		; 255 color bound (inclusive)
+   56 00:81A9 CD 3A 83 -  	call 	RandInt
+   57 00:81AC 4F -  -  -  	ld 		c, a
+   58 00:81AD CD 3A 83 -  	call 	RandInt
+   59 00:81B0 47 -  -  -  	ld 		b, a	
+   60 00:81B1 CD 39 83 -      call 	Color_Rectangle
+   61 00:81B4 C9 -  -  -  	ret	
+   62 00:81B5 -  -  -  -  	
+   63 00:81B5 -  -  -  -  DrawPlayer:
+   64 00:81B5 DD 21 3C 83 	ld 		ix,img_player			; load in image data
+   65 00:81B9 2A 72 87 -  	ld 		hl,(playery)			; load in y component
+   66 00:81BC ED 5B 72 87 	ld 		de,(playerx)			; load in x component
+   67 00:81C0 CD 37 83 -  	call	Draw_8Bit
+   68 00:81C3 C9 -  -  -  	ret
+   69 00:81C4 -  -  -  -  	
+   70 00:81C4 -  -  -  -  DeletePlayerLeft:
+   71 00:81C4 2A 72 87 -  	ld 		hl, (playerx)
+   72 00:81C7 ED 5B 72 87 	ld		de, (playery)
+   73 00:81CB FD 21 00 00 	ld 		iy, $00
+   74 00:81CF 2B -  -  -  	dec 	hl
+   75 00:81D0 -  -  -  -  DeleteLeftLoop:
+   76 00:81D0 13 -  -  -  	inc 	de
+   77 00:81D1 CD 3B 83 -  	call 	Color_Pixel
+   78 00:81D4 7B -  -  -  	ld		a,e
+   79 00:81D5 FE F0 -  -  	cp		240
+   80 00:81D7 C2 D0 81 -  	jp		nz, DeleteLeftLoop
+   81 00:81DA C9 -  -  -  	ret
+   82 00:81DB -  -  -  -  
+   83 00:81DB -  -  -  -  DeletePlayerRight:
+   84 00:81DB 2A 72 87 -  	ld 		hl, (playerx)
+   85 00:81DE ED 5B 72 87 	ld		de, (playery)
+   86 00:81E2 FD 21 00 00 	ld 		iy, $00
+   87 00:81E6 06 00 -  -  	ld 		b, 0		
+   88 00:81E8 0E 0F -  -  	ld		c, 15
+   89 00:81EA 09 -  -  -  	add		hl, bc
+   90 00:81EB -  -  -  -  DeleteRightLoop:
+   91 00:81EB 13 -  -  -  	inc 	de
+   92 00:81EC CD 3B 83 -  	call 	Color_Pixel
+   93 00:81EF 7B -  -  -  	ld		a,e
+   94 00:81F0 FE F0 -  -  	cp		240
+   95 00:81F2 C2 EB 81 -  	jp		nz, DeleteRightLoop
+   96 00:81F5 C9 -  -  -  	ret	
+   97 00:81F6 -  -  -  -  	
+   98 00:81F6 -  -  -  -  ;################ UpdateStars: Jump location called from main after timer goes off, which redraws stars
+   99 00:81F6 -  -  -  -  	
+  100 00:81F6 -  -  -  -  UpdateStars:
+  101 00:81F6 CD 25 82 -  	call		UpdateStar1
+  102 00:81F9 CD 42 82 -  	call		UpdateStar2
+  103 00:81FC CD 5F 82 -  	call		UpdateStar3
+  104 00:81FF CD 7C 82 -  	call		UpdateStar4
+  105 00:8202 CD 99 82 -  	call		UpdateStar5
+  106 00:8205 CD B6 82 -  	call		UpdateStar6
+  107 00:8208 CD DD 82 -  	call		Reset_Y
+  108 00:820B C9 -  -  -  	ret
+  109 00:820C -  -  -  -  	
+  110 00:820C -  -  -  -  setblue:
+  111 00:820C FD 21 18 18 	ld		iy, 1818h
+  112 00:8210 C9 -  -  -  	ret
+  113 00:8211 -  -  -  -  
+  114 00:8211 -  -  -  -  setwhite:
+  115 00:8211 FD 21 FF FF 	ld		iy, $ffff
+  116 00:8215 C9 -  -  -  	ret
+  117 00:8216 -  -  -  -  	
+  118 00:8216 -  -  -  -  setred:
+  119 00:8216 FD 21 80 80 	ld		iy, 8080h
+  120 00:821A C9 -  -  -  	ret
+  121 00:821B -  -  -  -  
+  122 00:821B -  -  -  -  setblack:
+  123 00:821B FD 21 00 00 	ld		iy, 0000h
+  124 00:821F C9 -  -  -  	ret
+  125 00:8220 -  -  -  -  	
+  126 00:8220 -  -  -  -  setgreen:
+  127 00:8220 FD 21 25 25 	ld		iy, 2525h
+  128 00:8224 C9 -  -  -  	ret
+  129 00:8225 -  -  -  -  	
+  130 00:8225 -  -  -  -  ;################ UpdateStarX: Increments position of star, redraws
+  131 00:8225 -  -  -  -  	
+  132 00:8225 -  -  -  -  UpdateStar1:
+  133 00:8225 ED 5B 72 87 	ld		de, (star1y)		
+  134 00:8229 21 44 00 -  	ld		hl, 68
+  135 00:822C 13 -  -  -  	inc 	de
+  136 00:822D ED 53 72 87 	ld		(star1y), de
+  137 00:8231 CD 0C 82 -  	call	setblue
+  138 00:8234 CD 3B 83 -  	call 	Color_Pixel
+  139 00:8237 -  -  -  -  	
+  140 00:8237 ED 5B 72 87 	ld		de, (star1y)
+  141 00:823B 21 44 00 -  	ld		hl, 68
+  142 00:823E CD D3 82 -  	call	FillinStar
+  143 00:8241 -  -  -  -  
+  144 00:8241 C9 -  -  -  	ret
+  145 00:8242 -  -  -  -  	
+  146 00:8242 -  -  -  -  UpdateStar2:
+  147 00:8242 ED 5B 72 87 	ld		de, (star2y)		
+  148 00:8246 21 70 00 -  	ld		hl, 112				
+  149 00:8249 13 -  -  -  	inc 	de
+  150 00:824A ED 53 72 87 	ld		(star2y), de
+  151 00:824E CD 11 82 -  	call	setwhite
+  152 00:8251 CD 3B 83 -  	call 	Color_Pixel
+  153 00:8254 -  -  -  -  	
+  154 00:8254 ED 5B 72 87 	ld		de, (star2y)
+  155 00:8258 21 70 00 -  	ld		hl, 112
+  156 00:825B CD D3 82 -  	call	FillinStar
+  157 00:825E C9 -  -  -  	ret
+  158 00:825F -  -  -  -  	
+  159 00:825F -  -  -  -  UpdateStar3:
+  160 00:825F ED 5B 72 87 	ld		de, (star3y)		
+  161 00:8263 21 92 00 -  	ld		hl, 146
+  162 00:8266 13 -  -  -  	inc 	de
+  163 00:8267 ED 53 72 87 	ld		(star3y), de
+  164 00:826B CD 16 82 -  	call	setred
+  165 00:826E CD 3B 83 -  	call 	Color_Pixel
+  166 00:8271 -  -  -  -  	
+  167 00:8271 ED 5B 72 87 	ld		de, (star3y)
+  168 00:8275 21 92 00 -  	ld		hl, 146
+  169 00:8278 CD D3 82 -  	call	FillinStar
+  170 00:827B C9 -  -  -  	ret
+  171 00:827C -  -  -  -  	
+  172 00:827C -  -  -  -  UpdateStar4:
+  173 00:827C ED 5B 72 87 	ld		de, (star4y)		
+  174 00:8280 21 B4 00 -  	ld		hl, 180
+  175 00:8283 13 -  -  -  	inc 	de
+  176 00:8284 ED 53 72 87 	ld		(star4y), de
+  177 00:8288 CD 0C 82 -  	call	setblue
+  178 00:828B CD 3B 83 -  	call 	Color_Pixel
+  179 00:828E -  -  -  -  	
+  180 00:828E ED 5B 72 87 	ld		de, (star4y)
+  181 00:8292 21 B4 00 -  	ld		hl, 180
+  182 00:8295 CD D3 82 -  	call	FillinStar
+  183 00:8298 C9 -  -  -  	ret
+  184 00:8299 -  -  -  -  	
+  185 00:8299 -  -  -  -  UpdateStar5:
+  186 00:8299 ED 5B 72 87 	ld		de, (star5y)		
+  187 00:829D 21 D6 00 -  	ld		hl, 214
+  188 00:82A0 13 -  -  -  	inc 	de
+  189 00:82A1 ED 53 72 87 	ld		(star5y), de
+  190 00:82A5 CD 20 82 -  	call	setgreen
+  191 00:82A8 CD 3B 83 -  	call 	Color_Pixel
+  192 00:82AB -  -  -  -  	
+  193 00:82AB ED 5B 72 87 	ld		de, (star5y)
+  194 00:82AF 21 D6 00 -  	ld		hl, 214
+  195 00:82B2 CD D3 82 -  	call	FillinStar
+  196 00:82B5 C9 -  -  -  	ret
+  197 00:82B6 -  -  -  -  	
+  198 00:82B6 -  -  -  -  UpdateStar6:
+  199 00:82B6 ED 5B 72 87 	ld		de, (star6y)		
+  200 00:82BA 21 F8 00 -  	ld		hl, 248
+  201 00:82BD 13 -  -  -  	inc 	de
+  202 00:82BE ED 53 72 87 	ld		(star6y), de
+  203 00:82C2 CD 11 82 -  	call	setwhite
+  204 00:82C5 CD 3B 83 -  	call 	Color_Pixel
+  205 00:82C8 -  -  -  -  	
+  206 00:82C8 ED 5B 72 87 	ld		de, (star6y)
+  207 00:82CC 21 F8 00 -  	ld		hl, 248
+  208 00:82CF CD D3 82 -  	call	FillinStar
+  209 00:82D2 C9 -  -  -  	ret
+  210 00:82D3 -  -  -  -  	
+  211 00:82D3 -  -  -  -  FillinStar:
+  212 00:82D3 1B -  -  -  	dec 	de
+  213 00:82D4 1B -  -  -  	dec		de
+  214 00:82D5 FD 21 00 00 	ld		iy, 0000h
+  215 00:82D9 CD 3B 83 -  	call 	Color_Pixel
+  216 00:82DC C9 -  -  -  	ret 
+  217 00:82DD -  -  -  -  	
+  218 00:82DD -  -  -  -  Reset_Y:
+  219 00:82DD DD 21 00 00 	ld		ix, 0
+  220 00:82E1 ED 5B 72 87 	ld		de, (star1y)
+  221 00:82E5 7B -  -  -  	ld		a, e
+  222 00:82E6 FE F1 -  -  	cp		241
+  223 00:82E8 28 2E -  -  	jr		z, Reset_Y1
+  224 00:82EA ED 5B 72 87 	ld		de, (star2y)
+  225 00:82EE 7B -  -  -  	ld		a, e
+  226 00:82EF FE F1 -  -  	cp		241
+  227 00:82F1 28 2A -  -  	jr		z, Reset_Y2
+  228 00:82F3 ED 5B 72 87 	ld		de, (star3y)
+  229 00:82F7 7B -  -  -  	ld		a, e
+  230 00:82F8 FE F1 -  -  	cp		241
+  231 00:82FA 28 26 -  -  	jr		z, Reset_Y3
+  232 00:82FC ED 5B 72 87 	ld		de, (star4y)
+  233 00:8300 7B -  -  -  	ld		a, e
+  234 00:8301 FE F1 -  -  	cp		241
+  235 00:8303 28 22 -  -  	jr		z, Reset_Y4
+  236 00:8305 ED 5B 72 87 	ld		de, (star5y)
+  237 00:8309 7B -  -  -  	ld		a, e
+  238 00:830A FE F1 -  -  	cp		241
+  239 00:830C 28 1E -  -  	jr		z, Reset_Y5
+  240 00:830E ED 5B 72 87 	ld		de, (star6y)
+  241 00:8312 7B -  -  -  	ld		a, e
+  242 00:8313 FE F1 -  -  	cp		241
+  243 00:8315 28 1A -  -  	jr		z, Reset_Y6
+  244 00:8317 C9 -  -  -  	ret
+  245 00:8318 -  -  -  -  	
+  246 00:8318 -  -  -  -  Reset_Y1:
+  247 00:8318 DD 22 72 87 	ld		(star1y), ix
+  248 00:831C C9 -  -  -  	ret
+  249 00:831D -  -  -  -  Reset_Y2:
+  250 00:831D DD 22 72 87 	ld		(star2y), ix
+  251 00:8321 C9 -  -  -  	ret
+  252 00:8322 -  -  -  -  Reset_Y3:
+  253 00:8322 DD 22 72 87 	ld		(star3y), ix
+  254 00:8326 C9 -  -  -  	ret
+  255 00:8327 -  -  -  -  Reset_Y4:
+  256 00:8327 DD 22 72 87 	ld		(star4y), ix
+  257 00:832B C9 -  -  -  	ret
+  258 00:832C -  -  -  -  Reset_Y5:
+  259 00:832C DD 22 72 87 	ld		(star5y), ix
+  260 00:8330 C9 -  -  -  	ret
+  261 00:8331 -  -  -  -  Reset_Y6:
+  262 00:8331 DD 22 72 87 	ld		(star6y), ix
+  263 00:8335 C9 -  -  -  	ret
+  264 00:8336 -  -  -  -  	
+  265 00:8336 -  -  -  -  Draw_1Bit:
+  266 00:8336 C9 -  -  -  	ret
+  267 00:8337 -  -  -  -  	
+  268 00:8337 -  -  -  -  Draw_8Bit:
+  269 00:8337 C9 -  -  -  	ret
+  270 00:8338 -  -  -  -  	
+  271 00:8338 -  -  -  -  Color_Line:
+  272 00:8338 C9 -  -  -  	ret
+  273 00:8339 -  -  -  -  	
+  274 00:8339 -  -  -  -  Color_Rectangle:
+  275 00:8339 C9 -  -  -  	ret
+  276 00:833A -  -  -  -  	
+  277 00:833A -  -  -  -  RandInt:
+  278 00:833A C9 -  -  -  	ret
+  279 00:833B -  -  -  -  	
+  280 00:833B -  -  -  -  Color_Pixel:
+  281 00:833B C9 -  -  -  	ret
 Listing for file "ti84cse.asm"
-   23 00:835D -  -  -  -  #include "asm\image.i"
+   23 00:833C -  -  -  -  #include "asm\image.i"
 Listing for file "C:\asm\source\galamarcse\asm\image.i"
-    1 00:835D -  -  -  -  Sprite_8Bit_Palette:
-    2 00:835D 00 00 FF FF 
-              18 18 E0 E0 
-              E0 00 -  -  	.db 0d, 0d, $FF, $FF, $18, $18, $E0, $E0, $E0, 0d  ; black, white, blue, red, redblack
-    3 00:8367 -  -  -  -  img_playerold:
-    4 00:8367 5D 83 -  -  	.dw Sprite_8Bit_Palette
-    5 00:8369 0F 10 -  -      .db 15,16
-    6 00:836B 00 00 00 00 
-              00 00 00 01 
-              00 00 00 00 
-              00 00 00 -      .db 0,0,0,0,0,0,0,1,0,0,0,0,0,0,0
-    7 00:837A 00 00 00 00 
-              00 00 00 01 
-              00 00 00 00 
-              00 00 00 -  	.db 0,0,0,0,0,0,0,1,0,0,0,0,0,0,0
-    8 00:8389 00 00 00 00 
-              00 00 00 01 
-              00 00 00 00 
-              00 00 00 -  	.db 0,0,0,0,0,0,0,1,0,0,0,0,0,0,0
-    9 00:8398 00 00 00 00 
-              00 00 01 01 
-              01 00 00 00 
-              00 00 00 -  	.db 0,0,0,0,0,0,1,1,1,0,0,0,0,0,0
-   10 00:83A7 00 00 00 00 
-              00 00 01 01 
-              01 00 00 00 
-              00 00 00 -  	.db 0,0,0,0,0,0,1,1,1,0,0,0,0,0,0
-   11 00:83B6 00 00 00 00 
-              00 00 01 01 
-              01 00 00 00 
-              00 00 00 -  	.db 0,0,0,0,0,0,1,1,1,0,0,0,0,0,0
-   12 00:83C5 00 00 00 03 
-              00 00 01 01 
-              01 00 00 03 
-              00 00 00 -  	.db 0,0,0,3,0,0,1,1,1,0,0,3,0,0,0
-   13 00:83D4 00 00 00 03 
-              00 01 01 01 
-              01 01 00 03 
-              00 00 00 -  	.db 0,0,0,3,0,1,1,1,1,1,0,3,0,0,0
-   14 00:83E3 03 00 00 01 
-              02 01 01 03 
-              01 01 02 01 
-              00 00 03 -  	.db 3,0,0,1,2,1,1,3,1,1,2,1,0,0,3
-   15 00:83F2 03 00 00 02 
-              01 01 03 03 
-              03 01 01 02 
-              00 00 03 -  	.db 3,0,0,2,1,1,3,3,3,1,1,2,0,0,3
-   16 00:8401 01 00 00 01 
-              01 01 03 01 
-              03 01 01 01 
-              00 00 01 -  	.db 1,0,0,1,1,1,3,1,3,1,1,1,0,0,1
-   17 00:8410 01 00 01 01 
-              01 01 01 01 
-              01 01 01 01 
-              01 00 01 -  	.db 1,0,1,1,1,1,1,1,1,1,1,1,1,0,1
-   18 00:841F 01 01 01 01 
-              01 03 01 01 
-              01 03 01 01 
-              01 01 01 -  	.db 1,1,1,1,1,3,1,1,1,3,1,1,1,1,1
-   19 00:842E 01 01 01 00 
-              03 03 01 01 
-              01 03 03 00 
-              01 01 01 -  	.db 1,1,1,0,3,3,1,1,1,3,3,0,1,1,1
-   20 00:843D 01 01 00 00 
-              03 03 00 01 
-              00 03 03 00 
-              00 01 01 -  	.db 1,1,0,0,3,3,0,1,0,3,3,0,0,1,1
-   21 00:844C 01 00 00 00 
-              00 00 00 01 
-              00 00 00 00 
-              00 00 01 -  	.db 1,0,0,0,0,0,0,1,0,0,0,0,0,0,1
-   22 00:845B -  -  -  -  	
-   23 00:845B 00 -  -  -  	.db 0
-   24 00:845C -  -  -  -  	
-   25 00:845C -  -  -  -  img_player:
-   26 00:845C 5D 83 -  -  	.dw Sprite_8Bit_Palette
-   27 00:845E 0F 10 -  -      .db 15,16
-   28 00:8460 00 01 00 00 
+    1 00:833C -  -  -  -  img_player:
+    2 00:833C 10 08 -  -      .db 16,8
+    3 00:833E 00 00 00 00 
               00 00 00 00 
               00 00 00 00 
-              00 01 00 -      .db 0,1,0,0,0,0,0,0,0,0,0,0,0,1,0
-   29 00:846F 00 01 00 00 
+              00 00 FF FF 
               00 00 00 00 
               00 00 00 00 
-              00 01 00 -      .db 0,1,0,0,0,0,0,0,0,0,0,0,0,1,0
-   30 00:847E 00 01 00 00 
+              00 00 00 00 
+              00 00 00 00     .db $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$FF,$FF,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+    4 00:835E 00 00 00 00 
               00 00 00 00 
               00 00 00 00 
-              00 01 00 -      .db 0,1,0,0,0,0,0,0,0,0,0,0,0,1,0
-   31 00:848D 01 01 00 00 
-              00 00 00 01 
+              00 00 FF FF 
               00 00 00 00 
-              00 01 01 -      .db 1,1,0,0,0,0,0,1,0,0,0,0,0,1,1
-   32 00:849C 01 01 00 00 
-              00 00 00 03 
               00 00 00 00 
-              00 01 01 -      .db 1,1,0,0,0,0,0,3,0,0,0,0,0,1,1
-   33 00:84AB 01 01 00 00 
-              00 00 00 01 
               00 00 00 00 
-              00 01 01 -      .db 1,1,0,0,0,0,0,1,0,0,0,0,0,1,1
-   34 00:84BA 01 01 00 00 
-              00 00 00 01 
+              00 00 00 00     .db $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$FF,$FF,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+    5 00:837E 00 00 00 00 
               00 00 00 00 
-              00 01 01 -      .db 1,1,0,0,0,0,0,1,0,0,0,0,0,1,1
-   35 00:84C9 01 01 00 00 
-              01 00 00 01 
-              00 00 01 00 
-              00 01 01 -      .db 1,1,0,0,1,0,0,1,0,0,1,0,0,1,1
-   36 00:84D8 01 01 00 00 
-              01 00 00 01 
-              00 00 01 00 
-              00 01 01 -      .db 1,1,0,0,1,0,0,1,0,0,1,0,0,1,1
-   37 00:84E7 01 01 03 02 
-              01 01 01 00 
-              01 00 01 02 
-              03 01 01 -      .db 1,1,3,2,1,1,1,0,1,0,1,2,3,1,1
-   38 00:84F6 01 01 03 02 
-              01 01 01 00 
-              01 01 01 02 
-              03 01 01 -      .db 1,1,3,2,1,1,1,0,1,1,1,2,3,1,1
-   39 00:8505 01 01 03 02 
-              01 01 03 00 
-              03 01 01 02 
-              03 01 01 -      .db 1,1,3,2,1,1,3,0,3,1,1,2,3,1,1
-   40 00:8514 01 01 00 00 
-              01 01 01 01 
-              01 01 01 00 
-              00 01 01 -      .db 1,1,0,0,1,1,1,1,1,1,1,0,0,1,1
-   41 00:8523 01 01 00 00 
-              01 01 00 00 
-              00 01 01 00 
-              00 01 01 -      .db 1,1,0,0,1,1,0,0,0,1,1,0,0,1,1
-   42 00:8532 01 01 00 00 
-              00 01 03 00 
-              03 01 00 00 
-              00 01 01 -      .db 1,1,0,0,0,1,3,0,3,1,0,0,0,1,1
-   43 00:8541 01 00 00 00 
-              00 01 01 01 
-              01 01 00 00 
-              00 00 01 -      .db 1,0,0,0,0,1,1,1,1,1,0,0,0,0,1
-   44 00:8550 -  -  -  -  	
-   45 00:8550 00 -  -  -  	.db 0
-   46 00:8551 -  -  -  -  	
-   47 00:8551 -  -  -  -  LogoPalette:
-   48 00:8551 FF DD -  -  .db $FF, $DD
-   49 00:8553 00 00 -  -  .db $00, $00
-   50 00:8555 -  -  -  -  
-   51 00:8555 -  -  -  -  
-   52 00:8555 -  -  -  -  img_logo:
-   53 00:8555 51 85 -  -  	.dw LogoPalette
-   54 00:8557 2D DC -  -  	.db 45, 220
-   55 00:8559 -  -  -  -  	;.incbmp "../assets/logo.png"
-   56 00:8559 -  -  -  -  	
-   57 00:8559 -  -  -  -  pauselogo:
-   58 00:8559 51 85 -  -  	.dw LogoPalette
-   59 00:855B 64 1E -  -  	.db	100, 30
-   60 00:855D -  -  -  -  	;.incbmp "../assets/paused.png"
+              00 00 00 00 
+              00 00 FF FF 
+              00 00 00 00 
+              00 00 00 00 
+              00 00 00 00 
+              00 00 00 00     .db $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$FF,$FF,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+    6 00:839E 00 00 00 00 
+              00 00 00 00 
+              00 00 00 00 
+              FF FF FF FF 
+              FF FF 00 00 
+              00 00 00 00 
+              00 00 00 00 
+              00 00 00 00     .db $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$FF,$FF,$FF,$FF,$FF,$FF,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+    7 00:83BE 00 00 00 00 
+              00 00 00 00 
+              00 00 00 00 
+              FF FF FF FF 
+              FF FF 00 00 
+              00 00 00 00 
+              00 00 00 00 
+              00 00 00 00     .db $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$FF,$FF,$FF,$FF,$FF,$FF,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+    8 00:83DE 00 00 00 00 
+              00 00 00 00 
+              00 00 00 00 
+              FF FF FF FF 
+              FF FF 00 00 
+              00 00 00 00 
+              00 00 00 00 
+              00 00 00 00     .db $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$FF,$FF,$FF,$FF,$FF,$FF,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
+    9 00:83FE 00 00 00 00 
+              00 00 E0 E0 
+              00 00 00 00 
+              FF FF FF FF 
+              FF FF 00 00 
+              00 00 E0 E0 
+              00 00 00 00 
+              00 00 00 00 	.db $00,$00,$00,$00,$00,$00,$E0,$E0,$00,$00,$00,$00,$FF,$FF,$FF,$FF,$FF,$FF,$00,$00,$00,$00,$E0,$E0,$00,$00,$00,$00,$00,$00,$00,$00
+   10 00:841E 00 00 00 00 
+              00 00 E0 E0 
+              00 00 FF FF 
+              FF FF FF FF 
+              FF FF FF FF 
+              00 00 E0 E0 
+              00 00 00 00 
+              00 00 00 00 	.db $00,$00,$00,$00,$00,$00,$E0,$E0,$00,$00,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$00,$00,$E0,$E0,$00,$00,$00,$00,$00,$00,$00,$00
+   11 00:843E E0 E0 00 00 
+              00 00 FF FF 
+              18 18 FF FF 
+              FF FF E0 E0 
+              FF FF FF FF 
+              18 18 FF FF 
+              00 00 00 00 
+              E0 E0 00 00 	.db $E0,$E0,$00,$00,$00,$00,$FF,$FF,$18,$18,$FF,$FF,$FF,$FF,$E0,$E0,$FF,$FF,$FF,$FF,$18,$18,$FF,$FF,$00,$00,$00,$00,$E0,$E0,$00,$00
+   12 00:845E E0 E0 00 00 
+              00 00 18 18 
+              FF FF FF FF 
+              E0 E0 E0 E0 
+              E0 E0 FF FF 
+              FF FF 18 18 
+              00 00 00 00 
+              E0 E0 00 00 	.db $E0,$E0,$00,$00,$00,$00,$18,$18,$FF,$FF,$FF,$FF,$E0,$E0,$E0,$E0,$E0,$E0,$FF,$FF,$FF,$FF,$18,$18,$00,$00,$00,$00,$E0,$E0,$00,$00
+   13 00:847E FF FF 00 00 
+              00 00 FF FF 
+              FF FF FF FF 
+              E0 E0 FF FF 
+              E0 E0 FF FF 
+              FF FF FF FF 
+              00 00 00 00 
+              FF FF 00 00 	.db $FF,$FF,$00,$00,$00,$00,$FF,$FF,$FF,$FF,$FF,$FF,$E0,$E0,$FF,$FF,$E0,$E0,$FF,$FF,$FF,$FF,$FF,$FF,$00,$00,$00,$00,$FF,$FF,$00,$00
+   14 00:849E FF FF 00 00 
+              FF FF FF FF 
+              FF FF FF FF 
+              FF FF FF FF 
+              FF FF FF FF 
+              FF FF FF FF 
+              FF FF 00 00 
+              FF FF 00 00 	.db $FF,$FF,$00,$00,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$00,$00,$FF,$FF,$00,$00
+   15 00:84BE FF FF FF FF 
+              FF FF FF FF 
+              FF FF E0 E0 
+              FF FF FF FF 
+              FF FF E0 E0 
+              FF FF FF FF 
+              FF FF FF FF 
+              FF FF 00 00 	.db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$E0,$E0,$FF,$FF,$FF,$FF,$FF,$FF,$E0,$E0,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$00,$00
+   16 00:84DE FF FF FF FF 
+              FF FF 00 00 
+              E0 E0 E0 E0 
+              FF FF FF FF 
+              FF FF E0 E0 
+              E0 E0 00 00 
+              FF FF FF FF 
+              FF FF 00 00 	.db $FF,$FF,$FF,$FF,$FF,$FF,$00,$00,$E0,$E0,$E0,$E0,$FF,$FF,$FF,$FF,$FF,$FF,$E0,$E0,$E0,$E0,$00,$00,$FF,$FF,$FF,$FF,$FF,$FF,$00,$00
+   17 00:84FE FF FF FF FF 
+              00 00 00 00 
+              E0 E0 E0 E0 
+              00 00 FF FF 
+              00 00 E0 E0 
+              E0 E0 00 00 
+              00 00 FF FF 
+              FF FF 00 00 	.db $FF,$FF,$FF,$FF,$00,$00,$00,$00,$E0,$E0,$E0,$E0,$00,$00,$FF,$FF,$00,$00,$E0,$E0,$E0,$E0,$00,$00,$00,$00,$FF,$FF,$FF,$FF,$00,$00
+   18 00:851E FF FF 00 00 
+              00 00 00 00 
+              00 00 00 00 
+              00 00 FF FF 
+              00 00 00 00 
+              00 00 00 00 
+              00 00 00 00 
+              FF FF 00 00 	.db $FF,$FF,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$FF,$FF,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$FF,$FF,$00,$00
+   19 00:853E -  -  -  -  	
+   20 00:853E 00 -  -  -  	.db 0
+   21 00:853F -  -  -  -  
+   22 00:853F -  -  -  -  	
+   23 00:853F -  -  -  -  LogoPalette:
+   24 00:853F FF DD -  -  .db $FF, $DD
+   25 00:8541 00 00 -  -  .db $00, $00
+   26 00:8543 -  -  -  -  
+   27 00:8543 -  -  -  -  img_logo:
+   28 00:8543 3F 85 -  -  	.dw LogoPalette
+   29 00:8545 2D DC -  -  	.db 45, 220
+   30 00:8547 -  -  -  -  	;.incbmp "../assets/logo.png"
+   31 00:8547 -  -  -  -  	
+   32 00:8547 -  -  -  -  pauselogo:
+   33 00:8547 3F 85 -  -  	.dw LogoPalette
+   34 00:8549 64 1E -  -  	.db	100, 30
+   35 00:854B -  -  -  -  	;.incbmp "../assets/paused.png"
 Listing for file "ti84cse.asm"
-   24 00:855D -  -  -  -  #include "asm\main.asm"
+   24 00:854B -  -  -  -  #include "asm\main.asm"
 Listing for file "C:\asm\source\galamarcse\asm\main.asm"
-    1 00:855D -  -  -  -  ;############################################;
-    2 00:855D -  -  -  -  ;#			Galamar Base Loop Code			#;
-    3 00:855D -  -  -  -  ;#	  Based off of Calcuzap's loop code 	#;
-    4 00:855D -  -  -  -  ;############################################;
-    5 00:855D -  -  -  -  
-    6 00:855D -  -  -  -  ;#############################;
-    7 00:855D -  -  -  -  ; checkinputlevel: takes in b, loads and delays into a
-    8 00:855D -  -  -  -  checkinputlevel:
-    9 00:855D 3E FF -  -  		ld 		a,$ff
-   10 00:855F D3 01 -  -  		out 	(1),a
-   11 00:8561 00 00 -  -  		nop \ nop
-   12 00:8563 78 -  -  -  		ld 		a,b
-   13 00:8564 D3 01 -  -  		out 	(1),a
-   14 00:8566 00 00 -  -  		nop \ nop
-   15 00:8568 CD BB 81 -  		call	DrawPlayer	
-   16 00:856B DB 01 -  -  		in 		a,(1)
-   17 00:856D FE FF -  -  		cp 		$ff
-   18 00:856F C9 -  -  -  		ret
-   19 00:8570 -  -  -  -  		
-   20 00:8570 -  -  -  -  
-   21 00:8570 -  -  -  -  drawpausegame:
-   22 00:8570 -  -  -  -  
-   23 00:8570 -  -  -  -  
-   24 00:8570 -  -  -  -  		; temp
-   25 00:8570 C9 -  -  -  		ret	
-   26 00:8571 -  -  -  -  		; temp
-   27 00:8571 -  -  -  -  		
-   28 00:8571 -  -  -  -  		
-   29 00:8571 11 6E 00 -  		ld		de, 110
-   30 00:8574 21 69 00 -  		ld		hl, 105
-   31 00:8577 DD 21 59 85 		ld		ix, pauselogo
-   32 00:857B CD 3C 83 -  		call	Draw_1Bit
-   33 00:857E -  -  -  -  pausegame:
-   34 00:857E 3E BF -  -  		ld      a,%10111111    		; mask most keys (allow 2nd)
-   35 00:8580 D3 01 -  -  		out 	(1),a
-   36 00:8582 00 00 -  -  		nop \ nop
-   37 00:8584 DB 01 -  -  		in 		a,(1)
-   38 00:8586 CB 6F -  -  		bit 	5,a
-   39 00:8588 20 F4 -  -  		jr		nz,pausegame		
-   40 00:858A 26 37 -  -  		ld		h, 55
-   41 00:858C 2E 69 -  -  		ld		l, 105
-   42 00:858E 16 32 -  -  		ld 		d, 50
-   43 00:8590 1E 1E -  -  		ld		e, 30
-   44 00:8592 01 00 00 -  		ld		bc, 0000h
-   45 00:8595 CD 3F 83 -  		call	Color_Rectangle
-   46 00:8598 -  -  -  -  
-   47 00:8598 -  -  -  -  mainloop:
-   48 00:8598 -  -  -  -  	
-   49 00:8598 -  -  -  -  		; Draw update to score here when necessary
-   50 00:8598 -  -  -  -  		
-   51 00:8598 3E BF -  -  		ld      a,%10111111    		; mask most keys (allow 2nd)
-   52 00:859A D3 01 -  -  		out     (1),a
-   53 00:859C -  -  -  -  
-   54 00:859C -  -  -  -  timer_loop: 
-   55 00:859C DB 04 -  -          in      a,(4)
-   56 00:859E CB 6F -  -          bit     5,a
-   57 00:85A0 28 FA -  -          jr      z,timer_loop
-   58 00:85A2 -  -  -  -  timer_wait_done:
-   59 00:85A2 AF -  -  -          xor     a					
-   60 00:85A3 D3 31 -  -          out     ($31),a				; load 0 into loopingdata
-   61 00:85A5 3A 89 86 -          ld      a,(time_delay)		
-   62 00:85A8 D3 32 -  -          out     ($32),a          	; load our timer delay value into crystal timer
-   63 00:85AA -  -  -  -  					
-   64 00:85AA 21 89 86 -          ld      hl,fire_pressed		; load our fire_pressed variable
-   65 00:85AD -  -  -  -  
-   66 00:85AD DB 01 -  -          in      a,(1)           	; shoot if 2nd is pressed
-   67 00:85AF CB 6F -  -          bit     5,a					; check if bit is active
-   68 00:85B1 20 0A -  -          jr      nz,no_fire			; if not active, skip
-   69 00:85B3 7E -  -  -          ld      a,(hl)				; 
-   70 00:85B4 B7 -  -  -          or      a					; 		
-   71 00:85B5 20 08 -  -          jr      nz,fire_done		; 
-   72 00:85B7 34 -  -  -          inc     (hl)				; set our fire_pressed active
-   73 00:85B8 CD 2A 86 -          call    firebullet     		; actual bullet firing
-   74 00:85BB 18 02 -  -          jr      fire_done		
-   75 00:85BD -  -  -  -  		
-   76 00:85BD -  -  -  -  no_fire:
-   77 00:85BD AF -  -  -          xor     a
-   78 00:85BE 77 -  -  -          ld      (hl),a				; set fire_pressed to 0
-   79 00:85BF -  -  -  -  		 
-   80 00:85BF -  -  -  -  fire_done:
-   81 00:85BF -  -  -  -  		
-   82 00:85BF CD FC 81 -  		call	UpdateStars			; update/redraw stars
-   83 00:85C2 CD BB 81 -  		call	DrawPlayer			; commented for speedup...redraw player in case stars go in front
-   84 00:85C5 -  -  -  -  		
-   85 00:85C5 06 7D -  -  		ld 		b,%1111101
-   86 00:85C7 CD 5D 85 -          call	checkinputlevel
-   87 00:85CA CB 47 -  -  		bit 	0, a
-   88 00:85CC 28 A2 -  -  		jr		z, drawpausegame
-   89 00:85CE -  -  -  -  	
-   90 00:85CE 06 FC -  -  		ld 		b,%11111100
-   91 00:85D0 CD 5D 85 -          call	checkinputlevel
-   92 00:85D3 28 C3 -  -  		jr 		z,mainloop
-   93 00:85D5 CB 5F -  -  		bit 	3,a
-   94 00:85D7 CC E9 85 -  		call	z,changespeed			; for laser charge later
-   95 00:85DA 06 FC -  -  		ld 		b,%11111100
-   96 00:85DC CD 5D 85 -          call	checkinputlevel
-   97 00:85DF CB 4F -  -  		bit 	1,a
-   98 00:85E1 28 2B -  -  		jr 		z,move_left
-   99 00:85E3 CB 57 -  -  		bit 	2,a
-  100 00:85E5 28 0B -  -  		jr 		z,move_right
-  101 00:85E7 18 AF -  -  		jr 		mainloop
-  102 00:85E9 -  -  -  -  		
-  103 00:85E9 -  -  -  -  changespeed:
-  104 00:85E9 CD FC 81 -  	call	UpdateStars
-  105 00:85EC CD FC 81 -  	call	UpdateStars
-  106 00:85EF C9 -  -  -  	ret
+    1 00:854B -  -  -  -  ;############################################;
+    2 00:854B -  -  -  -  ;#			Galamar Base Loop Code			#;
+    3 00:854B -  -  -  -  ;#	  Based off of Calcuzap's loop code 	#;
+    4 00:854B -  -  -  -  ;############################################;
+    5 00:854B -  -  -  -  
+    6 00:854B -  -  -  -  ;#############################;
+    7 00:854B -  -  -  -  ; checkinputlevel: takes in b, loads and delays into a
+    8 00:854B -  -  -  -  checkinputlevel:
+    9 00:854B 3E FF -  -  		ld 		a,$ff
+   10 00:854D D3 01 -  -  		out 	(1),a
+   11 00:854F 00 00 -  -  		nop \ nop
+   12 00:8551 78 -  -  -  		ld 		a,b
+   13 00:8552 D3 01 -  -  		out 	(1),a
+   14 00:8554 00 00 -  -  		nop \ nop
+   15 00:8556 CD B5 81 -  		call	DrawPlayer	
+   16 00:8559 DB 01 -  -  		in 		a,(1)
+   17 00:855B FE FF -  -  		cp 		$ff
+   18 00:855D C9 -  -  -  		ret
+   19 00:855E -  -  -  -  		
+   20 00:855E -  -  -  -  
+   21 00:855E -  -  -  -  drawpausegame:
+   22 00:855E -  -  -  -  
+   23 00:855E -  -  -  -  
+   24 00:855E -  -  -  -  		; temp
+   25 00:855E C9 -  -  -  		ret	
+   26 00:855F -  -  -  -  		; temp
+   27 00:855F -  -  -  -  		
+   28 00:855F -  -  -  -  		
+   29 00:855F 11 6E 00 -  		ld		de, 110
+   30 00:8562 21 69 00 -  		ld		hl, 105
+   31 00:8565 DD 21 47 85 		ld		ix, pauselogo
+   32 00:8569 CD 36 83 -  		call	Draw_1Bit
+   33 00:856C -  -  -  -  pausegame:
+   34 00:856C 3E BF -  -  		ld      a,%10111111    		; mask most keys (allow 2nd)
+   35 00:856E D3 01 -  -  		out 	(1),a
+   36 00:8570 00 00 -  -  		nop \ nop
+   37 00:8572 DB 01 -  -  		in 		a,(1)
+   38 00:8574 CB 6F -  -  		bit 	5,a
+   39 00:8576 20 F4 -  -  		jr		nz,pausegame		
+   40 00:8578 26 37 -  -  		ld		h, 55
+   41 00:857A 2E 69 -  -  		ld		l, 105
+   42 00:857C 16 32 -  -  		ld 		d, 50
+   43 00:857E 1E 1E -  -  		ld		e, 30
+   44 00:8580 01 00 00 -  		ld		bc, 0000h
+   45 00:8583 CD 39 83 -  		call	Color_Rectangle
+   46 00:8586 -  -  -  -  
+   47 00:8586 -  -  -  -  mainloop:
+   48 00:8586 -  -  -  -  	
+   49 00:8586 -  -  -  -  		; Draw update to score here when necessary
+   50 00:8586 -  -  -  -  		
+   51 00:8586 3E BF -  -  		ld      a,%10111111    		; mask most keys (allow 2nd)
+   52 00:8588 D3 01 -  -  		out     (1),a
+   53 00:858A -  -  -  -  
+   54 00:858A -  -  -  -  timer_loop: 
+   55 00:858A DB 04 -  -          in      a,(4)
+   56 00:858C CB 6F -  -          bit     5,a
+   57 00:858E 28 FA -  -          jr      z,timer_loop
+   58 00:8590 -  -  -  -  timer_wait_done:
+   59 00:8590 AF -  -  -          xor     a					
+   60 00:8591 D3 31 -  -          out     ($31),a				; load 0 into loopingdata
+   61 00:8593 3A 72 87 -          ld      a,(time_delay)		
+   62 00:8596 D3 32 -  -          out     ($32),a          	; load our timer delay value into crystal timer
+   63 00:8598 -  -  -  -  					
+   64 00:8598 21 72 87 -          ld      hl,fire_pressed		; load our fire_pressed variable
+   65 00:859B -  -  -  -  
+   66 00:859B DB 01 -  -          in      a,(1)           	; shoot if 2nd is pressed
+   67 00:859D CB 6F -  -          bit     5,a					; check if bit is active
+   68 00:859F 20 0A -  -          jr      nz,no_fire			; if not active, skip
+   69 00:85A1 7E -  -  -          ld      a,(hl)				; 
+   70 00:85A2 B7 -  -  -          or      a					; 		
+   71 00:85A3 20 08 -  -          jr      nz,fire_done		; 
+   72 00:85A5 34 -  -  -          inc     (hl)				; set our fire_pressed active
+   73 00:85A6 CD 18 86 -          call    firebullet     		; actual bullet firing
+   74 00:85A9 18 02 -  -          jr      fire_done		
+   75 00:85AB -  -  -  -  		
+   76 00:85AB -  -  -  -  no_fire:
+   77 00:85AB AF -  -  -          xor     a
+   78 00:85AC 77 -  -  -          ld      (hl),a				; set fire_pressed to 0
+   79 00:85AD -  -  -  -  		 
+   80 00:85AD -  -  -  -  fire_done:
+   81 00:85AD -  -  -  -  		
+   82 00:85AD CD F6 81 -  		call	UpdateStars			; update/redraw stars
+   83 00:85B0 CD B5 81 -  		call	DrawPlayer			; commented for speedup...redraw player in case stars go in front
+   84 00:85B3 -  -  -  -  		
+   85 00:85B3 06 7D -  -  		ld 		b,%1111101
+   86 00:85B5 CD 4B 85 -          call	checkinputlevel
+   87 00:85B8 CB 47 -  -  		bit 	0, a
+   88 00:85BA 28 A2 -  -  		jr		z, drawpausegame
+   89 00:85BC -  -  -  -  	
+   90 00:85BC 06 FC -  -  		ld 		b,%11111100
+   91 00:85BE CD 4B 85 -          call	checkinputlevel
+   92 00:85C1 28 C3 -  -  		jr 		z,mainloop
+   93 00:85C3 CB 5F -  -  		bit 	3,a
+   94 00:85C5 CC D7 85 -  		call	z,changespeed			; for laser charge later
+   95 00:85C8 06 FC -  -  		ld 		b,%11111100
+   96 00:85CA CD 4B 85 -          call	checkinputlevel
+   97 00:85CD CB 4F -  -  		bit 	1,a
+   98 00:85CF 28 2B -  -  		jr 		z,move_left
+   99 00:85D1 CB 57 -  -  		bit 	2,a
+  100 00:85D3 28 0B -  -  		jr 		z,move_right
+  101 00:85D5 18 AF -  -  		jr 		mainloop
+  102 00:85D7 -  -  -  -  		
+  103 00:85D7 -  -  -  -  changespeed:
+  104 00:85D7 CD F6 81 -  	call	UpdateStars
+  105 00:85DA CD F6 81 -  	call	UpdateStars
+  106 00:85DD C9 -  -  -  	ret
 Listing for file "ti84cse.asm"
-   25 00:85F0 -  -  -  -  #include "asm\move.asm"
+   25 00:85DE -  -  -  -  #include "asm\move.asm"
 Listing for file "C:\asm\source\galamarcse\asm\move.asm"
-    1 00:85F0 -  -  -  -  ;############## Move right
-    2 00:85F0 -  -  -  -  tomain:
-    3 00:85F0 18 A6 -  -  		jr		mainloop		
-    4 00:85F2 -  -  -  -  
-    5 00:85F2 -  -  -  -  move_right:
-    6 00:85F2 2A 89 86 -  		ld 		hl,(playerx)
-    7 00:85F5 7C -  -  -  		ld		a,h
-    8 00:85F6 FE 01 -  -  		cp		1						; check for right bound
-    9 00:85F8 20 05 -  -  		jr		nz, move_right_begin	; 
-   10 00:85FA 7D -  -  -  		ld		a,l						;
-   11 00:85FB FE 00 -  -  		cp		0						; right bound is at x = 272
-   12 00:85FD 28 F1 -  -  		jr		z, tomain
-   13 00:85FF -  -  -  -  move_right_begin:						; the actual movement and drawing calls
-   14 00:85FF 2A 89 86 -  		ld		hl, (playerx)
-   15 00:8602 23 -  -  -  		inc 	hl
-   16 00:8603 22 89 86 -  		ld 		(playerx), hl			; store our increased position
-   17 00:8606 CD BB 81 -  		call 	DrawPlayer
-   18 00:8609 CD CA 81 -  		call	DeletePlayerLeft		; delete leftover colors (fill in with black)
-   19 00:860C 18 E2 -  -  		jr 		tomain					; back to the beginning...
-   20 00:860E -  -  -  -  		
-   21 00:860E -  -  -  -  ;############## Move left
-   22 00:860E -  -  -  -  
-   23 00:860E -  -  -  -  move_left:
-   24 00:860E 2A 89 86 -  		ld 		hl,(playerx)
-   25 00:8611 7C -  -  -  		ld		a,h
-   26 00:8612 FE 00 -  -  		cp		0						; check for left bound
-   27 00:8614 20 05 -  -  		jr		nz, move_left_begin		;
-   28 00:8616 7D -  -  -  		ld		a,l						;
-   29 00:8617 FE 30 -  -  		cp		48						; left bound is at x = 48
-   30 00:8619 28 D5 -  -  		jr		z, tomain
-   31 00:861B -  -  -  -  move_left_begin:						; the actual movement and drawing calls
-   32 00:861B 2A 89 86 -  		ld		hl,(playerx)
-   33 00:861E 2B -  -  -  		dec 	hl						; decrease our position
-   34 00:861F 22 89 86 -  		ld 		(playerx), hl			; store our decreased position
-   35 00:8622 CD BB 81 -  		call 	DrawPlayer
-   36 00:8625 CD E1 81 -  		call	DeletePlayerRight		; delete leftover colors (fill in with black)
-   37 00:8628 18 C6 -  -  		jr		tomain				; back to the beginning...
+    1 00:85DE -  -  -  -  ;############## Move right
+    2 00:85DE -  -  -  -  tomain:
+    3 00:85DE 18 A6 -  -  		jr		mainloop		
+    4 00:85E0 -  -  -  -  
+    5 00:85E0 -  -  -  -  move_right:
+    6 00:85E0 2A 72 87 -  		ld 		hl,(playerx)
+    7 00:85E3 7C -  -  -  		ld		a,h
+    8 00:85E4 FE 01 -  -  		cp		1						; check for right bound
+    9 00:85E6 20 05 -  -  		jr		nz, move_right_begin	; 
+   10 00:85E8 7D -  -  -  		ld		a,l						;
+   11 00:85E9 FE 00 -  -  		cp		0						; right bound is at x = 272
+   12 00:85EB 28 F1 -  -  		jr		z, tomain
+   13 00:85ED -  -  -  -  move_right_begin:						; the actual movement and drawing calls
+   14 00:85ED 2A 72 87 -  		ld		hl, (playerx)
+   15 00:85F0 23 -  -  -  		inc 	hl
+   16 00:85F1 22 72 87 -  		ld 		(playerx), hl			; store our increased position
+   17 00:85F4 CD B5 81 -  		call 	DrawPlayer
+   18 00:85F7 CD C4 81 -  		call	DeletePlayerLeft		; delete leftover colors (fill in with black)
+   19 00:85FA 18 E2 -  -  		jr 		tomain					; back to the beginning...
+   20 00:85FC -  -  -  -  		
+   21 00:85FC -  -  -  -  ;############## Move left
+   22 00:85FC -  -  -  -  
+   23 00:85FC -  -  -  -  move_left:
+   24 00:85FC 2A 72 87 -  		ld 		hl,(playerx)
+   25 00:85FF 7C -  -  -  		ld		a,h
+   26 00:8600 FE 00 -  -  		cp		0						; check for left bound
+   27 00:8602 20 05 -  -  		jr		nz, move_left_begin		;
+   28 00:8604 7D -  -  -  		ld		a,l						;
+   29 00:8605 FE 30 -  -  		cp		48						; left bound is at x = 48
+   30 00:8607 28 D5 -  -  		jr		z, tomain
+   31 00:8609 -  -  -  -  move_left_begin:						; the actual movement and drawing calls
+   32 00:8609 2A 72 87 -  		ld		hl,(playerx)
+   33 00:860C 2B -  -  -  		dec 	hl						; decrease our position
+   34 00:860D 22 72 87 -  		ld 		(playerx), hl			; store our decreased position
+   35 00:8610 CD B5 81 -  		call 	DrawPlayer
+   36 00:8613 CD DB 81 -  		call	DeletePlayerRight		; delete leftover colors (fill in with black)
+   37 00:8616 18 C6 -  -  		jr		tomain				; back to the beginning...
 Listing for file "ti84cse.asm"
-   26 00:862A -  -  -  -  #include "asm\bullets.asm"
+   26 00:8618 -  -  -  -  #include "asm\bullets.asm"
 Listing for file "C:\asm\source\galamarcse\asm\bullets.asm"
-    1 00:862A -  -  -  -  firebullet:
-    2 00:862A C9 -  -  -  		ret
+    1 00:8618 -  -  -  -  firebullet:
+    2 00:8618 C9 -  -  -  		ret
 Listing for file "ti84cse.asm"
-   27 00:862B -  -  -  -  #include "asm\display.asm"
+   27 00:8619 -  -  -  -  #include "asm\display.asm"
 Listing for file "C:\asm\source\galamarcse\asm\display.asm"
-    1 00:862B -  -  -  -  ; Patrick Davidson's display routine codes
-    2 00:862B -  -  -  -  
-    3 00:862B -  -  -  -  Display_Org:
-    4 00:862B 3E 03 -  -          ld      a,3             ; adjust origin drawing mode
-    5 00:862D 21 38 10 -          ld      hl,$1038
-    6 00:8630 CD 56 86 -          call    Write_Display_Control
-    7 00:8633 18 08 -  -          jr      Full_Window
-    8 00:8635 -  -  -  -          
-    9 00:8635 -  -  -  -  Display_Normal:
-   10 00:8635 3E 03 -  -          ld      a,3             ; normal drawing mode
-   11 00:8637 21 B8 10 -          ld      hl,$10B8
-   12 00:863A CD 56 86 -          call    Write_Display_Control
-   13 00:863D -  -  -  -          
-   14 00:863D -  -  -  -  Full_Window:
-   15 00:863D 3E 50 -  -          ld      a,$50           ; Set minimum Y
-   16 00:863F 21 00 00 -          ld      hl,0
-   17 00:8642 CD 56 86 -          call    Write_Display_Control
-   18 00:8645 -  -  -  -          
-   19 00:8645 3C -  -  -          inc     a               ; Set maximum Y
-   20 00:8646 2E EF -  -          ld      l,239
-   21 00:8648 CD 56 86 -          call    Write_Display_Control   
-   22 00:864B -  -  -  -          
-   23 00:864B 21 00 00 -          ld      hl,0            ; Set minimum X
-   24 00:864E 3C -  -  -          inc     a
-   25 00:864F CD 56 86 -          call    Write_Display_Control
-   26 00:8652 -  -  -  -          
-   27 00:8652 3C -  -  -          inc     a               ; Set maximum X
-   28 00:8653 21 3F 01 -          ld      hl,319 
-   29 00:8656 -  -  -  -          
-   30 00:8656 -  -  -  -  ;############## Write HL to display register A
-   31 00:8656 -  -  -  -  
-   32 00:8656 -  -  -  -  Write_Display_Control:
-   33 00:8656 D3 10 -  -          out     ($10),a
-   34 00:8658 D3 10 -  -          out     ($10),a
-   35 00:865A 0E 11 -  -          ld      c,$11
-   36 00:865C ED 61 -  -          out     (c),h
-   37 00:865E ED 69 -  -          out     (c),l
-   38 00:8660 C9 -  -  -          ret
-   39 00:8661 -  -  -  -  		
-   40 00:8661 -  -  -  -  ;############## Clear the screen (in black)
-   41 00:8661 -  -  -  -  ;##############      Function adapted from Calcuzap by Patrick Davidson (huge thank you!)
-   42 00:8661 -  -  -  -  
-   43 00:8661 -  -  -  -  Clear_Screen:   
-   44 00:8661 CD 3D 86 -          call    Full_Window
-   45 00:8664 -  -  -  -          
-   46 00:8664 3E 20 -  -          ld      a,$20
-   47 00:8666 21 00 00 -          ld      hl,0            ; set write Y coordinate
-   48 00:8669 CD 56 86 -          call    Write_Display_Control
-   49 00:866C 3E 21 -  -          ld      a,$21           ; set write X coordinate
-   50 00:866E CD 56 86 -          call    Write_Display_Control
-   51 00:8671 -  -  -  -          
-   52 00:8671 3E 22 -  -          ld      a,$22
-   53 00:8673 D3 10 -  -          out     ($10),a
-   54 00:8675 D3 10 -  -          out     ($10),a
-   55 00:8677 -  -  -  -  
-   56 00:8677 01 00 C8 -          ld      bc,320*240*2/3
-   57 00:867A 1E 00 -  -  		ld		e, 0
-   58 00:867C -  -  -  -  
-   59 00:867C -  -  -  -  ;############## screen_write_loop: 
-   60 00:867C -  -  -  -  ; E  -> $XX color input
-   61 00:867C -  -  -  -  ; BC -> loop times
-   62 00:867C -  -  -  -  screen_write_loop:
-   63 00:867C 7B -  -  -          ld		a, e
-   64 00:867D D3 11 -  -          out     ($11),a
-   65 00:867F D3 11 -  -          out     ($11),a
-   66 00:8681 D3 11 -  -          out     ($11),a
-   67 00:8683 0B -  -  -          dec     bc
-   68 00:8684 78 -  -  -          ld      a,b
-   69 00:8685 B1 -  -  -          or      c
-   70 00:8686 20 F4 -  -          jr      nz,screen_write_loop
-   71 00:8688 C9 -  -  -          ret
+    1 00:8619 -  -  -  -  ; Patrick Davidson's display routine codes
+    2 00:8619 -  -  -  -  
+    3 00:8619 -  -  -  -  ;############## Erase rectangle
+    4 00:8619 -  -  -  -  ; B = X coordinate
+    5 00:8619 -  -  -  -  ; C = Y coordinate
+    6 00:8619 -  -  -  -  ; E = height
+    7 00:8619 -  -  -  -  ; D = width
+    8 00:8619 -  -  -  -  
+    9 00:8619 -  -  -  -  Erase_Rectangle:
+   10 00:8619 79 -  -  -          ld      a,c
+   11 00:861A -  -  -  -  Erase_Rectangle_A:
+   12 00:861A FE F4 -  -          cp      244
+   13 00:861C D0 -  -  -          ret     nc              ; below the bottom, so exit
+   14 00:861D D6 0C -  -          sub     12
+   15 00:861F 30 13 -  -          jr      nc,erase_no_top_clip
+   16 00:8621 -  -  -  -          
+   17 00:8621 83 -  -  -          add     a,e             ; A = remaining height
+   18 00:8622 D0 -  -  -          ret     nc
+   19 00:8623 C8 -  -  -          ret     z
+   20 00:8624 5F -  -  -          ld      e,a
+   21 00:8625 -  -  -  -          
+   22 00:8625 21 00 00 -          ld      hl,0            ; set minimum Y to 0
+   23 00:8628 3E 50 -  -          ld      a,$50
+   24 00:862A CD 3F 87 -          call    Write_Display_Control
+   25 00:862D 3E 20 -  -          ld      a,$20           ; set current Y
+   26 00:862F CD 3F 87 -          call    Write_Display_Control   
+   27 00:8632 18 17 -  -          jr      erase_vertical_clip_done
+   28 00:8634 -  -  -  -          
+   29 00:8634 -  -  -  -  erase_no_top_clip:
+   30 00:8634 6F -  -  -          ld      l,a             ; set minimum Y
+   31 00:8635 26 00 -  -          ld      h,0
+   32 00:8637 3E 50 -  -          ld      a,$50
+   33 00:8639 CD 3F 87 -          call    Write_Display_Control
+   34 00:863C 3E 20 -  -          ld      a,$20           ; set current Y
+   35 00:863E CD 3F 87 -          call    Write_Display_Control   
+   36 00:8641 -  -  -  -          
+   37 00:8641 7D -  -  -          ld      a,l
+   38 00:8642 83 -  -  -          add     a,e             ; A = bottom Y coordinate
+   39 00:8643 3E E8 -  -          ld      a,232
+   40 00:8645 93 -  -  -          sub     e
+   41 00:8646 95 -  -  -          sub     l               ; A = # lines remaining
+   42 00:8647 30 02 -  -          jr      nc,erase_vertical_clip_done
+   43 00:8649 83 -  -  -          add     a,e
+   44 00:864A 5F -  -  -          ld      e,a
+   45 00:864B -  -  -  -  
+   46 00:864B -  -  -  -  erase_vertical_clip_done:       ; E = real height, vertical registers set
+   47 00:864B 78 -  -  -          ld      a,b
+   48 00:864C D6 30 -  -          sub     48
+   49 00:864E 6F -  -  -          ld      l,a
+   50 00:864F 26 00 -  -          ld      h,0
+   51 00:8651 29 -  -  -          add     hl,hl           ; HL = full X coordinate
+   52 00:8652 3E 52 -  -          ld      a,$52
+   53 00:8654 CD 3F 87 -          call    Write_Display_Control
+   54 00:8657 3E 21 -  -          ld      a,$21           ; set current X
+   55 00:8659 CD 3F 87 -          call    Write_Display_Control
+   56 00:865C 78 -  -  -          ld      a,b
+   57 00:865D 82 -  -  -          add     a,d
+   58 00:865E D6 30 -  -          sub     48
+   59 00:8660 6F -  -  -          ld      l,a
+   60 00:8661 26 00 -  -          ld      h,0
+   61 00:8663 29 -  -  -          add     hl,hl
+   62 00:8664 2B -  -  -          dec     hl
+   63 00:8665 3E 53 -  -          ld      a,$53           ; set maximum X
+   64 00:8667 CD 3F 87 -          call    Write_Display_Control
+   65 00:866A -  -  -  -          
+   66 00:866A 3E 22 -  -          ld      a,$22
+   67 00:866C D3 10 -  -          out     ($10),a
+   68 00:866E D3 10 -  -          out     ($10),a 
+   69 00:8670 AF -  -  -          xor     a
+   70 00:8671 -  -  -  -  Erase_Clipped_Loop:             ; D = height, E = width
+   71 00:8671 42 -  -  -          ld      b,d
+   72 00:8672 -  -  -  -  Erase_Clipped_Inner_Loop        ; 57 clocks per loop, 28.5 clocks per pixel
+   73 00:8672 D3 11 -  -          out     ($11),a
+   74 00:8674 D3 11 -  -          out     ($11),a
+   75 00:8676 D3 11 -  -          out     ($11),a
+   76 00:8678 D3 11 -  -          out     ($11),a
+   77 00:867A 10 F6 -  -          djnz    Erase_Clipped_Inner_Loop
+   78 00:867C 1D -  -  -          dec     e
+   79 00:867D 20 F2 -  -          jr      nz,Erase_Clipped_Loop   
+   80 00:867F C9 -  -  -          ret
+   81 00:8680 -  -  -  -          
+   82 00:8680 -  -  -  -  ;############## Draw a sprite
+   83 00:8680 -  -  -  -  ; B = X coordinate divided by 2
+   84 00:8680 -  -  -  -  ; L = Y coordinate
+   85 00:8680 -  -  -  -  ; DE -> sprite (first byte is height in pixels, second byte is width in bytes, then packed pixels)
+   86 00:8680 -  -  -  -  
+   87 00:8680 -  -  -  -  clipped_entire_top:
+   88 00:8680 C1 -  -  -          pop     bc
+   89 00:8681 C9 -  -  -          ret
+   90 00:8682 -  -  -  -          
+   91 00:8682 -  -  -  -  Draw_Sprite_Packed:
+   92 00:8682 7D -  -  -          ld      a,l
+   93 00:8683 FE F4 -  -          cp      244
+   94 00:8685 D0 -  -  -          ret     nc              ; draw nothing if starting below the bottom
+   95 00:8686 D6 0C -  -          sub     12
+   96 00:8688 30 28 -  -          jr      nc,draw_packed_no_top_clip
+   97 00:868A -  -  -  -          
+   98 00:868A C5 -  -  -          push    bc
+   99 00:868B -  -  -  -          
+  100 00:868B ED 44 -  -          neg                     ; A = # of lines to clip
+  101 00:868D 47 -  -  -          ld      b,a
+  102 00:868E -  -  -  -          
+  103 00:868E 21 00 00 -          ld      hl,0            ; set minimum Y to 0
+  104 00:8691 3E 50 -  -          ld      a,$50
+  105 00:8693 CD 3F 87 -          call    Write_Display_Control
+  106 00:8696 3E 20 -  -          ld      a,$20           ; set current Y
+  107 00:8698 CD 3F 87 -          call    Write_Display_Control   
+  108 00:869B -  -  -  -          
+  109 00:869B EB -  -  -          ex      de,hl
+  110 00:869C 7E -  -  -          ld      a,(hl)
+  111 00:869D 90 -  -  -          sub     b               ; remove top lines from height
+  112 00:869E 38 E0 -  -          jr      c,clipped_entire_top
+  113 00:86A0 28 DE -  -          jr      z,clipped_entire_top
+  114 00:86A2 23 -  -  -          inc     hl
+  115 00:86A3 4E -  -  -          ld      c,(hl)
+  116 00:86A4 23 -  -  -          inc     hl
+  117 00:86A5 -  -  -  -          
+  118 00:86A5 59 -  -  -          ld      e,c
+  119 00:86A6 16 00 -  -          ld      d,0
+  120 00:86A8 -  -  -  -  loop_clip_top:
+  121 00:86A8 19 -  -  -          add     hl,de
+  122 00:86A9 19 -  -  -          add     hl,de
+  123 00:86AA 19 -  -  -          add     hl,de
+  124 00:86AB 19 -  -  -          add     hl,de
+  125 00:86AC 10 FA -  -          djnz    loop_clip_top
+  126 00:86AE -  -  -  -          
+  127 00:86AE C1 -  -  -          pop     bc              ; B = X coordinate / 2
+  128 00:86AF 4B -  -  -          ld      c,e             ; C = width in bytes
+  129 00:86B0 18 1D -  -          jr      draw_packed_vertical_clip_done
+  130 00:86B2 -  -  -  -          
+  131 00:86B2 -  -  -  -  draw_packed_no_top_clip:
+  132 00:86B2 6F -  -  -          ld      l,a
+  133 00:86B3 26 00 -  -          ld      h,0
+  134 00:86B5 3E 50 -  -          ld      a,$50           ; set minimum Y
+  135 00:86B7 CD 3F 87 -          call    Write_Display_Control
+  136 00:86BA 3E 20 -  -          ld      a,$20           ; set current Y
+  137 00:86BC CD 3F 87 -          call    Write_Display_Control   
+  138 00:86BF -  -  -  -          
+  139 00:86BF EB -  -  -          ex      de,hl           ; E = Y coordinate of top (screen coords)
+  140 00:86C0 7E -  -  -          ld      a,(hl)          ; A = height of sprite
+  141 00:86C1 23 -  -  -          inc     hl
+  142 00:86C2 4E -  -  -          ld      c,(hl)          ; C = width of sprite in bytes
+  143 00:86C3 23 -  -  -          inc     hl
+  144 00:86C4 -  -  -  -          
+  145 00:86C4 83 -  -  -          add     a,e             ; A = bottom row + 1
+  146 00:86C5 FE E9 -  -          cp      233
+  147 00:86C7 38 05 -  -          jr      c,no_bottom_clip
+  148 00:86C9 3E E8 -  -          ld      a,232
+  149 00:86CB 93 -  -  -          sub     e
+  150 00:86CC 18 01 -  -          jr      draw_packed_vertical_clip_done
+  151 00:86CE -  -  -  -          
+  152 00:86CE -  -  -  -  no_bottom_clip:
+  153 00:86CE 93 -  -  -          sub     e               ; A = height
+  154 00:86CF -  -  -  -                  
+  155 00:86CF -  -  -  -  ; At this point we have finished vertical clipping and set the Y register
+  156 00:86CF -  -  -  -  ; A = height of the sprite (excluding rows clipped out)
+  157 00:86CF -  -  -  -  ; HL -> pixel data of first pixel of first row to draw
+  158 00:86CF -  -  -  -  ; B = X coordinate
+  159 00:86CF -  -  -  -  ; C = width of sprite in bytes
+  160 00:86CF -  -  -  -  draw_packed_vertical_clip_done:
+  161 00:86CF -  -  -  -  
+  162 00:86CF -  -  -  -  draw_packed_no_horizontal_clip:
+  163 00:86CF 32 03 87 -          ld      (draw_packed_loop-1),a
+  164 00:86D2 -  -  -  -          
+  165 00:86D2 79 -  -  -          ld      a,c
+  166 00:86D3 87 -  -  -          add     a,a
+  167 00:86D4 87 -  -  -          add     a,a
+  168 00:86D5 81 -  -  -          add     a,c             ; A = width in bytes * 5                
+  169 00:86D6 32 05 87 -          ld      (draw_packed_line-1),a
+  170 00:86D9 -  -  -  -          
+  171 00:86D9 EB -  -  -          ex      de,hl
+  172 00:86DA C5 -  -  -          push    bc
+  173 00:86DB 78 -  -  -          ld      a,b
+  174 00:86DC D6 30 -  -          sub     48
+  175 00:86DE 6F -  -  -          ld      l,a             ; set minimum X
+  176 00:86DF 26 00 -  -          ld      h,0
+  177 00:86E1 29 -  -  -          add     hl,hl
+  178 00:86E2 3E 52 -  -          ld      a,$52
+  179 00:86E4 CD 3F 87 -          call    Write_Display_Control
+  180 00:86E7 3E 21 -  -          ld      a,$21           ; set current X
+  181 00:86E9 CD 3F 87 -          call    Write_Display_Control
+  182 00:86EC C1 -  -  -          pop     bc
+  183 00:86ED -  -  -  -          
+  184 00:86ED 78 -  -  -          ld      a,b             ; set maximum X
+  185 00:86EE 81 -  -  -          add     a,c
+  186 00:86EF D6 30 -  -          sub     48
+  187 00:86F1 6F -  -  -          ld      l,a
+  188 00:86F2 26 00 -  -          ld      h,0
+  189 00:86F4 29 -  -  -          add     hl,hl
+  190 00:86F5 2B -  -  -          dec     hl
+  191 00:86F6 3E 53 -  -          ld      a,$53
+  192 00:86F8 CD 3F 87 -          call    Write_Display_Control
+  193 00:86FB -  -  -  -          
+  194 00:86FB 3E 22 -  -          ld      a,$22
+  195 00:86FD D3 10 -  -          out     ($10),a
+  196 00:86FF D3 10 -  -          out     ($10),a 
+  197 00:8701 -  -  -  -          
+  198 00:8701 EB -  -  -          ex      de,hl
+  199 00:8702 16 01 -  -          ld      d,1
+  200 00:8704 -  -  -  -  draw_packed_loop:
+  201 00:8704 06 01 -  -          ld      b,1
+  202 00:8706 -  -  -  -  draw_packed_line:
+  203 00:8706 ED A3 -  -          outi                    ; 77 clocks per loop, 38.5 clocks per pixel
+  204 00:8708 ED A3 -  -          outi
+  205 00:870A ED A3 -  -          outi
+  206 00:870C ED A3 -  -          outi
+  207 00:870E 10 F6 -  -          djnz    draw_packed_line
+  208 00:8710 15 -  -  -          dec     d
+  209 00:8711 20 F1 -  -          jr      nz,draw_packed_loop
+  210 00:8713 C9 -  -  -          ret
+  211 00:8714 -  -  -  -  		
+  212 00:8714 -  -  -  -  
+  213 00:8714 -  -  -  -  Display_Org:
+  214 00:8714 3E 03 -  -          ld      a,3             ; adjust origin drawing mode
+  215 00:8716 21 38 10 -          ld      hl,$1038
+  216 00:8719 CD 3F 87 -          call    Write_Display_Control
+  217 00:871C 18 08 -  -          jr      Full_Window
+  218 00:871E -  -  -  -          
+  219 00:871E -  -  -  -  Display_Normal:
+  220 00:871E 3E 03 -  -          ld      a,3             ; normal drawing mode
+  221 00:8720 21 B8 10 -          ld      hl,$10B8
+  222 00:8723 CD 3F 87 -          call    Write_Display_Control
+  223 00:8726 -  -  -  -          
+  224 00:8726 -  -  -  -  Full_Window:
+  225 00:8726 3E 50 -  -          ld      a,$50           ; Set minimum Y
+  226 00:8728 21 00 00 -          ld      hl,0
+  227 00:872B CD 3F 87 -          call    Write_Display_Control
+  228 00:872E -  -  -  -          
+  229 00:872E 3C -  -  -          inc     a               ; Set maximum Y
+  230 00:872F 2E EF -  -          ld      l,239
+  231 00:8731 CD 3F 87 -          call    Write_Display_Control   
+  232 00:8734 -  -  -  -          
+  233 00:8734 21 00 00 -          ld      hl,0            ; Set minimum X
+  234 00:8737 3C -  -  -          inc     a
+  235 00:8738 CD 3F 87 -          call    Write_Display_Control
+  236 00:873B -  -  -  -          
+  237 00:873B 3C -  -  -          inc     a               ; Set maximum X
+  238 00:873C 21 3F 01 -          ld      hl,319 
+  239 00:873F -  -  -  -          
+  240 00:873F -  -  -  -  ;############## Write HL to display register A
+  241 00:873F -  -  -  -  
+  242 00:873F -  -  -  -  Write_Display_Control:
+  243 00:873F D3 10 -  -          out     ($10),a
+  244 00:8741 D3 10 -  -          out     ($10),a
+  245 00:8743 0E 11 -  -          ld      c,$11
+  246 00:8745 ED 61 -  -          out     (c),h
+  247 00:8747 ED 69 -  -          out     (c),l
+  248 00:8749 C9 -  -  -          ret
+  249 00:874A -  -  -  -  		
+  250 00:874A -  -  -  -  ;############## Clear the screen (in black)
+  251 00:874A -  -  -  -  ;##############      Function adapted from Calcuzap by Patrick Davidson (huge thank you!)
+  252 00:874A -  -  -  -  
+  253 00:874A -  -  -  -  Clear_Screen:   
+  254 00:874A CD 26 87 -          call    Full_Window
+  255 00:874D -  -  -  -          
+  256 00:874D 3E 20 -  -          ld      a,$20
+  257 00:874F 21 00 00 -          ld      hl,0            ; set write Y coordinate
+  258 00:8752 CD 3F 87 -          call    Write_Display_Control
+  259 00:8755 3E 21 -  -          ld      a,$21           ; set write X coordinate
+  260 00:8757 CD 3F 87 -          call    Write_Display_Control
+  261 00:875A -  -  -  -          
+  262 00:875A 3E 22 -  -          ld      a,$22
+  263 00:875C D3 10 -  -          out     ($10),a
+  264 00:875E D3 10 -  -          out     ($10),a
+  265 00:8760 -  -  -  -  
+  266 00:8760 01 00 C8 -          ld      bc,320*240*2/3
+  267 00:8763 1E 00 -  -  		ld		e, 0
+  268 00:8765 -  -  -  -  
+  269 00:8765 -  -  -  -  ;############## screen_write_loop: 
+  270 00:8765 -  -  -  -  ; E  -> $XX color input
+  271 00:8765 -  -  -  -  ; BC -> loop times
+  272 00:8765 -  -  -  -  screen_write_loop:
+  273 00:8765 7B -  -  -          ld		a, e
+  274 00:8766 D3 11 -  -          out     ($11),a
+  275 00:8768 D3 11 -  -          out     ($11),a
+  276 00:876A D3 11 -  -          out     ($11),a
+  277 00:876C 0B -  -  -          dec     bc
+  278 00:876D 78 -  -  -          ld      a,b
+  279 00:876E B1 -  -  -          or      c
+  280 00:876F 20 F4 -  -          jr      nz,screen_write_loop
+  281 00:8771 C9 -  -  -          ret
 Listing for file "ti84cse.asm"
-   28 00:8689 -  -  -  -  #include "asm\data.asm"
+   28 00:8772 -  -  -  -  #include "asm\data.asm"
 Listing for file "C:\asm\source\galamarcse\asm\data.asm"
-    1 00:8689 -  -  -  -  ;############## Patrick Davidson data structures
-    2 00:8689 -  -  -  -  ; Naievil: data structures maintained to provide example
-    3 00:8689 -  -  -  -  
-    4 00:8689 -  -  -  -  
-    5 00:8689 -  -  -  -  #define rs(size) =rscount \ #define rscount eval(rscount + size)
-    6 00:8689 -  -  -  -  
-    7 00:8689 -  -  -  -  ;############## High score storage definitions
-    8 00:8689 -  -  -  -  
-    9 00:8689 -  -  -  -  SCORELEN	=6
-   10 00:8689 -  -  -  -  NAME_LEN	=26
-   11 00:8689 -  -  -  -  SCORE_COUNT	=12
-   12 00:8689 -  -  -  -  ENTRYLEN	=SCORELEN + NAME_LEN + 1
-   13 00:8689 -  -  -  -  TABLE_SIZE      =ENTRYLEN * SCORE_COUNT
-   14 00:8689 -  -  -  -       
-   15 00:8689 -  -  -  -  high_scores     =$10000-TABLE_SIZE
-   16 00:8689 -  -  -  -  high_scores_end =high_scores + TABLE_SIZE
-   17 00:8689 -  -  -  -  last_score      =high_scores_end - ENTRYLEN
-   18 00:8689 -  -  -  -  
-   19 00:8689 -  -  -  -  ;############## Data structures for objects in arrays
-   20 00:8689 -  -  -  -  
-   21 00:8689 -  -  -  -  #define rscount 0
-   22 00:8689 -  -  -  -  b_type          rs(     1)      ; player bullet structure
+    1 00:8772 -  -  -  -  ;############## Patrick Davidson data structures
+    2 00:8772 -  -  -  -  ; Naievil: data structures maintained to provide example
+    3 00:8772 -  -  -  -  
+    4 00:8772 -  -  -  -  
+    5 00:8772 -  -  -  -  #define rs(size) =rscount \ #define rscount eval(rscount + size)
+    6 00:8772 -  -  -  -  
+    7 00:8772 -  -  -  -  ;############## High score storage definitions
+    8 00:8772 -  -  -  -  
+    9 00:8772 -  -  -  -  SCORELEN	=6
+   10 00:8772 -  -  -  -  NAME_LEN	=26
+   11 00:8772 -  -  -  -  SCORE_COUNT	=12
+   12 00:8772 -  -  -  -  ENTRYLEN	=SCORELEN + NAME_LEN + 1
+   13 00:8772 -  -  -  -  TABLE_SIZE      =ENTRYLEN * SCORE_COUNT
+   14 00:8772 -  -  -  -       
+   15 00:8772 -  -  -  -  high_scores     =$10000-TABLE_SIZE
+   16 00:8772 -  -  -  -  high_scores_end =high_scores + TABLE_SIZE
+   17 00:8772 -  -  -  -  last_score      =high_scores_end - ENTRYLEN
+   18 00:8772 -  -  -  -  
+   19 00:8772 -  -  -  -  ;############## Data structures for objects in arrays
+   20 00:8772 -  -  -  -  
+   21 00:8772 -  -  -  -  #define rscount 0
+   22 00:8772 -  -  -  -  b_type          rs(     1)      ; player bullet structure
 Listing for file "C:\asm\source\galamarcse\asm\data.asm"
-   23 00:8689 -  -  -  -  b_x             rs(     1)
-   24 00:8689 -  -  -  -  b_y             rs(     1)
-   25 00:8689 -  -  -  -  b_image         rs(     WORDLEN)
-   26 00:8689 -  -  -  -  b_size          rs(     0)
-   27 00:8689 -  -  -  -  b_count         =22
-   28 00:8689 -  -  -  -  
-   29 00:8689 -  -  -  -  #define rscount 0
-   30 00:8689 -  -  -  -  e_type          rs(     1)      ; enemy structure
-   31 00:8689 -  -  -  -  e_x             rs(     1)
-   32 00:8689 -  -  -  -  e_y             rs(     1)
-   33 00:8689 -  -  -  -  e_image         rs(     WORDLEN)
-   34 00:8689 -  -  -  -  e_misc          rs(     1)
-   35 00:8689 -  -  -  -  e_dmg           rs(     1)
-   36 00:8689 -  -  -  -  e_pattern       rs(     WORDLEN)
-   37 00:8689 -  -  -  -  e_size          rs(     0)
-   38 00:8689 -  -  -  -  e_count         =21
-   39 00:8689 -  -  -  -  
-   40 00:8689 -  -  -  -  
-   41 00:8689 -  -  -  -  #define rscount 0
-   42 00:8689 -  -  -  -  eb_type         rs(     1)      ; enemy bullet structure
-   43 00:8689 -  -  -  -  eb_x            rs(     1)
-   44 00:8689 -  -  -  -  eb_y            rs(     1)
-   45 00:8689 -  -  -  -  eb_image        rs(     WORDLEN)
-   46 00:8689 -  -  -  -  eb_misc         rs(     1)
-   47 00:8689 -  -  -  -  eb_size         rs(     0)
-   48 00:8689 -  -  -  -  eb_count        =25
-   49 00:8689 -  -  -  -  
-   50 00:8689 -  -  -  -  ;############## Allocation of storage within statVars
-   51 00:8689 -  -  -  -  
-   52 00:8689 -  -  -  -  #define rscount $FC00
-   53 00:8689 -  -  -  -  
-   54 00:8689 -  -  -  -  saved_flag      rs(     1)
-   55 00:8689 -  -  -  -  data_start      rs(     0)
-   56 00:8689 -  -  -  -  bullets         rs(     b_count * b_size)
-   57 00:8689 -  -  -  -  rand_inc        rs(     1)
-   58 00:8689 -  -  -  -  rand_counter    rs(     1)
-   59 00:8689 -  -  -  -  enemies         rs(     e_count * e_size)
-   60 00:8689 -  -  -  -  enemy_bullets   rs(     eb_count * eb_size)
-   61 00:8689 -  -  -  -  lives           rs(     1)
-   62 00:8689 -  -  -  -  player_cd       rs(     1)
-   63 00:8689 -  -  -  -  score_inc       rs(     1)
-   64 00:8689 -  -  -  -  level           rs(     1)
-   65 00:8689 -  -  -  -  enemy_delay     rs(     1)
-   66 00:8689 -  -  -  -  enemy_entry     rs(     WORDLEN)
-   67 00:8689 -  -  -  -  enemy_image     rs(     WORDLEN)
-   68 00:8689 -  -  -  -  playerx         rs(     1)
-   69 00:8689 -  -  -  -  playery         rs(     1)
-   70 00:8689 -  -  -  -  player_img      rs(     WORDLEN)
-   71 00:8689 -  -  -  -  p_weapon        rs(     1)
-   72 00:8689 -  -  -  -  flag_spin       rs(     1)
-   73 00:8689 -  -  -  -  delay_amount    rs(     WORDLEN)
-   74 00:8689 -  -  -  -  score           rs(     7)
-   75 00:8689 -  -  -  -  bonus_countdown rs(     1)
-   76 00:8689 -  -  -  -  data_end        rs(     0)
-   77 00:8689 -  -  -  -  frame_count     rs(     WORDLEN)
-   78 00:8689 -  -  -  -  fire_pressed    rs(     1)
-   79 00:8689 -  -  -  -  enemies_left    rs(     1)
-   80 00:8689 -  -  -  -  all_data_end    rs(     0)
-   81 00:8689 -  -  -  -  time_delay      rs(     1)
-   82 00:8689 -  -  -  -  star1y          rs(     1)
-   83 00:8689 -  -  -  -  star2y          rs(     1)
-   84 00:8689 -  -  -  -  star3y          rs(     1)
-   85 00:8689 -  -  -  -  star4y          rs(     1)
-   86 00:8689 -  -  -  -  star5y          rs(     1)
-   87 00:8689 -  -  -  -  star6y          rs(     1)
-   88 00:8689 -  -  -  -  
-   89 00:8689 -  -  -  -  #if     rscount > (high_scores)
-   90 00:8689                     .error  "!!!!!!!!!!!!!!!! data structure is oversized"
-   91 00:8689             #endif
+   23 00:8772 -  -  -  -  b_x             rs(     1)
+   24 00:8772 -  -  -  -  b_y             rs(     1)
+   25 00:8772 -  -  -  -  b_image         rs(     WORDLEN)
+   26 00:8772 -  -  -  -  b_size          rs(     0)
+   27 00:8772 -  -  -  -  b_count         =22
+   28 00:8772 -  -  -  -  
+   29 00:8772 -  -  -  -  #define rscount 0
+   30 00:8772 -  -  -  -  e_type          rs(     1)      ; enemy structure
+   31 00:8772 -  -  -  -  e_x             rs(     1)
+   32 00:8772 -  -  -  -  e_y             rs(     1)
+   33 00:8772 -  -  -  -  e_image         rs(     WORDLEN)
+   34 00:8772 -  -  -  -  e_misc          rs(     1)
+   35 00:8772 -  -  -  -  e_dmg           rs(     1)
+   36 00:8772 -  -  -  -  e_pattern       rs(     WORDLEN)
+   37 00:8772 -  -  -  -  e_size          rs(     0)
+   38 00:8772 -  -  -  -  e_count         =21
+   39 00:8772 -  -  -  -  
+   40 00:8772 -  -  -  -  
+   41 00:8772 -  -  -  -  #define rscount 0
+   42 00:8772 -  -  -  -  eb_type         rs(     1)      ; enemy bullet structure
+   43 00:8772 -  -  -  -  eb_x            rs(     1)
+   44 00:8772 -  -  -  -  eb_y            rs(     1)
+   45 00:8772 -  -  -  -  eb_image        rs(     WORDLEN)
+   46 00:8772 -  -  -  -  eb_misc         rs(     1)
+   47 00:8772 -  -  -  -  eb_size         rs(     0)
+   48 00:8772 -  -  -  -  eb_count        =25
+   49 00:8772 -  -  -  -  
+   50 00:8772 -  -  -  -  ;############## Allocation of storage within statVars
+   51 00:8772 -  -  -  -  
+   52 00:8772 -  -  -  -  #define rscount $FC00
+   53 00:8772 -  -  -  -  
+   54 00:8772 -  -  -  -  saved_flag      rs(     1)
+   55 00:8772 -  -  -  -  data_start      rs(     0)
+   56 00:8772 -  -  -  -  bullets         rs(     b_count * b_size)
+   57 00:8772 -  -  -  -  rand_inc        rs(     1)
+   58 00:8772 -  -  -  -  rand_counter    rs(     1)
+   59 00:8772 -  -  -  -  enemies         rs(     e_count * e_size)
+   60 00:8772 -  -  -  -  enemy_bullets   rs(     eb_count * eb_size)
+   61 00:8772 -  -  -  -  lives           rs(     1)
+   62 00:8772 -  -  -  -  player_cd       rs(     1)
+   63 00:8772 -  -  -  -  score_inc       rs(     1)
+   64 00:8772 -  -  -  -  level           rs(     1)
+   65 00:8772 -  -  -  -  enemy_delay     rs(     1)
+   66 00:8772 -  -  -  -  enemy_entry     rs(     WORDLEN)
+   67 00:8772 -  -  -  -  enemy_image     rs(     WORDLEN)
+   68 00:8772 -  -  -  -  playerx         rs(     1)
+   69 00:8772 -  -  -  -  playery         rs(     1)
+   70 00:8772 -  -  -  -  player_img      rs(     WORDLEN)
+   71 00:8772 -  -  -  -  p_weapon        rs(     1)
+   72 00:8772 -  -  -  -  flag_spin       rs(     1)
+   73 00:8772 -  -  -  -  delay_amount    rs(     WORDLEN)
+   74 00:8772 -  -  -  -  score           rs(     7)
+   75 00:8772 -  -  -  -  bonus_countdown rs(     1)
+   76 00:8772 -  -  -  -  data_end        rs(     0)
+   77 00:8772 -  -  -  -  frame_count     rs(     WORDLEN)
+   78 00:8772 -  -  -  -  fire_pressed    rs(     1)
+   79 00:8772 -  -  -  -  enemies_left    rs(     1)
+   80 00:8772 -  -  -  -  all_data_end    rs(     0)
+   81 00:8772 -  -  -  -  time_delay      rs(     1)
+   82 00:8772 -  -  -  -  star1y          rs(     1)
+   83 00:8772 -  -  -  -  star2y          rs(     1)
+   84 00:8772 -  -  -  -  star3y          rs(     1)
+   85 00:8772 -  -  -  -  star4y          rs(     1)
+   86 00:8772 -  -  -  -  star5y          rs(     1)
+   87 00:8772 -  -  -  -  star6y          rs(     1)
+   88 00:8772 -  -  -  -  
+   89 00:8772 -  -  -  -  #if     rscount > (high_scores)
+   90 00:8772                     .error  "!!!!!!!!!!!!!!!! data structure is oversized"
+   91 00:8772             #endif
 Listing for file "ti84cse.asm"
-   29 00:8689 -  -  -  -  .end
+   29 00:8772 -  -  -  -  .end

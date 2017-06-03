@@ -1,19 +1,15 @@
 ;############## Galamar by Ryan Baldwin - graphics routines
 		
 ;############## DrawPlayerStart: Draw our player to midway starting point	
-DrawPlayerStart:	
-	xor 	a
-	ld 		l,240-16				; middle of bottom screen y
-	ld 		h,0
-	ld 		(playery),hl
-	ld 		l,(320-15)/2			; middle of bottom screen x
-	ld 		h,0
-	ld 		(playerx),hl
-	
-	ld 		ix,img_player		; load in image data
-	ld 		hl,(playery)			; load in y component
-	ld 		de,(playerx)			; load in x component
-	call 	Draw_8Bit	
+DrawPlayerStart:		
+	ld		h, 0
+	ld		l, 144
+	ld		(playerx), hl           ; store our player x value into the var
+	ld		b, 122
+	ld		l, 240-16
+	ld      (playery), hl           ; store our player y value into the var
+	ld      de, img_player
+	call    Draw_Sprite_Packed
 	ret
 	
 ;############## DrawLevel: Draws the world and the siding
@@ -267,30 +263,6 @@ Color_Rectangle:
 	
 RandInt:
 	ret
-
-; Color_Pixel: takes in hl as x, de for y, iy as 8 bit color
+	
 Color_Pixel:
-		; *************
-		;  Set X coord
-		; *************
-		ld      a, $21          ; set write X coordinate
-        ; we don't change value of HL since it already contains the X value!
-        call    Write_Display_Control
-		
-		; *************
-		;  Set Y cord
-		; *************
-		ld		h, 0			; y coord will ALWAYS be < 256 so no need for first bit
-		ld		l, e
-        ld      a,$20           ; set write Y coordinate
-        call    Write_Display_Control
-        
-        ld      a,$22
-        out     ($10),a
-        out     ($10),a
-
-        ld      bc, 1
-		ld		e, IYL
-		call	screen_write_loop
-		
-		ret
+	ret
