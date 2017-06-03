@@ -1,16 +1,4 @@
 ;############## Galamar by Ryan Baldwin - graphics routines
-		
-;############## DrawPlayerStart: Draw our player to midway starting point	
-DrawPlayerStart:		
-	ld		h, 0
-	ld		l, 144
-	ld		(playerx), hl           ; store our player x value into the var
-	ld		b, 122
-	ld		l, 240-16
-	ld      (playery), hl           ; store our player y value into the var
-	ld      de, img_player
-	call    Draw_Sprite_Packed
-	ret
 	
 ;############## DrawLevel: Draws the world and the siding
 DrawLevel:
@@ -48,23 +36,23 @@ DrawRandomRec:
 	ret	
 	
 DrawPlayer:
-	ld 		ix,img_player			; load in image data
-	ld 		hl,(playery)			; load in y component
-	ld 		de,(playerx)			; load in x component
-	call	Draw_8Bit
+	ld		hl, (playerx)        
+	ld		b, l
+	ld      hl, (playery)
+	ld      de, img_player
+	call    Draw_Sprite_Packed
 	ret
 	
 DeletePlayerLeft:
 	ld 		hl, (playerx)
+	SRL		l
+	ld		b, l					; load our x component
 	ld		de, (playery)
-	ld 		iy, $00
-	dec 	hl
-DeleteLeftLoop:
-	inc 	de
-	call 	Color_Pixel
-	ld		a,e
-	cp		240
-	jp		nz, DeleteLeftLoop
+	ld		c, e					; load our y component
+	ld		e, 16
+	ld		d, 1
+	dec 	b
+	call    Erase_Rectangle
 	ret
 
 DeletePlayerRight:

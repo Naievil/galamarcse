@@ -18,6 +18,24 @@ img_player:
 	.db $FF,$FF,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$FF,$FF,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$FF,$FF,$00,$00
 	
 	.db 0
+	
+star1:			; white star
+	.db 1,1
+	.db $ff, $ff
+	
+	.db 0
+	
+star2: 			; blue star
+	.db 1,1
+	.db $18, $18
+	
+	.db 0
+	
+star3:			;red star
+	.db 1,1
+	.db $E0, $E0
+	
+	.db 0
 
 	
 LogoPalette:

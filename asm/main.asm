@@ -12,7 +12,6 @@ checkinputlevel:
 		ld 		a,b
 		out 	(1),a
 		nop \ nop
-		call	DrawPlayer	
 		in 		a,(1)
 		cp 		$ff
 		ret
@@ -80,7 +79,6 @@ no_fire:
 fire_done:
 		
 		call	UpdateStars			; update/redraw stars
-		call	DrawPlayer			; commented for speedup...redraw player in case stars go in front
 		
 		ld 		b,%1111101
         call	checkinputlevel
@@ -95,12 +93,13 @@ fire_done:
 		ld 		b,%11111100
         call	checkinputlevel
 		bit 	1,a
-		jr 		z,move_left
+		call	z,move_left
 		bit 	2,a
-		jr 		z,move_right
+		call	z,move_right
+		call	DrawPlayer			; commented for speedup...redraw player in case stars go in front
 		jr 		mainloop
 		
 changespeed:
-	call	UpdateStars
-	call	UpdateStars
+	;call	UpdateStars
+	;call	UpdateStars
 	ret

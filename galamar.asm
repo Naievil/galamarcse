@@ -12,10 +12,13 @@
 ;
 ; Program Name: Galamar (and other various tests)
 ; Author: 		Ryan Baldwin (rabaldwi@ncsu.edu)
-; Version:		0.2a
-; Date: 		16/5/2017
+; Version:		0.3a
+; Date: 		2/6/2017
 
 .nolist
+temp1			.equ cmdShadow
+playerx			.equ temp1					;2 bytes
+playery			.equ playerx+2
 .list
 
 ASMStart:
@@ -31,12 +34,17 @@ InitGame:
     out     ($20),a         ; maximum CPU speed
     ld      a,$45
     out     ($30),a         ; set timer frequency to 2048Hz
+	
+	ld		hl, 0
+	ld 		(playerx), hl
+	ld		hl, 240-16
+	ld		(playery), hl
 		
 	bcall(_ClrLCDFull)
 	
    	call 	ShowTitle		 	; clears the screen, show title when created
 	call	LoadStars
-	call 	DrawPlayerStart 	; draws player starting position
+	call 	DrawPlayer	     	; draws player starting position
 	call	DrawLevel
 	ld		a, 20
 	ld		(time_delay), a		; record our time delay

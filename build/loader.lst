@@ -4981,30 +4981,28 @@ Listing for file "C:\asm\source\galamarcse\asm\data.asm"
    65 00:0000 -  -  -  -  enemy_delay     rs(     1)
    66 00:0000 -  -  -  -  enemy_entry     rs(     WORDLEN)
    67 00:0000 -  -  -  -  enemy_image     rs(     WORDLEN)
-   68 00:0000 -  -  -  -  playerx         rs(     1)
-   69 00:0000 -  -  -  -  playery         rs(     1)
-   70 00:0000 -  -  -  -  player_img      rs(     WORDLEN)
-   71 00:0000 -  -  -  -  p_weapon        rs(     1)
-   72 00:0000 -  -  -  -  flag_spin       rs(     1)
-   73 00:0000 -  -  -  -  delay_amount    rs(     WORDLEN)
-   74 00:0000 -  -  -  -  score           rs(     7)
-   75 00:0000 -  -  -  -  bonus_countdown rs(     1)
-   76 00:0000 -  -  -  -  data_end        rs(     0)
-   77 00:0000 -  -  -  -  frame_count     rs(     WORDLEN)
-   78 00:0000 -  -  -  -  fire_pressed    rs(     1)
-   79 00:0000 -  -  -  -  enemies_left    rs(     1)
-   80 00:0000 -  -  -  -  all_data_end    rs(     0)
-   81 00:0000 -  -  -  -  time_delay      rs(     1)
-   82 00:0000 -  -  -  -  star1y          rs(     1)
-   83 00:0000 -  -  -  -  star2y          rs(     1)
-   84 00:0000 -  -  -  -  star3y          rs(     1)
-   85 00:0000 -  -  -  -  star4y          rs(     1)
-   86 00:0000 -  -  -  -  star5y          rs(     1)
-   87 00:0000 -  -  -  -  star6y          rs(     1)
-   88 00:0000 -  -  -  -  
-   89 00:0000 -  -  -  -  #if     rscount > (high_scores)
-   90 00:0000                     .error  "!!!!!!!!!!!!!!!! data structure is oversized"
-   91 00:0000             #endif
+   68 00:0000 -  -  -  -  player_img      rs(     WORDLEN)
+   69 00:0000 -  -  -  -  p_weapon        rs(     1)
+   70 00:0000 -  -  -  -  flag_spin       rs(     1)
+   71 00:0000 -  -  -  -  delay_amount    rs(     WORDLEN)
+   72 00:0000 -  -  -  -  score           rs(     7)
+   73 00:0000 -  -  -  -  bonus_countdown rs(     1)
+   74 00:0000 -  -  -  -  data_end        rs(     0)
+   75 00:0000 -  -  -  -  frame_count     rs(     WORDLEN)
+   76 00:0000 -  -  -  -  fire_pressed    rs(     1)
+   77 00:0000 -  -  -  -  enemies_left    rs(     1)
+   78 00:0000 -  -  -  -  all_data_end    rs(     0)
+   79 00:0000 -  -  -  -  time_delay      rs(     1)
+   80 00:0000 -  -  -  -  star1y          rs(     1)
+   81 00:0000 -  -  -  -  star2y          rs(     1)
+   82 00:0000 -  -  -  -  star3y          rs(     1)
+   83 00:0000 -  -  -  -  star4y          rs(     1)
+   84 00:0000 -  -  -  -  star5y          rs(     1)
+   85 00:0000 -  -  -  -  star6y          rs(     1)
+   86 00:0000 -  -  -  -  
+   87 00:0000 -  -  -  -  #if     rscount > (high_scores)
+   88 00:0000                     .error  "!!!!!!!!!!!!!!!! data structure is oversized"
+   89 00:0000             #endif
 Listing for file "loader.asm"
    10 00:0000 -  -  -  -  data_save       =plotSScreen
    11 00:0000 -  -  -  -  score_save      =saveSScreen
@@ -5049,7 +5047,7 @@ Listing for file "loader.asm"
    47 00:4044 -  -  -  -  
    48 00:4044 11 7C 98 -          ld      de,data_save    ; copy permanent data from our page
    49 00:4047 21 00 FC -          ld      hl,saved_flag
-   50 00:404A 01 DD 01 -          ld      bc,data_end-saved_flag
+   50 00:404A 01 DB 01 -          ld      bc,data_end-saved_flag
    51 00:404D ED B0 -  -          ldir
    52 00:404F 11 98 87 -          ld      de,score_save
    53 00:4052 21 74 FE -          ld      hl,high_scores
@@ -5127,247 +5125,242 @@ Listing for file "C:\asm\source\galamarcse\exec\lite86.asm"
 Listing for file "loader.asm"
    68 00:4098 -  -  -  -  
    69 00:4098 -  -  -  -  compressed_data:
-   70 00:4098 00 CD 14 87 
+   70 00:4098 00 CD E7 86 
               CD 09 81 C3 
-              1E 00 87 FD 
+              F1 00 86 FD 
               E5 3E 01 D3 
               20 3E 00 45 
-              D3 30 EF 37 
-              45 CD 2D 00 
-              81 CD 31 81 
-              CD 56 81 CD 
-              00 6B 81 3E 
-              14 32 72 87 
-              CD 00 90 85 
-              FD E1 C9 CD 
-              4A 87 00 C9 
-              21 18 00 22 
-              72 87 21 55 
-              70 E2 FA C8 
-              E2 FA 69 E2 
-              FA 96 E2 FA 
-              41 3E E1 FA 
-              C9 26 00 2E 
-              90 E0 F8 08 
-              06 7A 2E E0 
-              E0 F9 11 3C 
-              83 00 CD 82 
-              86 C9 11 10 
-              01 01 00 00 
+              D3 30 21 00 
+              00 22 AA 00 
+              9B 21 E0 00 
+              22 AC 9B EF 
+              00 37 45 CD 
+              39 81 CD 3D 
+              81 00 CD AC 
+              81 CD 62 81 
+              3E 14 00 32 
+              45 87 CD 8F 
+              85 FD E1 00 
+              C9 CD 1D 87 
+              C9 21 18 00 
+              05 22 45 87 
+              21 70 E2 FA 
+              C8 E2 FA 54 
+              69 E2 FA 96 
+              E2 FA 3E E1 
+              FA C9 11 00 
+              10 01 01 00 
               00 21 10 01 
-              DD 21 F0 00 
+              00 DD 21 F0 
               00 FD 21 74 
-              BD CD 38 83 
-              13 11 2E 00 
-              E1 EC 2E 00 
-              E1 EC E1 F0 
-              A0 E0 F3 00 
-              E0 F3 43 85 
-              CD 36 83 01 
+              BD 02 CD 2B 
+              83 11 2E 00 
+              E1 EC 2E 74 
+              00 E1 EC E1 
+              F0 E0 F3 00 
+              E0 F3 45 85 
+              00 CD 29 83 
               C9 06 04 CD 
-              3A 83 6F E0 
-              FC 50 67 E2 
+              2D 2A 83 6F 
+              E0 FC 67 E2 
               F6 4F E0 FC 
-              47 CD 39 83 
-              00 C9 DD 21 
-              3C 83 2A 72 
-              87 22 ED 5B 
-              E0 67 37 83 
-              C9 E4 F5 FD 
-              80 E0 C6 2B 
-              13 CD 3B 83 
-              7B FE 08 F0 
-              C2 D0 81 E9 
-              E9 06 00 0E 
-              20 0F 09 E5 
-              E5 EB 81 C9 
-              CD 25 00 82 
-              CD 42 82 CD 
-              5F 82 CD 00 
-              7C 82 CD 99 
-              82 CD B6 82 
-              00 CD DD 82 
-              C9 FD 21 18 
-              18 92 E0 FB 
-              FF FF E0 FB 
-              80 80 E0 FB 
-              00 44 00 E0 
-              FB 25 25 C9 
-              E1 B9 21 44 
-              09 00 13 ED 
-              53 E0 8F 0C 
-              82 E0 B8 8A 
-              E4 EE CD D3 
-              82 E3 E3 70 
-              E4 E3 11 AA 
-              E6 E3 70 E7 
+              47 00 CD 2C 
+              83 C9 2A AA 
+              9B 45 00 2A 
+              AC 9B 11 2F 
+              83 CD 55 40 
+              86 E1 F2 CB 
+              3D 45 ED 5B 
+              AC 00 9B 4B 
+              1E 10 16 01 
+              05 CD 34 EC 
+              85 E1 EC E1 
+              EF FD E0 B3 
+              06 00 00 0E 
+              0F 09 13 CD 
+              2E 83 7B 00 
+              FE F0 C2 DE 
+              81 C9 CD 18 
+              00 82 CD 35 
+              82 CD 52 82 
+              CD 00 6F 82 
+              CD 8C 82 CD 
+              A9 82 00 CD 
+              D0 82 C9 FD 
+              21 18 18 92 
+              E0 FB FF FF 
+              E0 FB 80 80 
+              E0 FB 00 41 
+              00 E0 FB 25 
+              25 C9 ED 5B 
+              E0 3F 04 44 
+              00 13 ED 53 
+              E0 0F FF 81 
+              C5 E0 B8 E4 
+              EE CD C6 82 
+              E3 E3 70 E4 
+              E3 2A 04 82 
+              E5 E3 70 E7 
               E3 92 E4 E3 
-              16 E6 E3 92 
-              AA E7 E3 B4 
+              09 AA E6 E3 
+              92 E7 E3 B4 
               EE A9 B4 E7 
-              E3 D6 E4 E3 
-              20 AA E6 E3 
+              E3 D6 AA E4 
+              E3 13 E6 C6 
               D6 E7 E3 F8 
-              EE 8C F8 E2 
-              E3 1B 72 1B 
+              EE 8C F8 99 
+              E2 E3 1B 1B 
               E1 46 E0 EC 
-              C0 D8 00 00 
-              E1 E7 7B 0A 
+              C9 DD E0 F8 
+              82 E1 E7 7B 
               FE F1 28 2E 
-              E5 F7 2A E5 
-              F7 26 A8 E5 
+              E5 F7 2A AA 
+              E5 F7 26 E5 
               F7 22 E5 F7 
               1E E5 F7 1A 
-              C9 DD E2 C1 
-              39 F6 FB E3 
+              38 C9 DD C1 
+              52 F6 FB E3 
               FF 10 08 00 
-              EA FF FF 7F 
+              9F EA FF FF 
               FF EB F0 ED 
               FF FF E0 FB 
-              E2 E1 FF FF 
-              E0 FF E0 9F 
+              E2 E1 FF E7 
+              FF E0 FF E0 
               ED FF E0 E0 
               EB E0 E3 F0 
-              EB E0 E3 E2 
-              E3 DE C9 E7 
+              EB E0 F2 E3 
+              E2 E3 DE E7 
               E0 E5 C6 18 
               18 E1 E6 E0 
-              E0 E1 FA FF 
+              7F E0 E1 FA 
               E1 F4 E5 E4 
               E3 E0 E5 E2 
               E1 FF E3 DE 
-              E7 AA E7 86 
-              FF E1 E4 E3 
+              FF E7 AA E7 
+              86 E1 E4 E3 
               E0 E5 EA E5 
               FC F1 FF ED 
-              E4 E5 C6 E5 
-              F8 FF E5 DC 
+              E4 FF E5 C6 
+              E5 F8 E5 DC 
               E5 4E E7 E0 
               E7 32 E3 F8 
-              E3 74 E5 72 
-              E3 F6 E0 E5 
+              E3 74 F9 E5 
+              72 E3 F6 E5 
               E6 CB D0 F0 
-              F2 FF DD 00 
-              00 3F 00 85 
-              2D DC 3F 85 
-              64 1E 3E 28 
-              FF D3 80 34 
-              78 E1 FB CD 
-              B5 81 00 DB 
-              01 FE FF C9 
-              C9 11 6E 44 
-              00 60 E1 DD 
-              21 47 81 30 
-              3E BF 80 E1 
-              E4 DB 01 CB 
+              F2 01 01 E0 
+              F9 24 01 01 
+              E0 2E 01 01 
+              E0 C7 FF DD 
+              00 00 00 41 
+              85 2D DC 41 
+              85 05 64 1E 
+              3E FF D3 80 
+              29 78 E1 FB 
+              00 DB 01 FE 
+              FF C9 C9 11 
+              6E 44 00 60 
+              EE DD 21 49 
+              81 28 3E BF 
+              80 E3 E7 CB 
               6F 20 F4 26 
-              01 37 2E 69 
+              37 2E 07 69 
               16 32 1E 1E 
-              E1 D3 40 39 
-              E2 E6 DB 04 
-              CB 6F 28 FA 
-              00 AF D3 31 
-              3A 72 87 D3 
-              32 10 21 72 
-              87 E2 D7 0A 
-              7E B7 20 00 
-              08 34 CD 18 
-              86 18 02 AF 
-              08 77 CD F6 
-              81 E0 A6 06 
-              7D CD 00 4B 
-              85 CB 47 28 
-              A2 06 FC 80 
-              E0 F7 28 C3 
-              CB 5F CC D7 
-              85 80 E2 F4 
-              CB 4F 28 2B 
-              CB 57 28 10 
-              0B 18 AF E1 
-              D6 F6 81 C9 
-              18 40 A6 60 
-              FB 7C FE 01 
-              20 05 7D 0B 
-              FE 00 28 F1 
-              E0 F3 23 A0 
-              41 E0 BC 05 
-              CD C4 81 18 
-              E2 E2 E4 00 
-              E1 E4 14 30 
-              28 D5 E0 F3 
-              2B E4 E4 DB 
-              81 00 18 C6 
+              E0 EF 80 26 
+              E1 E6 00 DB 
+              04 CB 6F 28 
+              FA AF D3 00 
+              31 3A 45 87 
+              D3 32 21 45 
+              40 87 E2 D7 
+              0A 7E B7 20 
+              08 34 00 CD 
+              EB 85 18 02 
+              AF 77 CD 00 
+              E9 81 06 7D 
+              CD 4D 85 CB 
+              04 47 28 A5 
+              06 FC E0 F7 
+              28 C6 04 CB 
+              5F CC D8 85 
+              E2 F4 CB 4F 
+              00 CC E3 85 
+              CB 57 CC DB 
+              85 82 60 55 
+              18 AD C9 18 
+              AA 60 F3 23 
+              D0 60 37 61 
+              EB 2B E1 F8 
               C9 79 FE F4 
-              D0 D6 01 0C 
+              00 D0 D6 0C 
               30 13 83 D0 
-              C8 5F 80 B9 
-              01 3E 50 CD 
-              3F 87 3E 20 
-              E0 FB 08 18 
+              C8 40 5F 80 
+              D9 3E 50 CD 
+              12 87 3E 42 
+              20 E0 FB 18 
               17 6F 26 E8 
-              F1 7D 83 3E 
-              00 E8 93 95 
-              30 02 83 5F 
-              78 22 D6 30 
+              F1 7D 00 83 
+              3E E8 93 95 
+              30 02 83 08 
+              5F 78 D6 30 
               E0 E6 29 3E 
-              52 E1 E5 21 
-              91 E0 FB 78 
+              52 A4 E1 E5 
+              21 E0 FB 78 
               82 E3 EE 2B 
-              3E 53 E1 ED 
-              00 22 D3 10 
-              D3 10 AF 42 
-              D3 40 11 E3 
+              3E 40 53 E1 
+              ED 22 D3 10 
+              D3 10 AF 10 
+              42 D3 11 E3 
               FE 10 F6 1D 
-              20 F2 C9 10 
+              20 04 F2 C9 
               C1 C9 7D E3 
-              97 28 C5 ED 
-              44 40 47 EA 
+              97 28 C5 10 
+              ED 44 47 EA 
               97 EB 7E 90 
-              38 E0 28 00 
+              38 00 E0 28 
               DE 23 4E 23 
-              59 16 00 19 
-              81 E0 FF 10 
+              59 16 20 00 
+              19 E0 FF 10 
               FA C1 4B 18 
-              1D EA 82 20 
+              48 1D EA 82 
               EB 7E E0 E1 
-              83 FE E9 38 
-              05 80 E0 7A 
+              83 FE E9 20 
+              38 05 E0 7A 
               18 01 93 32 
-              03 87 79 00 
+              D6 00 86 79 
               87 87 81 32 
-              05 87 EB C5 
-              88 EE 70 C1 
+              D8 86 22 EB 
+              C5 EE 70 C1 
               78 81 EF 6F 
-              EB 16 01 08 
+              EB 02 16 01 
               06 01 ED A3 
-              E3 FE 10 F6 
-              15 00 20 F1 
+              E3 FE 10 00 
+              F6 15 20 F1 
               C9 3E 03 21 
-              38 10 A9 E1 
+              2A 38 10 E1 
               16 08 E0 F6 
               B8 E1 F6 3E 
-              50 61 AE 06 
-              3F 87 3C 2E 
-              EF E0 FA E0 
-              F4 3C 88 E1 
+              41 50 61 CE 
+              12 87 3C 2E 
+              EF E0 FA A2 
+              E0 F4 3C E1 
               F3 21 3F 01 
-              E1 BE 0E 11 
-              ED 03 61 ED 
-              69 C9 CD 26 
-              E0 6D E3 D9 
-              C0 E2 92 E3 
-              A1 01 00 C8 
-              1E 00 7B 81 
-              E3 0E 0B 78 
-              B1 20 F4 C9 
-              1F -  -  -  #import compressed.bin
-   71 00:443D -  -  -  -          
-   72 00:443D -  -  -  -  #if     ($ > $8000)        
-   73 00:443D                     .echo   "Overflow of available flash space on page 0 by ",eval($ - $8000)
-   74 00:443D                     .error  "!!!!!!!!!!!!!!!!!!!! DISASTER !!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-   75 00:443D             #endif
-   76 00:443D -  -  -  -  #if     ($ > $7FA0)        
-   77 00:443D                     .echo   "Overflow after adding certificate by ",eval($ - $7FA0)
-   78 00:443D             #else
-   79 00:443D -  -  -  -          .echo   "Bytes left over in flash: ",eval($7FA0 - $)
-   80 00:443D -  -  -  -  #endif
+              E1 BE 0E 00 
+              11 ED 61 ED 
+              69 C9 CD F9 
+              1C 86 3E 20 
+              E3 D9 E2 92 
+              E3 A1 01 00 
+              08 C8 1E 00 
+              7B E3 0E 0B 
+              78 B1 10 20 
+              F4 C9 1F -  #import compressed.bin
+   71 00:442B -  -  -  -          
+   72 00:442B -  -  -  -  #if     ($ > $8000)        
+   73 00:442B                     .echo   "Overflow of available flash space on page 0 by ",eval($ - $8000)
+   74 00:442B                     .error  "!!!!!!!!!!!!!!!!!!!! DISASTER !!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+   75 00:442B             #endif
+   76 00:442B -  -  -  -  #if     ($ > $7FA0)        
+   77 00:442B                     .echo   "Overflow after adding certificate by ",eval($ - $7FA0)
+   78 00:442B             #else
+   79 00:442B -  -  -  -          .echo   "Bytes left over in flash: ",eval($7FA0 - $)
+   80 00:442B -  -  -  -  #endif
